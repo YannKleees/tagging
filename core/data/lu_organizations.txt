@@ -1,0 +1,68 @@
+# Major Luxembourg organizations with their common and official names.
+# Hand-curated; '|' separates names of the same organization.
+# All-caps acronyms only match with the same case. '~' marks names that are also common words.
+Spuerkeess|BCEE|Banque et Caisse d'Epargne de l'Etat|Banque et Caisse d'Épargne de l'État
+CFL|Chemins de Fer Luxembourgeois|Société nationale des chemins de fer luxembourgeois
+~POST
+POST Luxembourg|Entreprise des Postes et Télécommunications|P&T Luxembourg
+CHL|Centre Hospitalier de Luxembourg|Centre Hospitalier du Luxembourg
+CHEM|Centre Hospitalier Emile Mayrisch
+CHdN|Centre Hospitalier du Nord
+HRS|Hôpitaux Robert Schuman|Hôpital Kirchberg|ZithaKlinik|Clinique Bohler
+CNS|Caisse Nationale de Santé|Gesondheetskeess
+CCSS|Centre commun de la sécurité sociale
+ADEM|Agence pour le développement de l'emploi
+STATEC|Institut national de la statistique et des études économiques
+CTIE|Centre des technologies de l'information de l'État
+CGDIS|Corps grand-ducal d'incendie et de secours
+Police Grand-Ducale|Police Lëtzebuerg
+Chambre des Députés|Chamber vun den Deputéierten
+~Chamber
+Conseil d'État|Conseil d'Etat|Staatsrot
+BCL|Banque centrale du Luxembourg
+CSSF|Commission de Surveillance du Secteur Financier
+BGL BNP Paribas|BGL
+BIL|Banque Internationale à Luxembourg
+Banque Raiffeisen|Raiffeisen
+ING Luxembourg
+LuxTrust
+ArcelorMittal
+Cargolux
+Luxair|LuxairGroup
+SES|SES Astra
+RTL|RTL Lëtzebuerg|RTL Luxembourg|RTL Group
+Encevo|Enovos|Creos
+Paul Wurth
+Ceratizit
+Goodyear Dudelange
+Université du Luxembourg|University of Luxembourg|Universitéit Lëtzebuerg|Uni.lu
+~LIST
+Luxembourg Institute of Science and Technology
+LIH|Luxembourg Institute of Health
+LISER|Luxembourg Institute of Socio-Economic Research
+Luxinnovation
+Luxembourg Stock Exchange|Bourse de Luxembourg
+Chambre de Commerce|Chambre de Commerce Luxembourg
+CSL|Chambre des salariés
+Ville de Luxembourg|VdL|Stad Lëtzebuerg
+AVL|Autobus de la Ville de Luxembourg
+Luxtram
+RGTR
+Mobilitéitszentral
+LAR|Luxembourg Air Rescue
+Croix-Rouge luxembourgeoise|Croix-Rouge|Rout Kräiz
+Caritas Luxembourg
+~Cactus
+Pall Center
+Lalux|La Luxembourgeoise
+~Foyer
+Foyer Assurances
+~Tango
+Orange Luxembourg
+Luxembourg Online
+~ADA
+Administration des douanes et accises
+ACD|Administration des contributions directes
+~AED
+Administration de l'enregistrement, des domaines et de la TVA
+SNCT|Société Nationale de Contrôle Technique
