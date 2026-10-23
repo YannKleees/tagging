@@ -96,5 +96,5 @@ header = [
     "# '~' marks names that are also common words; they are matched with a lower score.",
 ]
 out = Path(__file__).with_name("lu_places.txt")
-out.write_text("\n".join(header + lines) + "\n", encoding="utf-8")
+out.write_text("\n".join(header + lines) + "\n", encoding="utf-8", newline="\n")
 print(len(lines), "places written to", out)
