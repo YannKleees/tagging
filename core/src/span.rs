@@ -63,7 +63,14 @@ pub struct Span {
 
 impl Span {
     pub fn new(text: &str, kind: EntityType, start: usize, end: usize, score: f64, source: Source) -> Self {
-        Self { kind, start, end, text: text[start..end].to_string(), score, source }
+        Self {
+            kind,
+            start,
+            end,
+            text: text[start..end].to_string(),
+            score,
+            source,
+        }
     }
 
     pub fn rule(text: &str, kind: EntityType, start: usize, end: usize, score: f64) -> Self {

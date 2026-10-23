@@ -90,5 +90,8 @@ impl Config {
 }
 
 pub(crate) fn read_to_string(path: &Path) -> Result<String> {
-    std::fs::read_to_string(path).map_err(|source| Error::Io { path: path.to_path_buf(), source })
+    std::fs::read_to_string(path).map_err(|source| Error::Io {
+        path: path.to_path_buf(),
+        source,
+    })
 }
