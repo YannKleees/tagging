@@ -1,0 +1,20 @@
+[package]
+name = "tagging-core"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Span-preserving tokenizer and rule-based PII detectors"
+
+[lib]
+name = "tagging_core"
+
+[[bin]]
+name = "tagging"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.6.7", features = ["derive"] }
+regex = "1.13.1"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+thiserror = "2.0.21"
