@@ -8,7 +8,11 @@ fn d() -> DateDetector {
 fn assert_dob(text: &str, date: &str) {
     let s = run(&d(), text);
     assert_eq!(s.len(), 1, "{text}");
-    assert_eq!((s[0].text.as_str(), s[0].kind), (date, EntityType::DateOfBirth), "{text}");
+    assert_eq!(
+        (s[0].text.as_str(), s[0].kind),
+        (date, EntityType::DateOfBirth),
+        "{text}"
+    );
     assert!(s[0].score >= 0.9);
 }
 
@@ -42,7 +46,12 @@ fn short_keywords_match_whole_words_only() {
 
 #[test]
 fn rejects_impossible_dates() {
-    for t in ["born 31.02.1985", "born 12.13.1985", "born 2023-02-30", "born 32 mars 1985"] {
+    for t in [
+        "born 31.02.1985",
+        "born 12.13.1985",
+        "born 2023-02-30",
+        "born 32 mars 1985",
+    ] {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }

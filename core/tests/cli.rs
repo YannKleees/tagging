@@ -35,7 +35,10 @@ fn detect_prints_json_spans() {
 fn detect_prints_csv() {
     let f = sample("csv.txt", "Mail jhemp@pt.lu zu Réimech");
     let out = stdout(&tagging(&["detect", f.to_str().unwrap(), "--format", "csv"]));
-    assert_eq!(out.lines().collect::<Vec<_>>(), ["tag,start,end", "email,5,16", "location,20,28"]);
+    assert_eq!(
+        out.lines().collect::<Vec<_>>(),
+        ["tag,start,end", "email,5,16", "location,20,28"]
+    );
 }
 
 #[test]
@@ -55,7 +58,14 @@ fn redact_masks_by_default() {
 fn uses_config_file() {
     let f = sample("cfg_input.txt", "Mail jhemp@pt.lu zu Réimech");
     let cfg = sample("cfg.json", r#"{"detectors": ["gazetteer"]}"#);
-    let out = stdout(&tagging(&["detect", f.to_str().unwrap(), "--format", "csv", "--config", cfg.to_str().unwrap()]));
+    let out = stdout(&tagging(&[
+        "detect",
+        f.to_str().unwrap(),
+        "--format",
+        "csv",
+        "--config",
+        cfg.to_str().unwrap(),
+    ]));
     assert_eq!(out.lines().collect::<Vec<_>>(), ["tag,start,end", "location,20,28"]);
 }
 

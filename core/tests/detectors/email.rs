@@ -41,7 +41,15 @@ fn finds_several() {
 
 #[test]
 fn rejects_non_addresses() {
-    for t in ["user@localhost", "@handle", "a@b.c", "price 5@3.50", "version@1.2", "foo@bar", "x@.lu"] {
+    for t in [
+        "user@localhost",
+        "@handle",
+        "a@b.c",
+        "price 5@3.50",
+        "version@1.2",
+        "foo@bar",
+        "x@.lu",
+    ] {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }

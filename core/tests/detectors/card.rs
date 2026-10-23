@@ -34,7 +34,11 @@ fn rejects_invalid_luhn() {
 
 #[test]
 fn rejects_luhn_valid_numbers_without_card_prefix() {
-    for t in ["Order 1000000000000008", "Tracking 9000000000000001", "1234567890123452"] {
+    for t in [
+        "Order 1000000000000008",
+        "Tracking 9000000000000001",
+        "1234567890123452",
+    ] {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }

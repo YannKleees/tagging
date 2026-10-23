@@ -81,7 +81,12 @@ fn finds_number_after_date() {
 
 #[test]
 fn rejects_prices() {
-    for t in ["Total: 1 234 567 €", "Price 621 123 456 EUR", "€ 0612345678", "1.250,00"] {
+    for t in [
+        "Total: 1 234 567 €",
+        "Price 621 123 456 EUR",
+        "€ 0612345678",
+        "1.250,00",
+    ] {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }
@@ -101,7 +106,14 @@ fn rejects_order_and_invoice_numbers() {
 
 #[test]
 fn rejects_dates_versions_and_ids() {
-    for t in ["01.03.1985", "12/03/2023", "Version 1.2.3", "1985031212307", "0.612345678", "2023-03-12"] {
+    for t in [
+        "01.03.1985",
+        "12/03/2023",
+        "Version 1.2.3",
+        "1985031212307",
+        "0.612345678",
+        "2023-03-12",
+    ] {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }

@@ -11,8 +11,21 @@ fn kinds(text: &str) -> Vec<(String, EntityType)> {
 
 #[test]
 fn finds_places_in_all_spellings() {
-    for p in ["Réimech", "Remich", "Ettelbréck", "Ettelbruck", "Ettelbrück", "Iernz", "Ernzen", "Lëtzebuerg"] {
-        assert_eq!(kinds(&format!("Mir fueren op {p}.")), [(p.to_string(), EntityType::Location)], "{p}");
+    for p in [
+        "Réimech",
+        "Remich",
+        "Ettelbréck",
+        "Ettelbruck",
+        "Ettelbrück",
+        "Iernz",
+        "Ernzen",
+        "Lëtzebuerg",
+    ] {
+        assert_eq!(
+            kinds(&format!("Mir fueren op {p}.")),
+            [(p.to_string(), EntityType::Location)],
+            "{p}"
+        );
     }
 }
 
@@ -57,8 +70,20 @@ fn ambiguous_entries_score_lower() {
 
 #[test]
 fn finds_organizations() {
-    for o in ["Spuerkeess", "BCEE", "CFL", "POST", "CHL", "Banque et Caisse d'Epargne de l'Etat", "Université du Luxembourg"] {
-        assert_eq!(kinds(&format!("bei der {o} schaffen")), [(o.to_string(), EntityType::Organization)], "{o}");
+    for o in [
+        "Spuerkeess",
+        "BCEE",
+        "CFL",
+        "POST",
+        "CHL",
+        "Banque et Caisse d'Epargne de l'Etat",
+        "Université du Luxembourg",
+    ] {
+        assert_eq!(
+            kinds(&format!("bei der {o} schaffen")),
+            [(o.to_string(), EntityType::Organization)],
+            "{o}"
+        );
     }
 }
 

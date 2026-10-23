@@ -5,14 +5,27 @@ fn toks(text: &str) -> Vec<&str> {
 }
 
 fn span(kind: EntityType, start: usize, end: usize, score: f64, text: &str) -> Span {
-    Span { kind, start, end, text: text[start..end].to_string(), score, source: Source::Rule }
+    Span {
+        kind,
+        start,
+        end,
+        text: text[start..end].to_string(),
+        score,
+        source: Source::Rule,
+    }
 }
 
 #[test]
 fn tokenizer_keeps_emails_urls_decimals_and_domains() {
     assert_eq!(toks("Mail jhemp@pt.lu."), ["Mail", "jhemp@pt.lu", "."]);
-    assert_eq!(toks("See https://www.cfl.lu/fr?x=1, ok"), ["See", "https://www.cfl.lu/fr?x=1", ",", "ok"]);
-    assert_eq!(toks("Pi is 3.14 and 1.250,00 on post.lu!"), ["Pi", "is", "3.14", "and", "1.250,00", "on", "post.lu", "!"]);
+    assert_eq!(
+        toks("See https://www.cfl.lu/fr?x=1, ok"),
+        ["See", "https://www.cfl.lu/fr?x=1", ",", "ok"]
+    );
+    assert_eq!(
+        toks("Pi is 3.14 and 1.250,00 on post.lu!"),
+        ["Pi", "is", "3.14", "and", "1.250,00", "on", "post.lu", "!"]
+    );
 }
 
 #[test]
@@ -68,7 +81,14 @@ fn resolve_is_deterministic_and_sorted() {
 #[test]
 fn resolve_keeps_adjacent_spans() {
     let t = "abcdef";
-    assert_eq!(resolve(vec![span(EntityType::Person, 0, 3, 0.5, t), span(EntityType::Person, 3, 6, 0.5, t)]).len(), 2);
+    assert_eq!(
+        resolve(vec![
+            span(EntityType::Person, 0, 3, 0.5, t),
+            span(EntityType::Person, 3, 6, 0.5, t)
+        ])
+        .len(),
+        2
+    );
 }
 
 #[test]
@@ -93,11 +113,18 @@ fn tagger_applies_threshold_and_detector_selection() {
     let t = "Invoice 12.03.2024 to mett@example.com";
     let default = Tagger::new(&Config::default()).unwrap();
     assert_eq!(default.detect(t).len(), 1);
-    let low = Tagger::new(&Config { threshold: 0.3, ..Config::default() }).unwrap();
+    let low = Tagger::new(&Config {
+        threshold: 0.3,
+        ..Config::default()
+    })
+    .unwrap();
     assert_eq!(low.detect(t).len(), 2);
     let cfg = Config::from_json(r#"{"detectors": ["date"], "threshold": 0.3}"#).unwrap();
     let only_dates = Tagger::new(&cfg).unwrap().detect(t);
-    assert_eq!(only_dates.iter().map(|s| s.kind).collect::<Vec<_>>(), [EntityType::Date]);
+    assert_eq!(
+        only_dates.iter().map(|s| s.kind).collect::<Vec<_>>(),
+        [EntityType::Date]
+    );
 }
 
 #[test]
@@ -112,7 +139,9 @@ fn config_supports_wordlists_and_gazetteer_files() {
     )
     .unwrap();
     let cfg = Config::from_path(&dir.join("config.json")).unwrap();
-    let spans = Tagger::new(&cfg).unwrap().detect("Den Här Kieffer vun Acme Sàrl zu Remich");
+    let spans = Tagger::new(&cfg)
+        .unwrap()
+        .detect("Den Här Kieffer vun Acme Sàrl zu Remich");
     let got: Vec<_> = spans.iter().map(|s| s.text.as_str()).collect();
     assert_eq!(got, ["Kieffer", "Acme Sàrl"]);
 }
@@ -144,7 +173,10 @@ fn pseudonymization_is_consistent_within_document() {
 #[test]
 fn redact_accepts_unsorted_spans() {
     let t = "ab cd";
-    let spans = [span(EntityType::Email, 3, 5, 0.9, t), span(EntityType::Person, 0, 2, 0.9, t)];
+    let spans = [
+        span(EntityType::Email, 3, 5, 0.9, t),
+        span(EntityType::Person, 0, 2, 0.9, t),
+    ];
     assert_eq!(redact(t, &spans, Mode::Pseudo).unwrap(), "[PERSON_1] [EMAIL_1]");
 }
 

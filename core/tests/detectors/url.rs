@@ -20,7 +20,10 @@ fn finds_www_url() {
 
 #[test]
 fn drops_unbalanced_closing_paren() {
-    assert_eq!(texts(&d(), "(see https://guichet.public.lu/en)"), ["https://guichet.public.lu/en"]);
+    assert_eq!(
+        texts(&d(), "(see https://guichet.public.lu/en)"),
+        ["https://guichet.public.lu/en"]
+    );
 }
 
 #[test]

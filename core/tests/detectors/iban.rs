@@ -42,7 +42,11 @@ fn rejects_invalid_checksum() {
 
 #[test]
 fn rejects_unknown_country_and_wrong_length() {
-    for t in ["XX28 0019 4006 4475 0000", "LU28 0019 4006 4475 000", "LU28 0019 4006 4475 00001"] {
+    for t in [
+        "XX28 0019 4006 4475 0000",
+        "LU28 0019 4006 4475 000",
+        "LU28 0019 4006 4475 00001",
+    ] {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }

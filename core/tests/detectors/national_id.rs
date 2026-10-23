@@ -7,7 +7,13 @@ fn d() -> NationalIdDetector {
 
 #[test]
 fn finds_valid_matricules() {
-    for x in ["1985031212307", "1985 0312 123 07", "1992 02 29 045 85", "2001070498726", "1976123100157"] {
+    for x in [
+        "1985031212307",
+        "1985 0312 123 07",
+        "1992 02 29 045 85",
+        "2001070498726",
+        "1976123100157",
+    ] {
         assert_eq!(texts(&d(), &format!("Matricule: {x}.")), [x], "{x}");
     }
     assert_eq!(run(&d(), "1985031212307")[0].kind, EntityType::NationalId);

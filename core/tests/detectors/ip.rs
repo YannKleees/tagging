@@ -33,7 +33,13 @@ fn rejects_out_of_range_and_short() {
 
 #[test]
 fn rejects_version_numbers() {
-    for t in ["v1.2.3.4", "version 1.2.3.4", "Version 10.0.1.2", "build 4.3.2.1", "1.2.3.4.5"] {
+    for t in [
+        "v1.2.3.4",
+        "version 1.2.3.4",
+        "Version 10.0.1.2",
+        "build 4.3.2.1",
+        "1.2.3.4.5",
+    ] {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }
