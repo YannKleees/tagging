@@ -1,0 +1,330 @@
+# Evaluation: rules_threshold_060
+
+Config: `eval/configs/threshold_060.json`. 288 sentences, 2637 words, 504 gold spans.
+
+Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
+`overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
+
+Runtime: 4.65 ms per 1,000 words (detection only).
+
+## By language and subset
+
+| lang | subset | recall_overlap | recall_exact | any_type_recall | precision_overlap | f1_overlap | f1_exact | n_gold | n_pred |
+|---|---|---|---|---|---|---|---|---|---|
+| de | hard | 0.58 | 0.58 | 0.58 | 1.00 | 0.74 | 0.74 | 60 | 35 |
+| de | standard | 0.58 | 0.50 | 0.58 | 1.00 | 0.73 | 0.63 | 66 | 38 |
+| en | hard | 0.55 | 0.55 | 0.55 | 1.00 | 0.71 | 0.71 | 60 | 33 |
+| en | standard | 0.58 | 0.50 | 0.58 | 1.00 | 0.73 | 0.63 | 66 | 38 |
+| fr | hard | 0.58 | 0.58 | 0.58 | 1.00 | 0.74 | 0.74 | 60 | 35 |
+| fr | standard | 0.58 | 0.50 | 0.58 | 1.00 | 0.73 | 0.63 | 66 | 38 |
+| lb | hard | 0.60 | 0.60 | 0.60 | 1.00 | 0.75 | 0.75 | 60 | 36 |
+| lb | standard | 0.58 | 0.50 | 0.58 | 1.00 | 0.73 | 0.63 | 66 | 38 |
+
+## False positives on the entity-free subset
+
+| lang | false positives | sentences |
+|---|---|---|
+| en | 0 | 20 |
+| fr | 0 | 20 |
+| de | 0 | 20 |
+| lb | 0 | 20 |
+
+None.
+
+## By entity type
+
+| type | recall_overlap | recall_exact | any_type_recall | precision_overlap | f1_overlap | f1_exact | n_gold | n_pred |
+|---|---|---|---|---|---|---|---|---|
+| address | 0.00 | 0.00 | 0.00 | – | 0.00 | 0.00 | 8 | 0 |
+| credit_card | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 16 | 16 |
+| date_of_birth | 0.92 | 0.92 | 0.92 | 1.00 | 0.96 | 0.96 | 24 | 22 |
+| email | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 32 | 32 |
+| iban | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 16 | 16 |
+| ip_address | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 8 | 8 |
+| location | 0.76 | 0.76 | 0.76 | 1.00 | 0.87 | 0.87 | 80 | 61 |
+| national_id | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 16 | 16 |
+| organization | 0.67 | 0.67 | 0.67 | 1.00 | 0.80 | 0.80 | 48 | 32 |
+| person | 0.22 | 0.13 | 0.22 | 1.00 | 0.36 | 0.21 | 216 | 48 |
+| phone | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 32 | 32 |
+| url | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 8 | 8 |
+
+## By language and entity type (overlap)
+
+| lang | type | recall_overlap | precision_overlap | f1_overlap | n_gold | n_pred |
+|---|---|---|---|---|---|---|
+| de | address | 0.00 | – | 0.00 | 2 | 0 |
+| de | credit_card | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| de | date_of_birth | 1.00 | 1.00 | 1.00 | 6 | 6 |
+| de | email | 1.00 | 1.00 | 1.00 | 8 | 8 |
+| de | iban | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| de | ip_address | 1.00 | 1.00 | 1.00 | 2 | 2 |
+| de | location | 0.75 | 1.00 | 0.86 | 20 | 15 |
+| de | national_id | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| de | organization | 0.67 | 1.00 | 0.80 | 12 | 8 |
+| de | person | 0.22 | 1.00 | 0.36 | 54 | 12 |
+| de | phone | 1.00 | 1.00 | 1.00 | 8 | 8 |
+| de | url | 1.00 | 1.00 | 1.00 | 2 | 2 |
+| en | address | 0.00 | – | 0.00 | 2 | 0 |
+| en | credit_card | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| en | date_of_birth | 0.67 | 1.00 | 0.80 | 6 | 4 |
+| en | email | 1.00 | 1.00 | 1.00 | 8 | 8 |
+| en | iban | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| en | ip_address | 1.00 | 1.00 | 1.00 | 2 | 2 |
+| en | location | 0.75 | 1.00 | 0.86 | 20 | 15 |
+| en | national_id | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| en | organization | 0.67 | 1.00 | 0.80 | 12 | 8 |
+| en | person | 0.22 | 1.00 | 0.36 | 54 | 12 |
+| en | phone | 1.00 | 1.00 | 1.00 | 8 | 8 |
+| en | url | 1.00 | 1.00 | 1.00 | 2 | 2 |
+| fr | address | 0.00 | – | 0.00 | 2 | 0 |
+| fr | credit_card | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| fr | date_of_birth | 1.00 | 1.00 | 1.00 | 6 | 6 |
+| fr | email | 1.00 | 1.00 | 1.00 | 8 | 8 |
+| fr | iban | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| fr | ip_address | 1.00 | 1.00 | 1.00 | 2 | 2 |
+| fr | location | 0.75 | 1.00 | 0.86 | 20 | 15 |
+| fr | national_id | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| fr | organization | 0.67 | 1.00 | 0.80 | 12 | 8 |
+| fr | person | 0.22 | 1.00 | 0.36 | 54 | 12 |
+| fr | phone | 1.00 | 1.00 | 1.00 | 8 | 8 |
+| fr | url | 1.00 | 1.00 | 1.00 | 2 | 2 |
+| lb | address | 0.00 | – | 0.00 | 2 | 0 |
+| lb | credit_card | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| lb | date_of_birth | 1.00 | 1.00 | 1.00 | 6 | 6 |
+| lb | email | 1.00 | 1.00 | 1.00 | 8 | 8 |
+| lb | iban | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| lb | ip_address | 1.00 | 1.00 | 1.00 | 2 | 2 |
+| lb | location | 0.80 | 1.00 | 0.89 | 20 | 16 |
+| lb | national_id | 1.00 | 1.00 | 1.00 | 4 | 4 |
+| lb | organization | 0.67 | 1.00 | 0.80 | 12 | 8 |
+| lb | person | 0.22 | 1.00 | 0.36 | 54 | 12 |
+| lb | phone | 1.00 | 1.00 | 1.00 | 8 | 8 |
+| lb | url | 1.00 | 1.00 | 1.00 | 2 | 2 |
+
+## Gold names found in the gazetteer
+
+Share of distinct gold person, location and organization strings that the built-in gazetteer contains. High values mean rules-only recall on names partly reflects list overlap with the generator.
+
+| type | distinct | in_gazetteer | share |
+|---|---|---|---|
+| location | 33 | 29 | 0.88 |
+| organization | 10 | 8 | 0.80 |
+| person | 50 | 16 | 0.32 |
+
+## Missed spans (213)
+
+| id | type | text | covered | sentence |
+|---|---|---|---|---|
+| en-standard-contact-0 | person | Gilbert Muller | False | Gilbert Muller can be reached at gilbert.muller@post.lu or on 00352 691 042 147. |
+| fr-standard-contact-0 | person | Gilbert Muller | False | On peut joindre Gilbert Muller à l'adresse gilbert.muller@post.lu ou au 00352 69 |
+| de-standard-contact-0 | person | Gilbert Muller | False | Gilbert Muller ist unter gilbert.muller@post.lu oder 00352 691 042 147 erreichba |
+| lb-standard-contact-0 | person | Gilbert Muller | False | Gilbert Muller ass ënner gilbert.muller@post.lu oder um 00352 691 042 147 ze err |
+| en-standard-contact-1 | person | Jochen Hoffmann | False | Jochen Hoffmann can be reached at jochen.hoffmann@example.com or on +33 6 52 43  |
+| fr-standard-contact-1 | person | Jochen Hoffmann | False | On peut joindre Jochen Hoffmann à l'adresse jochen.hoffmann@example.com ou au +3 |
+| de-standard-contact-1 | person | Jochen Hoffmann | False | Jochen Hoffmann ist unter jochen.hoffmann@example.com oder +33 6 52 43 28 13 err |
+| lb-standard-contact-1 | person | Jochen Hoffmann | False | Jochen Hoffmann ass ënner jochen.hoffmann@example.com oder um +33 6 52 43 28 13  |
+| en-standard-birth-0 | person | Norbert Muller | False | Norbert Muller was born on 03/02/1961 in Luxembourg. |
+| fr-standard-birth-0 | person | Norbert Muller | False | Norbert Muller (né(e) le 03/02/1961 à Luxembourg) a signé le contrat. |
+| de-standard-birth-0 | person | Norbert Muller | False | Norbert Muller wurde am 03.02.1961 in Luxemburg geboren. |
+| lb-standard-birth-0 | person | Norbert Muller | False | Norbert Muller ass den 03.02.1961 zu Lëtzebuerg gebuer. |
+| en-standard-birth-1 | person | Manon Grondin | False | Manon Grondin was born on 05/11/1955 in Luxembourg. |
+| fr-standard-birth-1 | person | Manon Grondin | False | Manon Grondin (né(e) le 05/11/1955 à Luxembourg) a signé le contrat. |
+| de-standard-birth-1 | person | Manon Grondin | False | Manon Grondin wurde am 05.11.1955 in Luxemburg geboren. |
+| lb-standard-birth-1 | person | Manon Grondin | False | Manon Grondin ass den 05.11.1955 zu Lëtzebuerg gebuer. |
+| en-standard-transfer-0 | person | Olga Hecker | False | Please transfer the deposit to Olga Hecker, IBAN DE21 3778 6504 8622 0152 34. |
+| fr-standard-transfer-0 | person | Olga Hecker | False | Veuillez virer la caution à Olga Hecker, IBAN DE21 3778 6504 8622 0152 34. |
+| de-standard-transfer-0 | person | Olga Hecker | False | Bitte überweisen Sie die Kaution an Olga Hecker, IBAN DE21 3778 6504 8622 0152 3 |
+| lb-standard-transfer-0 | person | Olga Hecker | False | Iwwerweist d'Kautioun w.e.g. un Olga Hecker, IBAN DE21 3778 6504 8622 0152 34. |
+| en-standard-transfer-1 | person | Lucy Peron | False | Please transfer the deposit to Lucy Peron, IBAN DE82 0521 5779 9605 8420 52. |
+| fr-standard-transfer-1 | person | Lucy Peron | False | Veuillez virer la caution à Lucy Peron, IBAN DE82 0521 5779 9605 8420 52. |
+| de-standard-transfer-1 | person | Lucy Peron | False | Bitte überweisen Sie die Kaution an Lucy Peron, IBAN DE82 0521 5779 9605 8420 52 |
+| lb-standard-transfer-1 | person | Lucy Peron | False | Iwwerweist d'Kautioun w.e.g. un Lucy Peron, IBAN DE82 0521 5779 9605 8420 52. |
+| en-standard-card-0 | person | Hans-Günther Ehlert | False | Hans-Günther Ehlert paid the booking with card 4406 2904 2147 6242. |
+| fr-standard-card-0 | person | Hans-Günther Ehlert | False | Hans-Günther Ehlert a payé la réservation avec la carte 4406 2904 2147 6242. |
+| de-standard-card-0 | person | Hans-Günther Ehlert | False | Hans-Günther Ehlert hat die Buchung mit der Karte 4406 2904 2147 6242 bezahlt. |
+| lb-standard-card-0 | person | Hans-Günther Ehlert | False | Hans-Günther Ehlert huet d'Reservatioun mat der Kaart 4406 2904 2147 6242 bezuel |
+| en-standard-card-1 | person | Susan Baker | False | Susan Baker paid the booking with card 3756 515947 89270. |
+| fr-standard-card-1 | person | Susan Baker | False | Susan Baker a payé la réservation avec la carte 3756 515947 89270. |
+| de-standard-card-1 | person | Susan Baker | False | Susan Baker hat die Buchung mit der Karte 3756 515947 89270 bezahlt. |
+| lb-standard-card-1 | person | Susan Baker | False | Susan Baker huet d'Reservatioun mat der Kaart 3756 515947 89270 bezuelt. |
+| en-standard-matricule-1 | person | Paula Noble | False | Social security number of Paula Noble: 1960032638746. |
+| fr-standard-matricule-1 | person | Paula Noble | False | Matricule de Paula Noble : 1960032638746. |
+| de-standard-matricule-1 | person | Paula Noble | False | Sozialversicherungsnummer von Paula Noble: 1960032638746. |
+| lb-standard-matricule-1 | person | Paula Noble | False | D'Matrikelnummer fir Paula Noble ass 1960032638746. |
+| en-standard-job-1 | person | Pedro Mies | False | Pedro Mies has worked for Amazon in London since 2019. |
+| en-standard-job-1 | organization | Amazon | False | Pedro Mies has worked for Amazon in London since 2019. |
+| en-standard-job-1 | location | London | False | Pedro Mies has worked for Amazon in London since 2019. |
+| fr-standard-job-1 | person | Pedro Mies | False | Pedro Mies travaille chez Amazon à Londres depuis 2019. |
+| fr-standard-job-1 | organization | Amazon | False | Pedro Mies travaille chez Amazon à Londres depuis 2019. |
+| fr-standard-job-1 | location | Londres | False | Pedro Mies travaille chez Amazon à Londres depuis 2019. |
+| de-standard-job-1 | person | Pedro Mies | False | Pedro Mies arbeitet seit 2019 bei Amazon in London. |
+| de-standard-job-1 | organization | Amazon | False | Pedro Mies arbeitet seit 2019 bei Amazon in London. |
+| de-standard-job-1 | location | London | False | Pedro Mies arbeitet seit 2019 bei Amazon in London. |
+| lb-standard-job-1 | person | Pedro Mies | False | Pedro Mies schafft zënter 2019 bei Amazon zu London. |
+| lb-standard-job-1 | organization | Amazon | False | Pedro Mies schafft zënter 2019 bei Amazon zu London. |
+| lb-standard-job-1 | location | London | False | Pedro Mies schafft zënter 2019 bei Amazon zu London. |
+| en-standard-address-0 | person | Marcus Butler | False | Marcus Butler lives at 98, rue de l'Église, Berlin. |
+| en-standard-address-0 | address | 98, rue de l'Église | False | Marcus Butler lives at 98, rue de l'Église, Berlin. |
+| en-standard-address-0 | location | Berlin | False | Marcus Butler lives at 98, rue de l'Église, Berlin. |
+| fr-standard-address-0 | person | Marcus Butler | False | Marcus Butler habite 98, rue de l'Église à Berlin. |
+| fr-standard-address-0 | address | 98, rue de l'Église | False | Marcus Butler habite 98, rue de l'Église à Berlin. |
+| fr-standard-address-0 | location | Berlin | False | Marcus Butler habite 98, rue de l'Église à Berlin. |
+| de-standard-address-0 | person | Marcus Butler | False | Marcus Butler wohnt unter der Adresse 98, rue de l'Église in Berlin. |
+| de-standard-address-0 | address | 98, rue de l'Église | False | Marcus Butler wohnt unter der Adresse 98, rue de l'Église in Berlin. |
+| de-standard-address-0 | location | Berlin | False | Marcus Butler wohnt unter der Adresse 98, rue de l'Église in Berlin. |
+| lb-standard-address-0 | person | Marcus Butler | False | Marcus Butler wunnt op der Adress 98, rue de l'Église zu Berlin. |
+| lb-standard-address-0 | address | 98, rue de l'Église | False | Marcus Butler wunnt op der Adress 98, rue de l'Église zu Berlin. |
+| lb-standard-address-0 | location | Berlin | False | Marcus Butler wunnt op der Adress 98, rue de l'Église zu Berlin. |
+| en-standard-address-1 | address | 12, rue de l'Église | False | Josée Kremer lives at 12, rue de l'Église, Luxembourg. |
+| fr-standard-address-1 | address | 12, rue de l'Église | False | Josée Kremer habite 12, rue de l'Église à Luxembourg. |
+| de-standard-address-1 | address | 12, rue de l'Église | False | Josée Kremer wohnt unter der Adresse 12, rue de l'Église in Luxemburg. |
+| lb-standard-address-1 | address | 12, rue de l'Église | False | Josée Kremer wunnt op der Adress 12, rue de l'Église zu Lëtzebuerg. |
+| en-standard-meeting-0 | person | Mett Gloden | False | Mett Gloden met Raoul Reuter at the Cargolux offices on Monday. |
+| en-standard-meeting-0 | person | Raoul Reuter | False | Mett Gloden met Raoul Reuter at the Cargolux offices on Monday. |
+| fr-standard-meeting-0 | person | Mett Gloden | False | Mett Gloden a rencontré Raoul Reuter dans les bureaux de Cargolux lundi. |
+| fr-standard-meeting-0 | person | Raoul Reuter | False | Mett Gloden a rencontré Raoul Reuter dans les bureaux de Cargolux lundi. |
+| de-standard-meeting-0 | person | Mett Gloden | False | Mett Gloden hat Raoul Reuter am Montag in den Büros von Cargolux getroffen. |
+| de-standard-meeting-0 | person | Raoul Reuter | False | Mett Gloden hat Raoul Reuter am Montag in den Büros von Cargolux getroffen. |
+| lb-standard-meeting-0 | person | Mett Gloden | False | Mett Gloden huet de Méindeg Raoul Reuter an de Büroe vun Cargolux getraff. |
+| lb-standard-meeting-0 | person | Raoul Reuter | False | Mett Gloden huet de Méindeg Raoul Reuter an de Büroe vun Cargolux getraff. |
+| en-standard-meeting-1 | person | Fernande Schiltz | False | Fernande Schiltz met Nelly Majerus at the Luxair offices on Monday. |
+| en-standard-meeting-1 | person | Nelly Majerus | False | Fernande Schiltz met Nelly Majerus at the Luxair offices on Monday. |
+| fr-standard-meeting-1 | person | Fernande Schiltz | False | Fernande Schiltz a rencontré Nelly Majerus dans les bureaux de Luxair lundi. |
+| fr-standard-meeting-1 | person | Nelly Majerus | False | Fernande Schiltz a rencontré Nelly Majerus dans les bureaux de Luxair lundi. |
+| de-standard-meeting-1 | person | Fernande Schiltz | False | Fernande Schiltz hat Nelly Majerus am Montag in den Büros von Luxair getroffen. |
+| de-standard-meeting-1 | person | Nelly Majerus | False | Fernande Schiltz hat Nelly Majerus am Montag in den Büros von Luxair getroffen. |
+| lb-standard-meeting-1 | person | Fernande Schiltz | False | Fernande Schiltz huet de Méindeg Nelly Majerus an de Büroe vun Luxair getraff. |
+| lb-standard-meeting-1 | person | Nelly Majerus | False | Fernande Schiltz huet de Méindeg Nelly Majerus an de Büroe vun Luxair getraff. |
+| en-standard-appointment-0 | person | Cilly Noack | False | Appointment confirmed for Cilly Noack in Dudelange, call 0171 7539086 to cancel. |
+| fr-standard-appointment-0 | person | Cilly Noack | False | Rendez-vous confirmé pour Cilly Noack à Dudelange, appelez le 0171 7539086 pour  |
+| de-standard-appointment-0 | person | Cilly Noack | False | Termin für Cilly Noack in Düdelingen bestätigt, Absage unter 0171 7539086. |
+| lb-standard-appointment-0 | person | Cilly Noack | False | Den Termin fir Cilly Noack zu Diddeleng ass confirméiert, rufft 0171 7539086 un  |
+| en-standard-appointment-1 | person | Bettina Heinz | False | Appointment confirmed for Bettina Heinz in Metz, call +33 6 07 66 79 01 to cance |
+| en-standard-appointment-1 | location | Metz | False | Appointment confirmed for Bettina Heinz in Metz, call +33 6 07 66 79 01 to cance |
+| fr-standard-appointment-1 | person | Bettina Heinz | False | Rendez-vous confirmé pour Bettina Heinz à Metz, appelez le +33 6 07 66 79 01 pou |
+| fr-standard-appointment-1 | location | Metz | False | Rendez-vous confirmé pour Bettina Heinz à Metz, appelez le +33 6 07 66 79 01 pou |
+| de-standard-appointment-1 | person | Bettina Heinz | False | Termin für Bettina Heinz in Metz bestätigt, Absage unter +33 6 07 66 79 01. |
+| de-standard-appointment-1 | location | Metz | False | Termin für Bettina Heinz in Metz bestätigt, Absage unter +33 6 07 66 79 01. |
+| lb-standard-appointment-1 | person | Bettina Heinz | False | Den Termin fir Bettina Heinz zu Metz ass confirméiert, rufft +33 6 07 66 79 01 u |
+| lb-standard-appointment-1 | location | Metz | False | Den Termin fir Bettina Heinz zu Metz ass confirméiert, rufft +33 6 07 66 79 01 u |
+| en-standard-invoice-0 | organization | Goodyear | False | Send the invoice to marthe.hansen@gmail.com, accounting department of Goodyear. |
+| fr-standard-invoice-0 | organization | Goodyear | False | Envoyez la facture à marthe.hansen@gmail.com, service comptabilité de Goodyear. |
+| de-standard-invoice-0 | organization | Goodyear | False | Senden Sie die Rechnung an marthe.hansen@gmail.com, Buchhaltung von Goodyear. |
+| lb-standard-invoice-0 | organization | Goodyear | False | Schéckt d'Rechnung un marthe.hansen@gmail.com, Comptabilitéit vun Goodyear. |
+| en-standard-invoice-1 | organization | Amazon | False | Send the invoice to jang.thill@pt.lu, accounting department of Amazon. |
+| fr-standard-invoice-1 | organization | Amazon | False | Envoyez la facture à jang.thill@pt.lu, service comptabilité de Amazon. |
+| de-standard-invoice-1 | organization | Amazon | False | Senden Sie die Rechnung an jang.thill@pt.lu, Buchhaltung von Amazon. |
+| lb-standard-invoice-1 | organization | Amazon | False | Schéckt d'Rechnung un jang.thill@pt.lu, Comptabilitéit vun Amazon. |
+| en-standard-form-0 | person | Raoul Kayser | False | Name: Raoul Kayser, date of birth: 22/11/1967, place of birth: Esch-sur-Alzette. |
+| fr-standard-form-0 | person | Raoul Kayser | False | Nom : Raoul Kayser, date de naissance : 22/11/1967, lieu de naissance : Esch-sur |
+| de-standard-form-0 | person | Raoul Kayser | False | Name: Raoul Kayser, Geburtsdatum: 22.11.1967, Geburtsort: Esch an der Alzette. |
+| lb-standard-form-0 | person | Raoul Kayser | False | Numm: Raoul Kayser, Gebuertsdatum: 22.11.1967, Gebuertsplaz: Esch-Uelzecht. |
+| en-standard-form-1 | person | Léon Boutin | False | Name: Léon Boutin, date of birth: 29/08/1953, place of birth: London. |
+| en-standard-form-1 | location | London | False | Name: Léon Boutin, date of birth: 29/08/1953, place of birth: London. |
+| fr-standard-form-1 | person | Léon Boutin | False | Nom : Léon Boutin, date de naissance : 29/08/1953, lieu de naissance : Londres. |
+| fr-standard-form-1 | location | Londres | False | Nom : Léon Boutin, date de naissance : 29/08/1953, lieu de naissance : Londres. |
+| de-standard-form-1 | person | Léon Boutin | False | Name: Léon Boutin, Geburtsdatum: 29.08.1953, Geburtsort: London. |
+| de-standard-form-1 | location | London | False | Name: Léon Boutin, Geburtsdatum: 29.08.1953, Geburtsort: London. |
+| lb-standard-form-1 | person | Léon Boutin | False | Numm: Léon Boutin, Gebuertsdatum: 29.08.1953, Gebuertsplaz: London. |
+| lb-standard-form-1 | location | London | False | Numm: Léon Boutin, Gebuertsdatum: 29.08.1953, Gebuertsplaz: London. |
+| en-hard-coordinated-1 | person | Léontine | False | Léontine and Josée drove to Ahn. |
+| en-hard-coordinated-1 | location | Ahn | False | Léontine and Josée drove to Ahn. |
+| fr-hard-coordinated-1 | person | Léontine | False | Léontine et Josée sont partis à Ahn. |
+| fr-hard-coordinated-1 | location | Ahn | False | Léontine et Josée sont partis à Ahn. |
+| de-hard-coordinated-1 | person | Léontine | False | Léontine und Josée sind nach Ahn gefahren. |
+| de-hard-coordinated-1 | location | Ahn | False | Léontine und Josée sind nach Ahn gefahren. |
+| lb-hard-coordinated-1 | person | Léontine | False | D'Léontine an d'Josée sinn op Ohn gefuer. |
+| en-hard-letter-0 | person | Goedert | False | Mrs Goedert from CNS wrote us a letter. |
+| fr-hard-letter-0 | person | Goedert | False | Madame Goedert de CNS nous a écrit une lettre. |
+| de-hard-letter-0 | person | Goedert | False | Frau Goedert von CNS hat uns einen Brief geschrieben. |
+| lb-hard-letter-0 | person | Goedert | False | D'Madame Goedert vun CNS huet eis e Bréif geschriwwen. |
+| en-hard-letter-1 | person | Schiltz | False | Mrs Schiltz from Cactus wrote us a letter. |
+| en-hard-letter-1 | organization | Cactus | False | Mrs Schiltz from Cactus wrote us a letter. |
+| fr-hard-letter-1 | person | Schiltz | False | Madame Schiltz de Cactus nous a écrit une lettre. |
+| fr-hard-letter-1 | organization | Cactus | False | Madame Schiltz de Cactus nous a écrit une lettre. |
+| de-hard-letter-1 | person | Schiltz | False | Frau Schiltz von Cactus hat uns einen Brief geschrieben. |
+| de-hard-letter-1 | organization | Cactus | False | Frau Schiltz von Cactus hat uns einen Brief geschrieben. |
+| lb-hard-letter-1 | person | Schiltz | False | D'Madame Schiltz vun Cactus huet eis e Bréif geschriwwen. |
+| lb-hard-letter-1 | organization | Cactus | False | D'Madame Schiltz vun Cactus huet eis e Bréif geschriwwen. |
+| en-hard-family-0 | person | Tun | False | My mother and Tun are coming to Haller on Sunday. |
+| fr-hard-family-0 | person | Tun | False | Ma mère et Tun viennent à Haller dimanche. |
+| de-hard-family-0 | person | Tun | False | Meine Mutter und Tun kommen am Sonntag nach Haller. |
+| lb-hard-family-0 | person | Tun | False | Meng Mamm an den Tun kommen e Sonndeg op Haler. |
+| en-hard-family-1 | person | Norbert | False | My mother and Norbert are coming to Kayl on Sunday. |
+| fr-hard-family-1 | person | Norbert | False | Ma mère et Norbert viennent à Kayl dimanche. |
+| de-hard-family-1 | person | Norbert | False | Meine Mutter und Norbert kommen am Sonntag nach Kayl. |
+| lb-hard-family-1 | person | Norbert | False | Meng Mamm an den Norbert kommen e Sonndeg op Keel. |
+| en-hard-workplace-0 | person | Gilbert | False | Gilbert has worked at ADEM in Grevenknapp for years. |
+| fr-hard-workplace-0 | person | Gilbert | False | Gilbert travaille depuis des années chez ADEM à Grevenknapp. |
+| de-hard-workplace-0 | person | Gilbert | False | Gilbert arbeitet seit Jahren bei ADEM in Grevenknapp. |
+| lb-hard-workplace-0 | person | Gilbert | False | De Gilbert schafft zënter Joren bei ADEM zu Gréiweknapp. |
+| en-hard-workplace-1 | person | Nelly | False | Nelly has worked at CHL in Blumenthal for years. |
+| fr-hard-workplace-1 | person | Nelly | False | Nelly travaille depuis des années chez CHL à Blumenthal. |
+| de-hard-workplace-1 | person | Nelly | False | Nelly arbeitet seit Jahren bei CHL in Blummendall. |
+| lb-hard-workplace-1 | person | Nelly | False | D'Nelly schafft zënter Joren bei CHL zu Blummendall. |
+| en-hard-hotline-0 | person | Wirtz | False | For questions: Mr Wirtz, tel. +352 2183 6298. |
+| fr-hard-hotline-0 | person | Wirtz | False | Pour toute question : Monsieur Wirtz, tél. +352 2183 6298. |
+| de-hard-hotline-0 | person | Wirtz | False | Bei Fragen: Herr Wirtz, Tel. +352 2183 6298. |
+| lb-hard-hotline-0 | person | Wirtz | False | Fir Froen: den Här Wirtz, Tel. +352 2183 6298. |
+| en-hard-hotline-1 | person | Schmit | False | For questions: Dr Schmit, tel. 0170/2029142. |
+| fr-hard-hotline-1 | person | Schmit | False | Pour toute question : la docteure Schmit, tél. 0170/2029142. |
+| de-hard-hotline-1 | person | Schmit | False | Bei Fragen: Dr. Schmit, Tel. 0170/2029142. |
+| lb-hard-hotline-1 | person | Schmit | False | Fir Froen: d'Doktesch Schmit, Tel. 0170/2029142. |
+| en-hard-chat-0 | person | rené | False | rené and léontine are coming tonight |
+| en-hard-chat-0 | person | léontine | False | rené and léontine are coming tonight |
+| fr-hard-chat-0 | person | rené | False | rené et léontine viennent ce soir |
+| fr-hard-chat-0 | person | léontine | False | rené et léontine viennent ce soir |
+| de-hard-chat-0 | person | rené | False | rené und léontine kommen heute abend |
+| de-hard-chat-0 | person | léontine | False | rené und léontine kommen heute abend |
+| lb-hard-chat-0 | person | rené | False | rené an léontine kommen haut den owend |
+| lb-hard-chat-0 | person | léontine | False | rené an léontine kommen haut den owend |
+| en-hard-chat-1 | person | ernest | False | ernest and gusty are coming tonight |
+| en-hard-chat-1 | person | gusty | False | ernest and gusty are coming tonight |
+| fr-hard-chat-1 | person | ernest | False | ernest et gusty viennent ce soir |
+| fr-hard-chat-1 | person | gusty | False | ernest et gusty viennent ce soir |
+| de-hard-chat-1 | person | ernest | False | ernest und gusty kommen heute abend |
+| de-hard-chat-1 | person | gusty | False | ernest und gusty kommen heute abend |
+| lb-hard-chat-1 | person | ernest | False | ernest an gusty kommen haut den owend |
+| lb-hard-chat-1 | person | gusty | False | ernest an gusty kommen haut den owend |
+| en-hard-born-0 | person | Méck | False | Méck, b. 06/05/1970 in Sanem. |
+| en-hard-born-0 | date_of_birth | 06/05/1970 | False | Méck, b. 06/05/1970 in Sanem. |
+| fr-hard-born-0 | person | Méck | False | Méck, né(e) le 06/05/1970 à Sanem. |
+| de-hard-born-0 | person | Méck | False | Méck, geb. 06.05.1970 in Sanem. |
+| lb-hard-born-0 | person | Méck | False | De Méck, gebuer 06.05.1970 zu Suessem. |
+| en-hard-born-1 | person | Pol | False | Pol, b. 3 February 1992 in Berdorf. |
+| en-hard-born-1 | date_of_birth | 3 February 1992 | False | Pol, b. 3 February 1992 in Berdorf. |
+| fr-hard-born-1 | person | Pol | False | Pol, né(e) le 3 février 1992 à Berdorf. |
+| de-hard-born-1 | person | Pol | False | Pol, geb. 3. Februar 1992 in Berdorf. |
+| lb-hard-born-1 | person | Pol | False | De Pol, gebuer 3. Februar 1992 zu Bäerdref. |
+| en-hard-separated-0 | person | Welter | False | Dr Welter and Dr Kieffer have separated. |
+| en-hard-separated-0 | person | Kieffer | False | Dr Welter and Dr Kieffer have separated. |
+| fr-hard-separated-0 | person | Welter | False | Le docteur Welter et le docteur Kieffer se sont séparés. |
+| fr-hard-separated-0 | person | Kieffer | False | Le docteur Welter et le docteur Kieffer se sont séparés. |
+| de-hard-separated-0 | person | Welter | False | Dr. Welter und Dr. Kieffer haben sich getrennt. |
+| de-hard-separated-0 | person | Kieffer | False | Dr. Welter und Dr. Kieffer haben sich getrennt. |
+| lb-hard-separated-0 | person | Welter | False | Den Dokter Welter an den Dokter Kieffer hu sech getrennt. |
+| lb-hard-separated-0 | person | Kieffer | False | Den Dokter Welter an den Dokter Kieffer hu sech getrennt. |
+| en-hard-separated-1 | person | Schmit | False | Mr Schmit and Dr Kieffer have separated. |
+| en-hard-separated-1 | person | Kieffer | False | Mr Schmit and Dr Kieffer have separated. |
+| fr-hard-separated-1 | person | Schmit | False | Monsieur Schmit et la docteure Kieffer se sont séparés. |
+| fr-hard-separated-1 | person | Kieffer | False | Monsieur Schmit et la docteure Kieffer se sont séparés. |
+| de-hard-separated-1 | person | Schmit | False | Herr Schmit und Dr. Kieffer haben sich getrennt. |
+| de-hard-separated-1 | person | Kieffer | False | Herr Schmit und Dr. Kieffer haben sich getrennt. |
+| lb-hard-separated-1 | person | Schmit | False | Den Här Schmit an d'Doktesch Kieffer hu sech getrennt. |
+| lb-hard-separated-1 | person | Kieffer | False | Den Här Schmit an d'Doktesch Kieffer hu sech getrennt. |
+| en-hard-text-0 | person | Aline | False | Email Aline at aline83@education.lu or text 0352 621 864014. |
+| fr-hard-text-0 | person | Aline | False | Écris à Aline sur aline83@education.lu ou par SMS au 0352 621 864014. |
+| de-hard-text-0 | person | Aline | False | Schreib Aline an aline83@education.lu oder eine SMS an 0352 621 864014. |
+| lb-hard-text-0 | person | Aline | False | Schreif der Aline op aline83@education.lu oder eng SMS op 0352 621 864014. |
+| en-hard-brother-0 | person | Norbert | False | Norbert's brother works at Spuerkeess. |
+| fr-hard-brother-0 | person | Norbert | False | Le frère de Norbert travaille chez Spuerkeess. |
+| de-hard-brother-0 | person | Norbert | False | Der Bruder von Norbert arbeitet bei Spuerkeess. |
+| lb-hard-brother-0 | person | Norbert | False | Dem Norbert säi Brudder schafft bei Spuerkeess. |
+| en-hard-card-0 | person | Wagner | False | Card 5593 7390 9905 9953 belongs to Mr Wagner. |
+| fr-hard-card-0 | person | Wagner | False | La carte 5593 7390 9905 9953 appartient à Monsieur Wagner. |
+| de-hard-card-0 | person | Wagner | False | Die Karte 5593 7390 9905 9953 gehört Herrn Wagner. |
+| lb-hard-card-0 | person | Wagner | False | D'Kaart 5593 7390 9905 9953 gehéiert dem Här Wagner. |
+| en-hard-card-1 | person | Majerus | False | Card 4813 2169 8807 5181 belongs to Mrs Majerus. |
+| fr-hard-card-1 | person | Majerus | False | La carte 4813 2169 8807 5181 appartient à Madame Majerus. |
+| de-hard-card-1 | person | Majerus | False | Die Karte 4813 2169 8807 5181 gehört Frau Majerus. |
+| lb-hard-card-1 | person | Majerus | False | D'Kaart 4813 2169 8807 5181 gehéiert der Madame Majerus. |
