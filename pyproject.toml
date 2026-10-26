@@ -1,0 +1,28 @@
+[build-system]
+requires = ["maturin>=1.7,<2"]
+build-backend = "maturin"
+
+[project]
+name = "tagging"
+version = "0.1.0"
+description = "PII detection and redaction for English, French, German and Luxembourgish documents"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = []
+
+[project.optional-dependencies]
+eval = ["faker>=30", "pandas>=2"]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[tool.maturin]
+manifest-path = "core/Cargo.toml"
+module-name = "tagging._core"
+python-source = "."
+features = ["python"]
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["core"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
