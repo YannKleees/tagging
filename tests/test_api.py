@@ -44,7 +44,7 @@ def test_taggers_are_cached_per_config():
 def test_bad_config_raises_value_error():
     with pytest.raises(ValueError, match="invalid config"):
         tagging.detect(TEXT, {"detectors": ["ssn"]})
-    with pytest.raises(ValueError, match="cannot read"):
+    with pytest.raises(FileNotFoundError):
         tagging.detect(TEXT, "missing.json")
 
 

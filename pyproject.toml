@@ -11,6 +11,8 @@ license = "MIT"
 dependencies = []
 
 [project.optional-dependencies]
+# gliner_multi_pii-v1 ships a SentencePiece tokenizer that transformers 5 fails to convert.
+ner = ["gliner>=0.2.29", "transformers>=4.51.3,<5", "protobuf>=4", "numpy>=1.26"]
 eval = ["faker>=30", "pandas>=2"]
 dev = ["pytest>=8", "ruff>=0.6"]
 
@@ -23,6 +25,7 @@ features = ["python"]
 [tool.ruff]
 line-length = 120
 extend-exclude = ["core"]
+src = [".", "eval"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
