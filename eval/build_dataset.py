@@ -1,3 +1,4 @@
+import argparse
 import csv
 import json
 import random
@@ -10,8 +11,10 @@ from faker import Faker
 ROOT = Path(__file__).parent
 RAW = ROOT.parent / "core" / "data" / "raw"
 OUT = ROOT / "data" / "eval.jsonl"
+DEV_OUT = ROOT / "data" / "dev.jsonl"
 LANGS = ["en", "fr", "de", "lb"]
 SEED = 13
+DEV_SEED = 7
 INSTANCES = 2
 
 rng = random.Random(SEED)
@@ -320,6 +323,71 @@ ENTITY_FREE = [
         "fr": "Les Enfants ont chanté avec la Maîtresse à la Maternelle.",
         "de": "Die Kinder haben im Kindergarten mit der Lehrerin gesungen.",
         "lb": "D'Kanner hunn am Kannergaart mat der Joffer gesongen.",
+    },
+]
+
+# Separate entity-free sentences for the development split, so false positives can be tuned
+# without touching the evaluation sentences.
+ENTITY_FREE_DEV = [
+    {
+        "en": "Grandma and the Neighbour drink coffee in the Kitchen.",
+        "fr": "La Grand-mère et la Voisine boivent un café dans la Cuisine.",
+        "de": "Die Oma und die Nachbarin trinken Kaffee in der Küche.",
+        "lb": "D'Bomi an d'Nopesch drénken e Kaffi an der Kichen.",
+    },
+    {
+        "en": "The Mayor opened the new School next to the Church.",
+        "fr": "Le Maire a inauguré la nouvelle École à côté de l'Église.",
+        "de": "Der Bürgermeister hat die neue Schule neben der Kirche eröffnet.",
+        "lb": "De Buergermeeschter huet déi nei Schoul nieft der Kierch opgemaach.",
+    },
+    {
+        "en": "My Father and my Uncle repaired the roof of the Barn.",
+        "fr": "Mon Père et mon Oncle ont réparé le toit de la Grange.",
+        "de": "Mein Vater und mein Onkel haben das Dach der Scheune repariert.",
+        "lb": "Mäi Papp an de Monni hunn den Daach vun der Scheier gefléckt.",
+    },
+    {
+        "en": "Invoice 4471 for 89,90 € is due within 30 days.",
+        "fr": "La facture 4471 de 89,90 € est payable sous 30 jours.",
+        "de": "Die Rechnung 4471 über 89,90 € ist innerhalb von 30 Tagen fällig.",
+        "lb": "D'Rechnung 4471 iwwer 89,90 € ass bannent 30 Deeg ze bezuelen.",
+    },
+    {
+        "en": "The Boy and the Girl are playing in the Park.",
+        "fr": "Le Garçon et la Fille jouent dans le Parc.",
+        "de": "Der Junge und das Mädchen spielen im Park.",
+        "lb": "De Jong an d'Meedchen spillen am Park.",
+    },
+    {
+        "en": "The Pharmacist gave the Patient new tablets.",
+        "fr": "Le Pharmacien a donné de nouveaux comprimés au Patient.",
+        "de": "Der Apotheker hat dem Patienten neue Tabletten gegeben.",
+        "lb": "Den Apdikter huet dem Patient nei Pëllen ginn.",
+    },
+    {
+        "en": "We walked along the River up to the Castle.",
+        "fr": "Nous avons marché le long de la Rivière jusqu'au Château.",
+        "de": "Wir sind am Fluss entlang bis zur Burg gelaufen.",
+        "lb": "Mir sinn d'Baach laanscht bis bei d'Schlass gaang.",
+    },
+    {
+        "en": "The Coach and the Players celebrated in the Changing Room.",
+        "fr": "L'Entraîneur et les Joueurs ont fêté dans le Vestiaire.",
+        "de": "Der Trainer und die Spieler haben in der Kabine gefeiert.",
+        "lb": "Den Trainer an d'Spiller hunn an der Kabinn gefeiert.",
+    },
+    {
+        "en": "Update 2.3.0.1 fixes the Printer driver on the Laptop.",
+        "fr": "La mise à jour 2.3.0.1 corrige le pilote de l'Imprimante.",
+        "de": "Das Update 2.3.0.1 behebt den Druckertreiber auf dem Laptop.",
+        "lb": "Den Update 2.3.0.1 flécken den Drécker um Laptop.",
+    },
+    {
+        "en": "The Baker and the Butcher close early on Saturday.",
+        "fr": "Le Boulanger et le Boucher ferment tôt le samedi.",
+        "de": "Der Bäcker und der Metzger schließen am Samstag früh.",
+        "lb": "De Bäcker an de Metzler maachen e Samschdeg fréi zou.",
     },
 ]
 
@@ -796,6 +864,12 @@ def render(template, vals, lang, capitalize=True):
 
 
 def main():
+    ap = argparse.ArgumentParser(description="Generate the synthetic labeled dataset")
+    ap.add_argument("--split", choices=["eval", "dev"], default="eval")
+    args = ap.parse_args()
+    seed, entity_free, out = (SEED, ENTITY_FREE, OUT) if args.split == "eval" else (DEV_SEED, ENTITY_FREE_DEV, DEV_OUT)
+    rng.seed(seed)
+    Faker.seed(seed)
     rows = []
     for subset, templates in [("standard", STANDARD), ("hard", HARD)]:
         for tid, tpl in templates.items():
@@ -815,7 +889,7 @@ def main():
                             "spans": spans,
                         }
                     )
-    for k, sentence in enumerate(ENTITY_FREE):
+    for k, sentence in enumerate(entity_free):
         for lang in LANGS:
             group = f"entity_free-{k:02d}"
             rows.append(
@@ -831,9 +905,9 @@ def main():
     for r in rows:
         raw = r["text"].encode()
         assert all(raw[s["start"] : s["end"]].decode() == s["text"] for s in r["spans"]), r
-    OUT.parent.mkdir(exist_ok=True)
-    OUT.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8", newline="\n")
-    print(len(rows), "sentences written to", OUT)
+    out.parent.mkdir(exist_ok=True)
+    out.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8", newline="\n")
+    print(len(rows), "sentences written to", out)
 
 
 if __name__ == "__main__":
