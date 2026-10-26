@@ -5,7 +5,18 @@ use regex::Regex;
 use super::{Detector, has_keyword, next_char, number_bounded, prev_char, scan, window_before};
 use crate::{EntityType, Result, Span, Token, resolve};
 
-const VERSION_WORDS: &[&str] = &["versio*", "ver", "v", "build", "release", "firmware", "rev*"];
+const VERSION_WORDS: &[&str] = &[
+    "versio*",
+    "ver",
+    "v",
+    "build",
+    "release",
+    "firmware",
+    "rev*",
+    "update*",
+    "patch*",
+    "mise à jour",
+];
 
 pub struct IpDetector {
     v4: Regex,
@@ -26,7 +37,7 @@ impl IpDetector {
                 .as_str()
                 .split('.')
                 .all(|o| o.parse::<u8>().is_ok() && (o == "0" || !o.starts_with('0')));
-            let versioned = has_keyword(&window_before(text, m.start(), 12), VERSION_WORDS);
+            let versioned = has_keyword(&window_before(text, m.start(), 16), VERSION_WORDS);
             (octets_ok && !versioned && number_bounded(text, m.start(), m.end()))
                 .then(|| Span::rule(text, EntityType::IpAddress, m.start(), m.end(), 0.9))
         })

@@ -55,3 +55,14 @@ fn rejects_times_and_paths() {
 fn rejects_luxembourgish_version_word() {
     assert!(texts(&d(), "D'Software Versioun 4.2.1.7 leeft").is_empty());
 }
+
+#[test]
+fn rejects_update_and_patch_numbers() {
+    for t in [
+        "Update 2.3.0.1 fixes",
+        "La mise à jour 2.3.0.1 corrige",
+        "Patch 1.2.3.4",
+    ] {
+        assert!(texts(&d(), t).is_empty(), "{t}");
+    }
+}
