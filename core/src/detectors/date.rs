@@ -1,6 +1,6 @@
 use regex::{Captures, Regex};
 
-use super::{Detector, has_keyword, number_bounded, window_before, word_bounded};
+use super::{Detector, has_keyword, number_bounded, window_after, window_before, word_bounded};
 use crate::{EntityType, Result, Span, Token, resolve};
 
 #[rustfmt::skip]
@@ -81,7 +81,9 @@ fn find(
         if !bounded(text, m.start(), m.end()) || !valid_date(year, month, day) {
             continue;
         }
-        let birth = has_keyword(&window_before(text, m.start(), 40), BIRTH_WORDS);
+        // German and Luxembourgish put the verb last: "am 03.02.1961 in Luxemburg geboren".
+        let birth = has_keyword(&window_before(text, m.start(), 40), BIRTH_WORDS)
+            || has_keyword(&window_after(text, m.end(), 30), BIRTH_WORDS);
         let (kind, score) = match (birth, short_year) {
             (true, false) => (EntityType::DateOfBirth, 0.95),
             (true, true) => (EntityType::DateOfBirth, 0.9),

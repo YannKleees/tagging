@@ -62,3 +62,9 @@ fn rejects_non_dates() {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }
+
+#[test]
+fn finds_birth_keyword_after_verb_final_date() {
+    assert_dob("Norbert Muller wurde am 03.02.1961 in Luxemburg geboren.", "03.02.1961");
+    assert_dob("Hien ass den 03.02.1961 zu Lëtzebuerg gebuer.", "03.02.1961");
+}

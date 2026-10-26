@@ -50,3 +50,8 @@ fn rejects_times_and_paths() {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }
+
+#[test]
+fn rejects_luxembourgish_version_word() {
+    assert!(texts(&d(), "D'Software Versioun 4.2.1.7 leeft").is_empty());
+}

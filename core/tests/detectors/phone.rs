@@ -117,3 +117,13 @@ fn rejects_dates_versions_and_ids() {
         assert!(texts(&d(), t).is_empty(), "{t}");
     }
 }
+
+#[test]
+fn includes_parenthesized_country_code() {
+    assert_found("SMS op (+352) 621 033 459.", "(+352) 621 033 459");
+}
+
+#[test]
+fn reads_0352_as_luxembourg_prefix() {
+    assert_found("text 0352 621 864014 now", "0352 621 864014");
+}

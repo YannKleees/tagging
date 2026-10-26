@@ -91,7 +91,8 @@ impl PhoneDetector {
     pub fn new() -> Result<Self> {
         let sep = r"[\d \u{a0}.\-/()]";
         Ok(Self {
-            intl: Regex::new(&format!(r"(?:\+|\b00)\d{sep}{{6,24}}\d"))?,
+            // `0352` is a common misspelling of `+352`.
+            intl: Regex::new(&format!(r"(?:\(?\+\d|\b00\d|\b0352){sep}{{6,24}}\d"))?,
             national: Regex::new(&format!(r"\(?0[1-9]{sep}{{5,20}}\d"))?,
             lu_mobile: Regex::new(r"\b6[1-9]1[ \u{a0}.]?\d{3}[ \u{a0}.]?\d{3}")?,
             lu_fixed: Regex::new(r"\b[2-9]\d(?:[ \u{a0}]?\d{2,4}){1,3}(?:-\d{1,3})?")?,
@@ -100,8 +101,14 @@ impl PhoneDetector {
 
     fn intl(&self, text: &str) -> Vec<Span> {
         scan(&self.intl, text, |m| {
-            let via_00 = m.as_str().starts_with("00");
-            let valid = |d: &str| intl_valid(if via_00 { &d[2..] } else { d }, via_00);
+            let prefix = m.as_str().trim_start_matches(['(', '+']);
+            let via_00 = prefix.starts_with("00");
+            let skip = if via_00 {
+                2
+            } else {
+                usize::from(prefix.starts_with('0'))
+            };
+            let valid = |d: &str| d.len() > skip && intl_valid(&d[skip..], via_00);
             let end = best_prefix(text, m.start(), m.end(), valid, None)?;
             let score = match context(text, m.start(), end) {
                 Context::Phone => 0.95,

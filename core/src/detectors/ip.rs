@@ -5,7 +5,7 @@ use regex::Regex;
 use super::{Detector, has_keyword, next_char, number_bounded, prev_char, scan, window_before};
 use crate::{EntityType, Result, Span, Token, resolve};
 
-const VERSION_WORDS: &[&str] = &["version*", "ver", "v", "build", "release", "firmware", "rev*"];
+const VERSION_WORDS: &[&str] = &["versio*", "ver", "v", "build", "release", "firmware", "rev*"];
 
 pub struct IpDetector {
     v4: Regex,
