@@ -1,265 +1,56 @@
 import re
 
-ARTICLES = {"d'", "d’", "l'", "l’", "de", "den", "dem", "der", "die", "das", "des", "le", "la", "les", "the"}
-TITLES = {
-    "här",
-    "madame",
-    "monsieur",
-    "herr",
-    "herrn",
-    "frau",
-    "dokter",
-    "doktesch",
-    "docteur",
-    "docteure",
-    "dr",
-    "dr.",
-    "mr",
-    "mr.",
-    "mrs",
-    "mrs.",
-    "ms",
-    "ms.",
-    "mme",
-    "mme.",
-    "mlle",
-    "m.",
-    "prof",
-    "prof.",
-    "professor",
-    "sir",
-    "miss",
-}
-DETERMINERS = ARTICLES | {
-    "d",
-    "l",
-    "a",
-    "an",
-    "e",
-    "en",
-    "eng",
-    "ein",
-    "eine",
-    "un",
-    "une",
-    "my",
-    "your",
-    "his",
-    "her",
-    "our",
-    "their",
-    "meng",
-    "mäi",
-    "mäin",
-    "däin",
-    "deng",
-    "säin",
-    "säi",
-    "seng",
-    "hir",
-    "hire",
-    "eis",
-    "eisen",
-    "äre",
-    "mein",
-    "meine",
-    "meinem",
-    "meiner",
-    "dein",
-    "deine",
-    "sein",
-    "seine",
-    "ihr",
-    "ihre",
-    "unser",
-    "unsere",
-    "ma",
-    "mon",
-    "mes",
-    "ta",
-    "ton",
-    "sa",
-    "son",
-    "ses",
-    "notre",
-    "nos",
-    "votre",
-    "vos",
-    "leur",
-}
-ROLES = {
+ARTICLES = set("d' d’ l' l’ de den dem der die das des le la les the".split())
+TITLES = set(
+    "här madame monsieur herr herrn frau dokter doktesch docteur docteure dr dr. mr mr. mrs mrs. ms ms. mme mme. "
+    "mlle m. prof prof. professor sir miss".split()
+)
+DETERMINERS = ARTICLES | set(
+    "d l a an e en eng ein eine un une my your his her our their meng mäi mäin däin deng säin säi seng hir hire "
+    "eis eisen äre mein meine meinem meiner dein deine sein seine ihr ihre unser unsere ma mon mes ta ton sa son "
+    "ses notre nos votre vos leur".split()
+)
+# Words that may sit between role nouns without making the span a name: "the Baker and the Butcher".
+FILLERS = set(
+    "and und et an a & of von vum vun du new old big small nei neie al grouss kleng neu neue neuen alt alte groß "
+    "große klein nouveau nouvelle vieux vieille grand grande petit petite".split()
+)
+ROLES = set(
     # Luxembourgish
-    "mamm",
-    "mamma",
-    "papp",
-    "pappa",
-    "bopa",
-    "bomi",
-    "boma",
-    "monni",
-    "tatta",
-    "noper",
-    "nopesch",
-    "direkter",
-    "direktesch",
-    "proff",
-    "joffer",
-    "schwëster",
-    "brudder",
-    "jong",
-    "meedchen",
-    "kand",
-    "kanner",
-    "fra",
-    "mann",
-    "frënd",
-    "frëndin",
-    "chef",
-    "cheffin",
-    "dokter",
-    "doktesch",
-    "infirmière",
-    "infirmier",
-    "elteren",
-    "niess",
-    "neveu",
-    "cousin",
-    "kusinn",
-    "buergermeeschter",
-    "apdikter",
-    "bäcker",
-    "metzler",
-    "bauer",
-    "enkel",
-    "schwoer",
-    "schwéiesch",
-    "nonn",
+    "mamm mamma papp pappa bopa bomi boma monni tatta noper nopesch direkter direktesch proff joffer schwëster "
+    "brudder jong meedchen kand kanner fra mann frënd frëndin chef cheffin dokter doktesch infirmière infirmier "
+    "elteren niess neveu cousin kusinn buergermeeschter apdikter bäcker metzler bauer enkel schwoer schwéiesch "
+    "nonn spiller trainer patient patientin "
     # German
-    "mutter",
-    "mama",
-    "vater",
-    "papa",
-    "opa",
-    "oma",
-    "großvater",
-    "großmutter",
-    "grossvater",
-    "grossmutter",
-    "onkel",
-    "tante",
-    "nachbar",
-    "nachbarin",
-    "direktor",
-    "direktorin",
-    "lehrer",
-    "lehrerin",
-    "chefin",
-    "bruder",
-    "schwester",
-    "sohn",
-    "tochter",
-    "kinder",
-    "eltern",
-    "cousine",
-    "nichte",
-    "neffe",
-    "arzt",
-    "ärztin",
-    "doktor",
-    "freund",
-    "freundin",
-    "sekretärin",
-    "sekretär",
-    "trainer",
-    "apotheker",
-    "metzger",
-    "bürgermeister",
-    "krankenschwester",
-    "kollege",
-    "kollegin",
-    "frau",
-    "herr",
+    "mutter mama vater papa opa oma großvater großmutter grossvater grossmutter onkel tante nachbar nachbarin "
+    "direktor direktorin lehrer lehrerin chefin bruder schwester sohn tochter kind kinder eltern cousine nichte "
+    "neffe arzt ärztin doktor freund freundin sekretärin sekretär apotheker metzger bürgermeister "
+    "krankenschwester kollege kollegin junge mädchen spieler spielerin patienten "
     # French
-    "mère",
-    "maman",
-    "père",
-    "grand-mère",
-    "grand-père",
-    "mémé",
-    "pépé",
-    "oncle",
-    "voisin",
-    "voisine",
-    "directeur",
-    "directrice",
-    "professeur",
-    "maîtresse",
-    "maître",
-    "frère",
-    "sœur",
-    "soeur",
-    "fils",
-    "fille",
-    "enfant",
-    "enfants",
-    "parents",
-    "médecin",
-    "docteur",
-    "patron",
-    "patronne",
-    "secrétaire",
-    "maire",
-    "nièce",
-    "collègue",
-    "ami",
-    "amie",
-    "mari",
-    "femme",
-    "boulanger",
-    "boucher",
-    "pharmacien",
-    "entraîneur",
-    "madame",
-    "monsieur",
+    "mère maman père grand-mère grand-père mémé pépé oncle voisin voisine directeur directrice professeur "
+    "maîtresse maître frère sœur soeur fils fille enfant enfants parents médecin docteur patron patronne "
+    "secrétaire maire nièce collègue ami amie mari femme boulanger boucher pharmacien entraîneur garçon joueur "
+    "joueurs patiente "
     # English
-    "mother",
-    "mom",
-    "mum",
-    "father",
-    "dad",
-    "grandma",
-    "grandpa",
-    "grandmother",
-    "grandfather",
-    "uncle",
-    "aunt",
-    "auntie",
-    "neighbour",
-    "neighbor",
-    "teacher",
-    "boss",
-    "brother",
-    "sister",
-    "son",
-    "daughter",
-    "child",
-    "children",
-    "niece",
-    "nephew",
-    "doctor",
-    "nurse",
-    "secretary",
-    "farmer",
-    "mayor",
-    "colleague",
-    "friend",
-    "husband",
-    "wife",
-    "baker",
-    "butcher",
-    "pharmacist",
-    "coach",
-}
+    "mother mom mum father dad grandma grandpa grandmother grandfather uncle aunt auntie neighbour neighbor "
+    "teacher boss brother sister son daughter child children niece nephew doctor nurse secretary farmer mayor "
+    "colleague friend husband wife baker butcher pharmacist coach boy girl man woman player players".split()
+)
+PRONOUNS = set(
+    "i me we us you he him she her they them ech mir mer du hien hatt si dir ich wir er sie es je nous vous il "
+    "elle ils elles on moi toi lui eux".split()
+)
+# Generic places and institutions; descriptive labels still tag them as organizations when they are
+# capitalized ("the new School", "la Cuisine", "Garage", "Kino").
+GENERIC = set(
+    "school schoul schule école ecole kitchen kichen küche cuisine barn scheier scheune grange garage kino cinema "
+    "cinéma hospital spidol krankenhaus hôpital station gare bahnhof poste church kierch kirche église castle "
+    "schlass burg château park parc office büro bureau room changing sall saal salle town hall gemeng gemeinde "
+    "commune bakery bäckerei boulangerie pharmacy apdikt apotheke pharmacie restaurant café cafe shop geschäft "
+    "magasin river baach fluss rivière garden gaart garten jardin library bibliothéik bibliothek bibliothèque "
+    "university universitéit universität université police polizei court gericht tribunal".split()
+)
+NOT_NAMES = ROLES | PRONOUNS | GENERIC | {t.rstrip(".") for t in TITLES}
 LEADING = re.compile(r"([dDlL]['’])|(\S+)\s+")
 CONJUNCTION = re.compile(r"\s+(?:an|a|und|et|and|&)\s+", re.IGNORECASE)
 WORDS = re.compile(r"[^\s'’]+")
@@ -274,9 +65,9 @@ def strip_titles(text, start, end):
     return start, end
 
 
-def only_roles(span):
-    words = [w for w in WORDS.findall(span.lower()) if w not in DETERMINERS]
-    return all(w.strip(".,;:!?") in ROLES for w in words)
+def not_a_name(span):
+    words = [w.strip(".,;:!?") for w in WORDS.findall(span.lower())]
+    return all(w in NOT_NAMES for w in words if w not in DETERMINERS and w not in FILLERS)
 
 
 def split_coordinated(text, start, end):
@@ -302,6 +93,6 @@ def postprocess(text, spans):
             if s["type"] == "person":
                 a, b = strip_titles(text, a, b)
             a, b = trim(text, a, b)
-            if a < b and not only_roles(text[a:b]):
+            if a < b and not not_a_name(text[a:b]):
                 out.append({**s, "start": a, "end": b, "text": text[a:b]})
     return out

@@ -29,3 +29,7 @@ src = [".", "eval"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff.lint.per-file-ignores]
+# Word lists are kept as split strings for readability.
+"tagging/postprocess.py" = ["SIM905"]

@@ -9,6 +9,7 @@ import tagging
 
 ROOT = Path(__file__).parent
 NAME_TYPES = {"person", "location", "organization"}
+CONTEXT_TYPES = NAME_TYPES | {"address"}
 
 
 def load(path):
@@ -107,15 +108,20 @@ def gazetteer_coverage(gold):
 
 def run(dataset, config, name):
     rows = load(dataset)
-    tagger = tagging.tagger(config)
+    tagging.detect("warm up model loading", config)
     t0 = time.perf_counter()
-    preds = [json.loads(tagger.detect(r["text"])) for r in rows]
+    preds = [tagging.detect(r["text"], config) for r in rows]
     elapsed = time.perf_counter() - t0
     words = sum(len(r["text"].split()) for r in rows)
     gold, pred = score(rows, preds)
     entity_spans = gold[gold["subset"] != "entity_free"]
 
     summary = metrics(gold, pred, ["lang", "subset"])
+    names = metrics(
+        entity_spans[entity_spans["type"].isin(CONTEXT_TYPES)],
+        pred[(pred["subset"] != "entity_free") & pred["type"].isin(CONTEXT_TYPES)],
+        ["lang", "subset"],
+    )
     by_type = metrics(entity_spans, pred[pred["subset"] != "entity_free"], ["type"])
     by_lang_type = metrics(entity_spans, pred[pred["subset"] != "entity_free"], ["lang", "type"])
     full = metrics(gold, pred, ["lang", "subset", "type"])
@@ -161,6 +167,13 @@ def run(dataset, config, name):
         "",
         md(summary[summary.index.get_level_values("subset") != "entity_free"], ["lang", "subset"] + main_cols),
         "",
+        "## Names only (person, organization, location, address)",
+        "",
+        md(
+            names,
+            ["lang", "subset", "recall_overlap", "recall_exact", "precision_overlap", "f1_overlap", "n_gold", "n_pred"],
+        ),
+        "",
         "## False positives on the entity-free subset",
         "",
         "| lang | false positives | sentences |",
@@ -202,7 +215,13 @@ def run(dataset, config, name):
     print(md(summary[summary.index.get_level_values("subset") != "entity_free"], ["lang", "subset"] + main_cols))
     print(f"\nentity-free false positives: {fp_by_lang.astype(int).to_dict()}")
     print(f"report written to {out / 'report.md'}")
-    return summary
+    return {
+        "summary": summary,
+        "names": names,
+        "false_positives": fp_by_lang,
+        "entity_free_sentences": free_counts,
+        "ms_per_1k_words": 1e6 * elapsed / words,
+    }
 
 
 def main():

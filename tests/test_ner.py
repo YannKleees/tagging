@@ -140,3 +140,18 @@ def test_merge_keeps_gazetteer_names_inside_coordinated_ner_span():
     gaz = [span(text, "Mett", "person", "gazetteer", 0.55), span(text, "Méck", "person", "gazetteer", 0.55)]
     out = merge(text, gaz, [span(text, "D'Mett an de Méck", "organization", "ner")])
     assert [(s["type"], s["text"]) for s in out] == [("person", "Mett"), ("person", "Méck")]
+
+
+def test_postprocess_drops_pronouns_generic_places_and_coordinated_roles():
+    for text, phrase, type in [
+        ("The Baker and the Butcher close early.", "The Baker and the Butcher", "organization"),
+        ("Wir sind gelaufen.", "Wir", "person"),
+        ("They opened the new School.", "new School", "organization"),
+        ("Il est dans la Cuisine.", "la Cuisine", "organization"),
+    ]:
+        assert postprocess(text, [char_span(text, phrase, type)]) == [], text
+
+
+def test_postprocess_keeps_named_businesses():
+    for text, phrase in [("Hien schafft am Garage Weis.", "Garage Weis"), ("Café Majerus ass zou.", "Café Majerus")]:
+        assert [s["text"] for s in postprocess(text, [char_span(text, phrase, "organization")])] == [phrase]
