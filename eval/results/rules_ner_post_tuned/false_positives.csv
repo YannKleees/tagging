@@ -1,0 +1,37 @@
+id,type,text,score,sentence
+en-entity_free-02,person,Director,0.8296,The Director and the Teacher are talking to the parents.
+lb-entity_free-03,person,Eng Méck,0.8646,Eng Méck huet d'Bomi an den Aarm gestach.
+lb-entity_free-04,organization,Mir sinn e Sonndeg op de Bierg gaang,0.4206,Mir sinn e Sonndeg op de Bierg gaang.
+en-entity_free-05,organization,Post Office,0.9852,"The letter is at the Post Office, the parcel at the Station."
+de-entity_free-05,organization,Post,0.9498,"Der Brief liegt auf der Post, das Paket am Bahnhof."
+lb-entity_free-05,person,Bréif,0.8609,"De Bréif läit op der Post, de Pak an der Gare."
+lb-entity_free-05,organization,Post,0.5288,"De Bréif läit op der Post, de Pak an der Gare."
+lb-entity_free-05,location,de Pak an der Gare,0.55,"De Bréif läit op der Post, de Pak an der Gare."
+lb-entity_free-07,organization,Infirmière am Spidol,0.9287,Meng Schwëster ass Infirmière am Spidol.
+fr-entity_free-09,organization,Serveur du Bureau,0.6371,Le Logiciel version 4.2.1.7 tourne sur le Serveur du Bureau.
+lb-entity_free-10,organization,Gaart Fussball,0.7025,De Papp an de Jong spillen am Gaart Fussball.
+en-entity_free-11,organization,The Council,0.831,The Council repaired the Streets after the Winter.
+fr-entity_free-11,address,Rues,0.8047,La Commune a refait les Rues après l'hiver.
+de-entity_free-11,address,Straßen,0.5819,Die Gemeinde hat die Straßen nach dem Winter erneuert.
+lb-entity_free-11,address,Wanter,0.8776,D'Gemeng huet d'Stroossen nom Wanter nei gemaach.
+fr-entity_free-13,location,La Réunion,0.8141,La Réunion a lieu le 14/11/2024 à 10 heures en Salle 3.
+en-entity_free-14,organization,Conference,0.6781,The Boss and the Secretary are at a Conference.
+de-entity_free-14,organization,Konferenz,0.4911,Der Chef und die Sekretärin sind auf einer Konferenz.
+en-entity_free-15,location,Countryside,0.6781,My Cousin and my Niece live in the Countryside.
+fr-entity_free-15,location,la Campagne,0.6433,Mon Cousin et ma Nièce habitent à la Campagne.
+en-entity_free-16,organization,Winery,0.8387,The Farmer sold his Wine at the Winery.
+fr-entity_free-16,person,Paysan,0.8482,Le Paysan a vendu son Vin à la Cave.
+fr-entity_free-16,organization,Vin à la Cave,0.5322,Le Paysan a vendu son Vin à la Cave.
+de-entity_free-16,organization,Kellerei,0.7276,Der Bauer hat seinen Wein in der Kellerei verkauft.
+lb-entity_free-16,organization,Wäin,0.5114,De Bauer huet säi Wäin an der Kellerei verkaaft.
+lb-entity_free-16,organization,Kellerei,0.5525,De Bauer huet säi Wäin an der Kellerei verkaaft.
+en-entity_free-17,person,Mett,0.5506,Breakfast was Mett with onions.
+lb-entity_free-17,person,Moies Mett,0.55,Mir hunn Moies Mett mat Ënnen giess.
+en-entity_free-18,organization,The Train into Town,0.6491,The Train into Town was twenty minutes late.
+fr-entity_free-18,organization,Le Train pour la Ville,0.9339,Le Train pour la Ville avait vingt minutes de retard.
+de-entity_free-18,location,Stadt,0.4884,Der Zug in die Stadt hatte zwanzig Minuten Verspätung.
+lb-entity_free-18,organization,Den Zuch op d'Stad,0.8449,Den Zuch op d'Stad hat zwanzeg Minutte Verspéidung.
+en-entity_free-19,organization,Nursery,0.6405,The Children sang with the Teacher at Nursery.
+fr-entity_free-19,person,Maîtresse à la Maternelle,0.4509,Les Enfants ont chanté avec la Maîtresse à la Maternelle.
+de-entity_free-19,organization,Kindergarten,0.8983,Die Kinder haben im Kindergarten mit der Lehrerin gesungen.
+lb-entity_free-19,location,Kannergaart,0.6152,D'Kanner hunn am Kannergaart mat der Joffer gesongen.

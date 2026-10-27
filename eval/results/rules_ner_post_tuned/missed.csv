@@ -1,0 +1,16 @@
+id,type,text,covered,sentence
+en-standard-address-0,location,Berlin,True,"Marcus Butler lives at 98, rue de l'Église, Berlin."
+en-standard-address-1,location,Luxembourg,True,"Josée Kremer lives at 12, rue de l'Église, Luxembourg."
+de-standard-meeting-0,person,Mett Gloden,True,Mett Gloden hat Raoul Reuter am Montag in den Büros von Cargolux getroffen.
+lb-standard-meeting-0,person,Mett Gloden,True,Mett Gloden huet de Méindeg Raoul Reuter an de Büroe vun Cargolux getraff.
+fr-hard-letter-1,organization,Cactus,False,Madame Schiltz de Cactus nous a écrit une lettre.
+lb-hard-family-0,person,Tun,False,Meng Mamm an den Tun kommen e Sonndeg op Haler.
+en-hard-chat-1,person,gusty,False,ernest and gusty are coming tonight
+lb-hard-chat-1,person,ernest,False,ernest an gusty kommen haut den owend
+lb-hard-chat-1,person,gusty,False,ernest an gusty kommen haut den owend
+en-hard-born-0,date_of_birth,06/05/1970,False,"Méck, b. 06/05/1970 in Sanem."
+en-hard-born-1,date_of_birth,3 February 1992,False,"Pol, b. 3 February 1992 in Berdorf."
+en-hard-text-0,person,Aline,False,Email Aline at aline83@education.lu or text 0352 621 864014.
+fr-hard-text-0,person,Aline,False,Écris à Aline sur aline83@education.lu ou par SMS au 0352 621 864014.
+de-hard-text-0,person,Aline,False,Schreib Aline an aline83@education.lu oder eine SMS an 0352 621 864014.
+lb-hard-text-0,person,Aline,False,Schreif der Aline op aline83@education.lu oder eng SMS op 0352 621 864014.

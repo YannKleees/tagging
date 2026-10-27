@@ -1,11 +1,11 @@
 # Evaluation: rules
 
-Config: `null`. 288 sentences, 2637 words, 504 gold spans.
+Config: `eval/configs/rules.json`. 288 sentences, 2637 words, 504 gold spans.
 
 Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
 `overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
 
-Runtime: 4.79 ms per 1,000 words (detection only).
+Runtime: 63.91 ms per 1,000 words (detection only).
 
 ## By language and subset
 
@@ -19,6 +19,19 @@ Runtime: 4.79 ms per 1,000 words (detection only).
 | fr | standard | 0.59 | 0.50 | 0.59 | 1.00 | 0.74 | 0.63 | 66 | 39 |
 | lb | hard | 0.67 | 0.67 | 0.67 | 1.00 | 0.80 | 0.80 | 60 | 40 |
 | lb | standard | 0.59 | 0.50 | 0.59 | 1.00 | 0.74 | 0.63 | 66 | 39 |
+
+## Names only (person, organization, location, address)
+
+| lang | subset | recall_overlap | recall_exact | precision_overlap | f1_overlap | n_gold | n_pred |
+|---|---|---|---|---|---|---|---|
+| de | hard | 0.57 | 0.57 | 1.00 | 0.72 | 46 | 26 |
+| de | standard | 0.36 | 0.21 | 1.00 | 0.53 | 42 | 15 |
+| en | hard | 0.57 | 0.57 | 1.00 | 0.72 | 46 | 26 |
+| en | standard | 0.36 | 0.21 | 1.00 | 0.53 | 42 | 15 |
+| fr | hard | 0.57 | 0.57 | 1.00 | 0.72 | 46 | 26 |
+| fr | standard | 0.36 | 0.21 | 1.00 | 0.53 | 42 | 15 |
+| lb | hard | 0.57 | 0.57 | 1.00 | 0.72 | 46 | 26 |
+| lb | standard | 0.36 | 0.21 | 1.00 | 0.53 | 42 | 15 |
 
 ## False positives on the entity-free subset
 

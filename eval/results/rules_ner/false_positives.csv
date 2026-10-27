@@ -1,0 +1,101 @@
+id,type,text,score,sentence
+en-entity_free-00,person,Mother and Grandpa,0.6011,Mother and Grandpa are going to the cinema today.
+fr-entity_free-00,person,La mère et le grand-père,0.5777,La mère et le grand-père vont au cinéma aujourd'hui.
+de-entity_free-00,person,Opa,0.5192,Die Mutter und der Opa gehen heute ins Kino.
+lb-entity_free-00,organization,D'Mamm an de Bopa,0.7412,D'Mamm an de Bopa ginn haut an de Kino.
+en-entity_free-01,person,The Neighbour,0.7725,The Neighbour took his car to the Garage.
+en-entity_free-01,organization,Garage,0.778,The Neighbour took his car to the Garage.
+fr-entity_free-01,person,Le voisin,0.7977,Le voisin a amené sa voiture au garage.
+de-entity_free-01,person,Der Nachbar,0.6258,Der Nachbar hat sein Auto in die Garage gebracht.
+lb-entity_free-01,person,Den Noper,0.7031,Den Noper huet säin Auto an d'Garage bruecht.
+en-entity_free-02,person,Director,0.8296,The Director and the Teacher are talking to the parents.
+en-entity_free-02,person,Teacher,0.8107,The Director and the Teacher are talking to the parents.
+en-entity_free-02,person,parents,0.5389,The Director and the Teacher are talking to the parents.
+fr-entity_free-02,person,Le directeur,0.5509,Le directeur et le professeur parlent avec les parents.
+fr-entity_free-02,person,professeur,0.5547,Le directeur et le professeur parlent avec les parents.
+fr-entity_free-02,person,parents,0.6228,Le directeur et le professeur parlent avec les parents.
+de-entity_free-02,person,Der Direktor,0.6059,Der Direktor und der Lehrer sprechen mit den Eltern.
+de-entity_free-02,person,Eltern,0.5129,Der Direktor und der Lehrer sprechen mit den Eltern.
+lb-entity_free-02,person,De Direkter an de Proff,0.7986,De Direkter an de Proff schwätzen mat den Elteren.
+en-entity_free-03,person,Grandma,0.6212,A mosquito stung Grandma on the arm.
+fr-entity_free-03,person,grand-mère,0.5268,Un moustique a piqué la grand-mère au bras.
+de-entity_free-03,person,Oma,0.5225,Eine Mücke hat die Oma in den Arm gestochen.
+lb-entity_free-03,person,Eng Méck,0.8646,Eng Méck huet d'Bomi an den Aarm gestach.
+lb-entity_free-03,organization,Bomi,0.5183,Eng Méck huet d'Bomi an den Aarm gestach.
+de-entity_free-04,organization,Wir,0.5439,Wir sind am Sonntag auf den Berg gestiegen.
+de-entity_free-04,location,Berg,0.55,Wir sind am Sonntag auf den Berg gestiegen.
+lb-entity_free-04,location,Bierg,0.55,Mir sinn e Sonndeg op de Bierg gaang.
+en-entity_free-05,organization,Post Office,0.9852,"The letter is at the Post Office, the parcel at the Station."
+en-entity_free-05,location,Station,0.5951,"The letter is at the Post Office, the parcel at the Station."
+fr-entity_free-05,organization,la Poste,0.7788,"La lettre est à la Poste, le colis à la Gare."
+fr-entity_free-05,location,Gare,0.55,"La lettre est à la Poste, le colis à la Gare."
+de-entity_free-05,organization,Post,0.9498,"Der Brief liegt auf der Post, das Paket am Bahnhof."
+lb-entity_free-05,person,De Bréif,0.8609,"De Bréif läit op der Post, de Pak an der Gare."
+lb-entity_free-05,organization,Post,0.5288,"De Bréif läit op der Post, de Pak an der Gare."
+lb-entity_free-05,location,Gare,0.55,"De Bréif läit op der Post, de Pak an der Gare."
+en-entity_free-06,person,Auntie and Uncle,0.6568,Auntie and Uncle are coming at Christmas.
+fr-entity_free-06,person,La Tante et l'Oncle,0.6874,La Tante et l'Oncle viennent à Noël.
+lb-entity_free-06,organization,D'Tatta an de Monni,0.6546,D'Tatta an de Monni kommen op Chrëschtdag.
+en-entity_free-07,person,My Sister,0.7406,My Sister is a Nurse at the Hospital.
+en-entity_free-07,organization,Hospital,0.7946,My Sister is a Nurse at the Hospital.
+fr-entity_free-07,person,Ma Sœur,0.6703,Ma Sœur est infirmière à l'Hôpital.
+fr-entity_free-07,organization,Hôpital,0.7312,Ma Sœur est infirmière à l'Hôpital.
+de-entity_free-07,person,Meine Schwester,0.6033,Meine Schwester ist Krankenschwester im Krankenhaus.
+de-entity_free-07,organization,Krankenhaus,0.8411,Meine Schwester ist Krankenschwester im Krankenhaus.
+lb-entity_free-07,person,Meng Schwëster,0.6038,Meng Schwëster ass Infirmière am Spidol.
+lb-entity_free-07,organization,Infirmière am Spidol,0.9287,Meng Schwëster ass Infirmière am Spidol.
+fr-entity_free-09,organization,Serveur du Bureau,0.6371,Le Logiciel version 4.2.1.7 tourne sur le Serveur du Bureau.
+en-entity_free-10,person,Father and Son,0.6054,Father and Son play Football in the Garden.
+fr-entity_free-10,organization,Le Père et le Fils,0.873,Le Père et le Fils jouent au football dans le Jardin.
+lb-entity_free-10,person,De Papp an de Jong,0.8039,De Papp an de Jong spillen am Gaart Fussball.
+lb-entity_free-10,organization,Gaart Fussball,0.7025,De Papp an de Jong spillen am Gaart Fussball.
+en-entity_free-11,organization,The Council,0.831,The Council repaired the Streets after the Winter.
+fr-entity_free-11,organization,La Commune,0.9836,La Commune a refait les Rues après l'hiver.
+fr-entity_free-11,address,Rues,0.8047,La Commune a refait les Rues après l'hiver.
+de-entity_free-11,organization,Die Gemeinde,0.873,Die Gemeinde hat die Straßen nach dem Winter erneuert.
+de-entity_free-11,address,Straßen,0.5819,Die Gemeinde hat die Straßen nach dem Winter erneuert.
+lb-entity_free-11,organization,D'Gemeng,0.8273,D'Gemeng huet d'Stroossen nom Wanter nei gemaach.
+lb-entity_free-11,location,Stroossen,0.55,D'Gemeng huet d'Stroossen nom Wanter nei gemaach.
+lb-entity_free-11,address,Wanter,0.8776,D'Gemeng huet d'Stroossen nom Wanter nei gemaach.
+en-entity_free-12,person,Nurse,0.6066,The Nurse and the Doctor were on duty all day.
+en-entity_free-12,person,Doctor,0.6449,The Nurse and the Doctor were on duty all day.
+fr-entity_free-12,organization,L'Infirmière et le Médecin,0.7587,L'Infirmière et le Médecin ont été de service toute la journée.
+de-entity_free-12,person,Die Krankenschwester,0.5426,Die Krankenschwester und der Arzt waren den ganzen Tag im Dienst.
+de-entity_free-12,person,Arzt,0.5217,Die Krankenschwester und der Arzt waren den ganzen Tag im Dienst.
+lb-entity_free-12,person,D'Infirmière an den Dokter,0.6658,D'Infirmière an den Dokter waren de ganzen Dag am Déngscht.
+fr-entity_free-13,location,La Réunion,0.8141,La Réunion a lieu le 14/11/2024 à 10 heures en Salle 3.
+en-entity_free-14,person,The Boss,0.6962,The Boss and the Secretary are at a Conference.
+en-entity_free-14,person,Secretary,0.621,The Boss and the Secretary are at a Conference.
+en-entity_free-14,organization,Conference,0.6781,The Boss and the Secretary are at a Conference.
+fr-entity_free-14,person,Le Chef et la Secrétaire,0.7655,Le Chef et la Secrétaire sont en Conférence.
+de-entity_free-14,person,Sekretärin,0.5344,Der Chef und die Sekretärin sind auf einer Konferenz.
+lb-entity_free-14,person,De Chef an d'Sekretärin,0.6869,De Chef an d'Sekretärin sinn op enger Konferenz.
+en-entity_free-15,person,My Cousin and my Niece,0.6227,My Cousin and my Niece live in the Countryside.
+en-entity_free-15,location,Countryside,0.6781,My Cousin and my Niece live in the Countryside.
+fr-entity_free-15,person,Mon Cousin et ma Nièce,0.5567,Mon Cousin et ma Nièce habitent à la Campagne.
+fr-entity_free-15,location,la Campagne,0.6433,Mon Cousin et ma Nièce habitent à la Campagne.
+de-entity_free-15,person,Mein Cousin,0.5825,Mein Cousin und meine Nichte wohnen auf dem Land.
+de-entity_free-15,person,meine Nichte,0.5209,Mein Cousin und meine Nichte wohnen auf dem Land.
+lb-entity_free-15,person,Mäi Cousin an d'Niess,0.7301,Mäi Cousin an d'Niess wunnen um Land.
+en-entity_free-16,person,The Farmer,0.8791,The Farmer sold his Wine at the Winery.
+en-entity_free-16,organization,Winery,0.8387,The Farmer sold his Wine at the Winery.
+fr-entity_free-16,person,Le Paysan,0.8482,Le Paysan a vendu son Vin à la Cave.
+fr-entity_free-16,organization,Vin à la Cave,0.5322,Le Paysan a vendu son Vin à la Cave.
+de-entity_free-16,person,Der Bauer,0.7533,Der Bauer hat seinen Wein in der Kellerei verkauft.
+de-entity_free-16,organization,Kellerei,0.7276,Der Bauer hat seinen Wein in der Kellerei verkauft.
+lb-entity_free-16,person,De Bauer,0.7473,De Bauer huet säi Wäin an der Kellerei verkaaft.
+lb-entity_free-16,organization,Wäin,0.5114,De Bauer huet säi Wäin an der Kellerei verkaaft.
+lb-entity_free-16,organization,Kellerei,0.5525,De Bauer huet säi Wäin an der Kellerei verkaaft.
+en-entity_free-17,person,Mett,0.5506,Breakfast was Mett with onions.
+fr-entity_free-17,person,Mett,0.55,"Au petit-déjeuner, il y avait du Mett aux oignons."
+de-entity_free-17,person,Mett,0.55,Zum Frühstück gab es Mett mit Zwiebeln.
+lb-entity_free-17,person,Mett,0.55,Mir hunn Moies Mett mat Ënnen giess.
+en-entity_free-18,organization,The Train into Town,0.6491,The Train into Town was twenty minutes late.
+fr-entity_free-18,organization,Le Train pour la Ville,0.9339,Le Train pour la Ville avait vingt minutes de retard.
+lb-entity_free-18,organization,Den Zuch op d'Stad,0.8449,Den Zuch op d'Stad hat zwanzeg Minutte Verspéidung.
+en-entity_free-19,person,The Children,0.605,The Children sang with the Teacher at Nursery.
+en-entity_free-19,organization,Nursery,0.6405,The Children sang with the Teacher at Nursery.
+fr-entity_free-19,organization,Les Enfants,0.6302,Les Enfants ont chanté avec la Maîtresse à la Maternelle.
+de-entity_free-19,organization,Kindergarten,0.8983,Die Kinder haben im Kindergarten mit der Lehrerin gesungen.
+lb-entity_free-19,organization,D'Kanner,0.8883,D'Kanner hunn am Kannergaart mat der Joffer gesongen.
+lb-entity_free-19,location,Kannergaart,0.6152,D'Kanner hunn am Kannergaart mat der Joffer gesongen.

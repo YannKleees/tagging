@@ -1,11 +1,11 @@
 # Evaluation: rules_threshold_060
 
-Config: `eval/configs/threshold_060.json`. 288 sentences, 2637 words, 504 gold spans.
+Config: `eval/configs/rules_threshold_060.json`. 288 sentences, 2637 words, 504 gold spans.
 
 Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
 `overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
 
-Runtime: 4.65 ms per 1,000 words (detection only).
+Runtime: 19.93 ms per 1,000 words (detection only).
 
 ## By language and subset
 
@@ -19,6 +19,19 @@ Runtime: 4.65 ms per 1,000 words (detection only).
 | fr | standard | 0.58 | 0.50 | 0.58 | 1.00 | 0.73 | 0.63 | 66 | 38 |
 | lb | hard | 0.60 | 0.60 | 0.60 | 1.00 | 0.75 | 0.75 | 60 | 36 |
 | lb | standard | 0.58 | 0.50 | 0.58 | 1.00 | 0.73 | 0.63 | 66 | 38 |
+
+## Names only (person, organization, location, address)
+
+| lang | subset | recall_overlap | recall_exact | precision_overlap | f1_overlap | n_gold | n_pred |
+|---|---|---|---|---|---|---|---|
+| de | hard | 0.46 | 0.46 | 1.00 | 0.63 | 46 | 21 |
+| de | standard | 0.33 | 0.21 | 1.00 | 0.50 | 42 | 14 |
+| en | hard | 0.46 | 0.46 | 1.00 | 0.63 | 46 | 21 |
+| en | standard | 0.33 | 0.21 | 1.00 | 0.50 | 42 | 14 |
+| fr | hard | 0.46 | 0.46 | 1.00 | 0.63 | 46 | 21 |
+| fr | standard | 0.33 | 0.21 | 1.00 | 0.50 | 42 | 14 |
+| lb | hard | 0.48 | 0.48 | 1.00 | 0.65 | 46 | 22 |
+| lb | standard | 0.33 | 0.21 | 1.00 | 0.50 | 42 | 14 |
 
 ## False positives on the entity-free subset
 

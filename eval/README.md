@@ -46,6 +46,15 @@ python eval/evaluate.py --config my.json --name variant  # any config, written t
 Each run writes `report.md`, `metrics.csv` (per language, subset and type), `missed.csv` and
 `false_positives.csv` to `results/<name>/`.
 
+With the model installed (`pip install -e ".[ner,eval]"`):
+
+```
+python eval/compare.py --split dev    # tuning runs, written to results/dev/
+python eval/compare.py --split eval   # all variants on the held-out split, results/comparison.md
+python eval/benchmark.py              # runtime per 1,000 words, results/runtime.md
+TAGGING_NER_TESTS=1 pytest tests/test_ner_model.py
+```
+
 The metrics:
 
 - **overlap**: a prediction of the same type overlaps the gold span (one-to-one).
@@ -100,6 +109,104 @@ What this shows:
   partly because the generator and the gazetteer draw on the same knowledge. Rules-only recall on
   names is optimistic for that reason.
 
+## Results: rules plus contextual NER
+
+The model is GLiNER `urchade/gliner_multi_pii-v1` with descriptive labels. All tuning (filter
+lists, threshold, the ambiguous-gazetteer rule) used the dev split `data/dev.jsonl`: 248
+sentences from its own seed. The eval split was run once at the end. Full tables are in
+[`results/comparison.md`](results/comparison.md).
+
+| variant | what runs |
+| --- | --- |
+| `rules` | Rules and gazetteers. |
+| `ner_only` | GLiNER alone, threshold 0.5, raw output. |
+| `rules_ner` | Rules, gazetteers and GLiNER merged by precedence, threshold 0.5, no post-processing. |
+| `rules_ner_post` | Adds post-processing: strip articles and titles, drop kinship, role and generic nouns, split coordinated names. Ambiguous gazetteer hits need the model to agree. Threshold 0.5. |
+| `rules_ner_post_tuned` | The package default: the same with threshold 0.4. |
+
+### Luxembourgish, names only
+
+Person, organization, location and address spans. False positives are on the 20 Luxembourgish
+entity-free sentences.
+
+| variant | hard recall (overlap) | hard recall (exact) | hard precision | standard recall (overlap) | false positives |
+| --- | --- | --- | --- | --- | --- |
+| `rules` | 0.57 | 0.57 | 1.00 | 0.36 | 5 |
+| `ner_only` | 0.74 | 0.30 | 0.79 | 0.98 | 23 |
+| `rules_ner` | 0.87 | 0.43 | 0.89 | 0.98 | 27 |
+| `rules_ner_post` | 0.91 | 0.89 | 1.00 | 0.98 | 10 |
+| `rules_ner_post_tuned` | 0.91 | 0.89 | 1.00 | 0.98 | 13 |
+
+Against the baseline from a quick test of the model alone (threshold 0.5, descriptive labels):
+
+| | baseline | default config |
+| --- | --- | --- |
+| LB standard recall | 0.97 | 0.98 |
+| LB hard recall | 0.82 | 0.91 |
+| LB false positives | 9 on 8 sentences | 13 on 20 sentences |
+| DE hard recall | 1.00 | 0.98 |
+| DE false positives | 4 | 6 on 20 sentences |
+
+The baseline came from a different, smaller set of sentences, so this comparison is only
+indicative.
+
+### All entity types, recall (overlap)
+
+| lang | subset | `rules` | `rules_ner` | `rules_ner_post` | `rules_ner_post_tuned` | precision (tuned) |
+| --- | --- | --- | --- | --- | --- | --- |
+| en | standard | 0.59 | 0.97 | 0.97 | 0.97 | 1.00 |
+| en | hard | 0.63 | 0.92 | 0.92 | 0.93 | 1.00 |
+| fr | standard | 0.59 | 0.98 | 0.98 | 1.00 | 1.00 |
+| fr | hard | 0.67 | 0.97 | 0.97 | 0.97 | 1.00 |
+| de | standard | 0.59 | 0.98 | 0.98 | 0.98 | 0.98 |
+| de | hard | 0.67 | 0.98 | 0.98 | 0.98 | 1.00 |
+| lb | standard | 0.59 | 0.98 | 0.98 | 0.98 | 0.98 |
+| lb | hard | 0.67 | 0.90 | 0.93 | 0.93 | 1.00 |
+
+### False positives on entity-free sentences (20 per language)
+
+| variant | en | fr | de | lb | total |
+| --- | --- | --- | --- | --- | --- |
+| `rules` | 1 | 2 | 2 | 5 | 10 |
+| `ner_only` | 27 | 23 | 19 | 23 | 92 |
+| `rules_ner` | 27 | 25 | 21 | 27 | 100 |
+| `rules_ner_post` | 9 | 7 | 4 | 10 | 30 |
+| `rules_ner_post_tuned` | 9 | 8 | 6 | 13 | 36 |
+
+### Runtime
+
+From [`results/runtime.md`](results/runtime.md), on a laptop CPU with no GPU:
+
+- Rules only: 1.5 to 2.1 ms per 1,000 words.
+- Rules plus NER: 14 to 18 s per 1,000 words for one long document, and 45 to 53 s when every
+  sentence is a separate call, because each call pays the model's fixed overhead.
+
+The model dominates the cost. A GPU should be much faster, but this has not been measured.
+
+### What this shows
+
+- The model closes the gaps the rules leave. Luxembourgish hard recall rises from 0.57 to 0.91
+  for names. With the default config, recall across all types is 0.93 to 1.00 in every language
+  and subset.
+- Post-processing matters as much as the model. Stripping articles and titles lifts Luxembourgish
+  hard exact recall from 0.43 to 0.89, so pseudonyms replace `Mett` and not `D'Mett`. The filters
+  cut false positives by 70%, from 100 to 30.
+- Luxembourgish is still the weakest language on hard sentences: 0.93 against 0.97 to 0.98 for
+  French and German. The remaining misses are lowercase chat names (`ernest an gusty`) and names
+  after the articles `den` and `der` (`den Tun`, `der Aline`).
+- The dev split chose threshold 0.4: 2 more points of Luxembourgish hard recall for one extra
+  false positive. On the eval split, 0.4 brings no Luxembourgish gain. English hard names rise
+  from 0.93 to 0.96 and French standard from 0.98 to 1.00, at the cost of 6 more false positives.
+  The default stays at 0.4, because recall comes first and changing it after seeing the eval split
+  would tune on the test set.
+- False positives were 0 on the dev split but 30 to 36 on the eval split, so the filter lists
+  partly fit the dev sentences. Most of what remains are generic nouns the model labels as
+  organizations or places: `Post Office`, `Winery`, `Kindergarten`, `The Council`, `Countryside`,
+  `Le Train pour la Ville`. The rest are role phrases the filters miss (`Director`, `Paysan`,
+  `Infirmière am Spidol`), plural street words (`Rues`, `Straßen`), and the decoys `Mett` (minced
+  pork) and `Méck` (mosquito). These were left unpatched for the same reason, and they mean the tool
+  over-redacts ordinary text.
+
 ## Caveats
 
 - The sentences are template-generated. Real documents are longer, noisier and less regular.
@@ -111,4 +218,4 @@ What this shows:
 
   This lifted date-of-birth recall from 0.75 to 0.92 and exact phone matching from 0.75 to 1.00,
   and removed one false positive. Because those fixes were informed by this set, it is no longer
-  fully held out for the rules. Later phases should tune on a separate development split.
+  fully held out for the rules. All Phase 3 tuning used the separate dev split.

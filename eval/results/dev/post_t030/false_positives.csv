@@ -1,0 +1,32 @@
+id,type,text,score,sentence
+en-entity_free-00,organization,Kitchen,0.4812,Grandma and the Neighbour drink coffee in the Kitchen.
+fr-entity_free-00,organization,la Cuisine,0.8691,La Grand-mère et la Voisine boivent un café dans la Cuisine.
+en-entity_free-01,organization,new School,0.7515,The Mayor opened the new School next to the Church.
+en-entity_free-01,organization,Church,0.4176,The Mayor opened the new School next to the Church.
+fr-entity_free-01,organization,École,0.7681,Le Maire a inauguré la nouvelle École à côté de l'Église.
+de-entity_free-01,organization,Schule,0.6216,Der Bürgermeister hat die neue Schule neben der Kirche eröffnet.
+lb-entity_free-01,organization,Schoul,0.5374,De Buergermeeschter huet déi nei Schoul nieft der Kierch opgemaach.
+en-entity_free-02,organization,Barn,0.4849,My Father and my Uncle repaired the roof of the Barn.
+fr-entity_free-02,organization,la Grange,0.5904,Mon Père et mon Oncle ont réparé le toit de la Grange.
+de-entity_free-02,organization,Scheune,0.4024,Mein Vater und mein Onkel haben das Dach der Scheune repariert.
+en-entity_free-04,person,Boy,0.581,The Boy and the Girl are playing in the Park.
+en-entity_free-04,person,Girl,0.581,The Boy and the Girl are playing in the Park.
+fr-entity_free-04,person,Garçon,0.64,Le Garçon et la Fille jouent dans le Parc.
+de-entity_free-04,person,Junge,0.3511,Der Junge und das Mädchen spielen im Park.
+de-entity_free-04,person,Mädchen,0.3511,Der Junge und das Mädchen spielen im Park.
+en-entity_free-05,person,Patient,0.7219,The Pharmacist gave the Patient new tablets.
+fr-entity_free-05,person,Patient,0.8014,Le Pharmacien a donné de nouveaux comprimés au Patient.
+de-entity_free-05,person,Patienten,0.3398,Der Apotheker hat dem Patienten neue Tabletten gegeben.
+lb-entity_free-05,person,Patient,0.499,Den Apdikter huet dem Patient nei Pëllen ginn.
+en-entity_free-06,person,We,0.5,We walked along the River up to the Castle.
+fr-entity_free-06,person,Nous,0.4045,Nous avons marché le long de la Rivière jusqu'au Château.
+de-entity_free-06,person,Wir,0.526,Wir sind am Fluss entlang bis zur Burg gelaufen.
+lb-entity_free-06,person,Mir,0.5701,Mir sinn d'Baach laanscht bis bei d'Schlass gaang.
+en-entity_free-07,organization,The Coach and the Players,0.8183,The Coach and the Players celebrated in the Changing Room.
+en-entity_free-07,location,Changing Room,0.5923,The Coach and the Players celebrated in the Changing Room.
+fr-entity_free-07,person,Joueurs,0.7578,L'Entraîneur et les Joueurs ont fêté dans le Vestiaire.
+fr-entity_free-07,organization,Vestiaire,0.439,L'Entraîneur et les Joueurs ont fêté dans le Vestiaire.
+lb-entity_free-07,person,Spiller,0.5475,Den Trainer an d'Spiller hunn an der Kabinn gefeiert.
+en-entity_free-09,organization,The Baker and the Butcher,0.9626,The Baker and the Butcher close early on Saturday.
+fr-entity_free-09,organization,Le Boulanger et le Boucher,0.9645,Le Boulanger et le Boucher ferment tôt le samedi.
+de-entity_free-09,organization,Der Bäcker und der Metzger,0.9354,Der Bäcker und der Metzger schließen am Samstag früh.

@@ -1,0 +1,184 @@
+id,type,text,covered,sentence
+en-standard-contact-0,email,gilbert.muller@post.lu,False,Gilbert Muller can be reached at gilbert.muller@post.lu or on 00352 691 042 147.
+en-standard-contact-0,phone,00352 691 042 147,False,Gilbert Muller can be reached at gilbert.muller@post.lu or on 00352 691 042 147.
+fr-standard-contact-0,email,gilbert.muller@post.lu,False,On peut joindre Gilbert Muller à l'adresse gilbert.muller@post.lu ou au 00352 691 042 147.
+fr-standard-contact-0,phone,00352 691 042 147,False,On peut joindre Gilbert Muller à l'adresse gilbert.muller@post.lu ou au 00352 691 042 147.
+de-standard-contact-0,email,gilbert.muller@post.lu,False,Gilbert Muller ist unter gilbert.muller@post.lu oder 00352 691 042 147 erreichbar.
+de-standard-contact-0,phone,00352 691 042 147,False,Gilbert Muller ist unter gilbert.muller@post.lu oder 00352 691 042 147 erreichbar.
+lb-standard-contact-0,email,gilbert.muller@post.lu,False,Gilbert Muller ass ënner gilbert.muller@post.lu oder um 00352 691 042 147 ze erreechen.
+lb-standard-contact-0,phone,00352 691 042 147,False,Gilbert Muller ass ënner gilbert.muller@post.lu oder um 00352 691 042 147 ze erreechen.
+en-standard-contact-1,email,jochen.hoffmann@example.com,False,Jochen Hoffmann can be reached at jochen.hoffmann@example.com or on +33 6 52 43 28 13.
+en-standard-contact-1,phone,+33 6 52 43 28 13,False,Jochen Hoffmann can be reached at jochen.hoffmann@example.com or on +33 6 52 43 28 13.
+fr-standard-contact-1,email,jochen.hoffmann@example.com,False,On peut joindre Jochen Hoffmann à l'adresse jochen.hoffmann@example.com ou au +33 6 52 43 28 13.
+fr-standard-contact-1,phone,+33 6 52 43 28 13,False,On peut joindre Jochen Hoffmann à l'adresse jochen.hoffmann@example.com ou au +33 6 52 43 28 13.
+de-standard-contact-1,email,jochen.hoffmann@example.com,False,Jochen Hoffmann ist unter jochen.hoffmann@example.com oder +33 6 52 43 28 13 erreichbar.
+de-standard-contact-1,phone,+33 6 52 43 28 13,False,Jochen Hoffmann ist unter jochen.hoffmann@example.com oder +33 6 52 43 28 13 erreichbar.
+lb-standard-contact-1,email,jochen.hoffmann@example.com,False,Jochen Hoffmann ass ënner jochen.hoffmann@example.com oder um +33 6 52 43 28 13 ze erreechen.
+lb-standard-contact-1,phone,+33 6 52 43 28 13,False,Jochen Hoffmann ass ënner jochen.hoffmann@example.com oder um +33 6 52 43 28 13 ze erreechen.
+en-standard-birth-0,date_of_birth,03/02/1961,False,Norbert Muller was born on 03/02/1961 in Luxembourg.
+fr-standard-birth-0,date_of_birth,03/02/1961,False,Norbert Muller (né(e) le 03/02/1961 à Luxembourg) a signé le contrat.
+de-standard-birth-0,date_of_birth,03.02.1961,False,Norbert Muller wurde am 03.02.1961 in Luxemburg geboren.
+lb-standard-birth-0,date_of_birth,03.02.1961,False,Norbert Muller ass den 03.02.1961 zu Lëtzebuerg gebuer.
+en-standard-birth-1,date_of_birth,05/11/1955,False,Manon Grondin was born on 05/11/1955 in Luxembourg.
+fr-standard-birth-1,date_of_birth,05/11/1955,False,Manon Grondin (né(e) le 05/11/1955 à Luxembourg) a signé le contrat.
+de-standard-birth-1,date_of_birth,05.11.1955,False,Manon Grondin wurde am 05.11.1955 in Luxemburg geboren.
+lb-standard-birth-1,date_of_birth,05.11.1955,False,Manon Grondin ass den 05.11.1955 zu Lëtzebuerg gebuer.
+en-standard-transfer-0,iban,DE21 3778 6504 8622 0152 34,False,"Please transfer the deposit to Olga Hecker, IBAN DE21 3778 6504 8622 0152 34."
+fr-standard-transfer-0,iban,DE21 3778 6504 8622 0152 34,False,"Veuillez virer la caution à Olga Hecker, IBAN DE21 3778 6504 8622 0152 34."
+de-standard-transfer-0,iban,DE21 3778 6504 8622 0152 34,False,"Bitte überweisen Sie die Kaution an Olga Hecker, IBAN DE21 3778 6504 8622 0152 34."
+lb-standard-transfer-0,iban,DE21 3778 6504 8622 0152 34,False,"Iwwerweist d'Kautioun w.e.g. un Olga Hecker, IBAN DE21 3778 6504 8622 0152 34."
+en-standard-transfer-1,iban,DE82 0521 5779 9605 8420 52,False,"Please transfer the deposit to Lucy Peron, IBAN DE82 0521 5779 9605 8420 52."
+fr-standard-transfer-1,iban,DE82 0521 5779 9605 8420 52,False,"Veuillez virer la caution à Lucy Peron, IBAN DE82 0521 5779 9605 8420 52."
+de-standard-transfer-1,iban,DE82 0521 5779 9605 8420 52,False,"Bitte überweisen Sie die Kaution an Lucy Peron, IBAN DE82 0521 5779 9605 8420 52."
+lb-standard-transfer-1,iban,DE82 0521 5779 9605 8420 52,False,"Iwwerweist d'Kautioun w.e.g. un Lucy Peron, IBAN DE82 0521 5779 9605 8420 52."
+en-standard-card-0,credit_card,4406 2904 2147 6242,False,Hans-Günther Ehlert paid the booking with card 4406 2904 2147 6242.
+fr-standard-card-0,credit_card,4406 2904 2147 6242,False,Hans-Günther Ehlert a payé la réservation avec la carte 4406 2904 2147 6242.
+de-standard-card-0,credit_card,4406 2904 2147 6242,False,Hans-Günther Ehlert hat die Buchung mit der Karte 4406 2904 2147 6242 bezahlt.
+lb-standard-card-0,credit_card,4406 2904 2147 6242,False,Hans-Günther Ehlert huet d'Reservatioun mat der Kaart 4406 2904 2147 6242 bezuelt.
+en-standard-card-1,credit_card,3756 515947 89270,False,Susan Baker paid the booking with card 3756 515947 89270.
+fr-standard-card-1,credit_card,3756 515947 89270,False,Susan Baker a payé la réservation avec la carte 3756 515947 89270.
+de-standard-card-1,credit_card,3756 515947 89270,False,Susan Baker hat die Buchung mit der Karte 3756 515947 89270 bezahlt.
+lb-standard-card-1,credit_card,3756 515947 89270,False,Susan Baker huet d'Reservatioun mat der Kaart 3756 515947 89270 bezuelt.
+en-standard-matricule-0,national_id,1996022954388,False,Social security number of Kätti Weber: 1996022954388.
+fr-standard-matricule-0,national_id,1996022954388,False,Matricule de Kätti Weber : 1996022954388.
+de-standard-matricule-0,national_id,1996022954388,False,Sozialversicherungsnummer von Kätti Weber: 1996022954388.
+lb-standard-matricule-0,national_id,1996022954388,False,D'Matrikelnummer fir Kätti Weber ass 1996022954388.
+en-standard-matricule-1,national_id,1960032638746,False,Social security number of Paula Noble: 1960032638746.
+fr-standard-matricule-1,person,Paula Noble,False,Matricule de Paula Noble : 1960032638746.
+fr-standard-matricule-1,national_id,1960032638746,False,Matricule de Paula Noble : 1960032638746.
+de-standard-matricule-1,national_id,1960032638746,False,Sozialversicherungsnummer von Paula Noble: 1960032638746.
+lb-standard-matricule-1,national_id,1960032638746,False,D'Matrikelnummer fir Paula Noble ass 1960032638746.
+en-standard-address-0,location,Berlin,True,"Marcus Butler lives at 98, rue de l'Église, Berlin."
+en-standard-address-1,location,Luxembourg,True,"Josée Kremer lives at 12, rue de l'Église, Luxembourg."
+en-standard-profile-0,url,www.jhempwagner.com,False,More about Jhemp Wagner on www.jhempwagner.com.
+fr-standard-profile-0,url,www.jhempwagner.com,False,Plus d'informations sur Jhemp Wagner : www.jhempwagner.com.
+de-standard-profile-0,url,www.jhempwagner.com,False,Mehr über Jhemp Wagner unter www.jhempwagner.com.
+lb-standard-profile-0,url,www.jhempwagner.com,False,Méi iwwer Jhemp Wagner op www.jhempwagner.com.
+en-standard-profile-1,url,www.jangwelter.com,False,More about Jang Welter on www.jangwelter.com.
+fr-standard-profile-1,url,www.jangwelter.com,True,Plus d'informations sur Jang Welter : www.jangwelter.com.
+de-standard-profile-1,url,www.jangwelter.com,False,Mehr über Jang Welter unter www.jangwelter.com.
+lb-standard-profile-1,url,www.jangwelter.com,False,Méi iwwer Jang Welter op www.jangwelter.com.
+en-standard-login-0,email,lis.schmit@pt.lu,True,Login to lis.schmit@pt.lu from IP address 2001:db8:67e0::ff04 was blocked.
+en-standard-login-0,ip_address,2001:db8:67e0::ff04,False,Login to lis.schmit@pt.lu from IP address 2001:db8:67e0::ff04 was blocked.
+fr-standard-login-0,email,lis.schmit@pt.lu,False,La connexion à lis.schmit@pt.lu depuis l'adresse IP 2001:db8:67e0::ff04 a été bloquée.
+fr-standard-login-0,ip_address,2001:db8:67e0::ff04,False,La connexion à lis.schmit@pt.lu depuis l'adresse IP 2001:db8:67e0::ff04 a été bloquée.
+de-standard-login-0,email,lis.schmit@pt.lu,True,Die Anmeldung bei lis.schmit@pt.lu von der IP-Adresse 2001:db8:67e0::ff04 wurde blockiert.
+de-standard-login-0,ip_address,2001:db8:67e0::ff04,False,Die Anmeldung bei lis.schmit@pt.lu von der IP-Adresse 2001:db8:67e0::ff04 wurde blockiert.
+lb-standard-login-0,email,lis.schmit@pt.lu,False,D'Umeldung op lis.schmit@pt.lu vun der IP-Adress 2001:db8:67e0::ff04 gouf blockéiert.
+lb-standard-login-0,ip_address,2001:db8:67e0::ff04,False,D'Umeldung op lis.schmit@pt.lu vun der IP-Adress 2001:db8:67e0::ff04 gouf blockéiert.
+en-standard-login-1,email,anastasie.dumont@gmail.com,False,Login to anastasie.dumont@gmail.com from IP address 2001:db8:2646::7340 was blocked.
+en-standard-login-1,ip_address,2001:db8:2646::7340,False,Login to anastasie.dumont@gmail.com from IP address 2001:db8:2646::7340 was blocked.
+fr-standard-login-1,email,anastasie.dumont@gmail.com,False,La connexion à anastasie.dumont@gmail.com depuis l'adresse IP 2001:db8:2646::7340 a été bloquée.
+fr-standard-login-1,ip_address,2001:db8:2646::7340,False,La connexion à anastasie.dumont@gmail.com depuis l'adresse IP 2001:db8:2646::7340 a été bloquée.
+de-standard-login-1,email,anastasie.dumont@gmail.com,False,Die Anmeldung bei anastasie.dumont@gmail.com von der IP-Adresse 2001:db8:2646::7340 wurde blockiert.
+de-standard-login-1,ip_address,2001:db8:2646::7340,False,Die Anmeldung bei anastasie.dumont@gmail.com von der IP-Adresse 2001:db8:2646::7340 wurde blockiert.
+lb-standard-login-1,email,anastasie.dumont@gmail.com,True,D'Umeldung op anastasie.dumont@gmail.com vun der IP-Adress 2001:db8:2646::7340 gouf blockéiert.
+lb-standard-login-1,ip_address,2001:db8:2646::7340,False,D'Umeldung op anastasie.dumont@gmail.com vun der IP-Adress 2001:db8:2646::7340 gouf blockéiert.
+de-standard-meeting-0,person,Mett Gloden,True,Mett Gloden hat Raoul Reuter am Montag in den Büros von Cargolux getroffen.
+lb-standard-meeting-0,person,Mett Gloden,True,Mett Gloden huet de Méindeg Raoul Reuter an de Büroe vun Cargolux getraff.
+en-standard-appointment-0,phone,0171 7539086,False,"Appointment confirmed for Cilly Noack in Dudelange, call 0171 7539086 to cancel."
+fr-standard-appointment-0,phone,0171 7539086,False,"Rendez-vous confirmé pour Cilly Noack à Dudelange, appelez le 0171 7539086 pour annuler."
+de-standard-appointment-0,phone,0171 7539086,False,"Termin für Cilly Noack in Düdelingen bestätigt, Absage unter 0171 7539086."
+lb-standard-appointment-0,phone,0171 7539086,False,"Den Termin fir Cilly Noack zu Diddeleng ass confirméiert, rufft 0171 7539086 un fir ofzesoen."
+en-standard-appointment-1,phone,+33 6 07 66 79 01,False,"Appointment confirmed for Bettina Heinz in Metz, call +33 6 07 66 79 01 to cancel."
+fr-standard-appointment-1,phone,+33 6 07 66 79 01,False,"Rendez-vous confirmé pour Bettina Heinz à Metz, appelez le +33 6 07 66 79 01 pour annuler."
+de-standard-appointment-1,phone,+33 6 07 66 79 01,False,"Termin für Bettina Heinz in Metz bestätigt, Absage unter +33 6 07 66 79 01."
+lb-standard-appointment-1,phone,+33 6 07 66 79 01,False,"Den Termin fir Bettina Heinz zu Metz ass confirméiert, rufft +33 6 07 66 79 01 un fir ofzesoen."
+en-standard-invoice-0,email,marthe.hansen@gmail.com,True,"Send the invoice to marthe.hansen@gmail.com, accounting department of Goodyear."
+fr-standard-invoice-0,email,marthe.hansen@gmail.com,True,"Envoyez la facture à marthe.hansen@gmail.com, service comptabilité de Goodyear."
+de-standard-invoice-0,email,marthe.hansen@gmail.com,True,"Senden Sie die Rechnung an marthe.hansen@gmail.com, Buchhaltung von Goodyear."
+lb-standard-invoice-0,email,marthe.hansen@gmail.com,True,"Schéckt d'Rechnung un marthe.hansen@gmail.com, Comptabilitéit vun Goodyear."
+en-standard-invoice-1,email,jang.thill@pt.lu,True,"Send the invoice to jang.thill@pt.lu, accounting department of Amazon."
+fr-standard-invoice-1,email,jang.thill@pt.lu,True,"Envoyez la facture à jang.thill@pt.lu, service comptabilité de Amazon."
+de-standard-invoice-1,email,jang.thill@pt.lu,True,"Senden Sie die Rechnung an jang.thill@pt.lu, Buchhaltung von Amazon."
+lb-standard-invoice-1,email,jang.thill@pt.lu,True,"Schéckt d'Rechnung un jang.thill@pt.lu, Comptabilitéit vun Amazon."
+en-standard-form-0,date_of_birth,22/11/1967,False,"Name: Raoul Kayser, date of birth: 22/11/1967, place of birth: Esch-sur-Alzette."
+fr-standard-form-0,date_of_birth,22/11/1967,False,"Nom : Raoul Kayser, date de naissance : 22/11/1967, lieu de naissance : Esch-sur-Alzette."
+de-standard-form-0,date_of_birth,22.11.1967,False,"Name: Raoul Kayser, Geburtsdatum: 22.11.1967, Geburtsort: Esch an der Alzette."
+lb-standard-form-0,date_of_birth,22.11.1967,False,"Numm: Raoul Kayser, Gebuertsdatum: 22.11.1967, Gebuertsplaz: Esch-Uelzecht."
+en-standard-form-1,date_of_birth,29/08/1953,False,"Name: Léon Boutin, date of birth: 29/08/1953, place of birth: London."
+fr-standard-form-1,date_of_birth,29/08/1953,False,"Nom : Léon Boutin, date de naissance : 29/08/1953, lieu de naissance : Londres."
+de-standard-form-1,date_of_birth,29.08.1953,False,"Name: Léon Boutin, Geburtsdatum: 29.08.1953, Geburtsort: London."
+lb-standard-form-1,date_of_birth,29.08.1953,False,"Numm: Léon Boutin, Gebuertsdatum: 29.08.1953, Gebuertsplaz: London."
+lb-hard-coordinated-0,person,Tessy,True,D'Mady an d'Tessy sinn op Lellgen gefuer.
+lb-hard-coordinated-1,person,Josée,True,D'Léontine an d'Josée sinn op Ohn gefuer.
+lb-hard-coordinated-1,location,Ohn,False,D'Léontine an d'Josée sinn op Ohn gefuer.
+fr-hard-letter-1,organization,Cactus,False,Madame Schiltz de Cactus nous a écrit une lettre.
+lb-hard-family-0,person,Tun,False,Meng Mamm an den Tun kommen e Sonndeg op Haler.
+lb-hard-family-0,location,Haler,False,Meng Mamm an den Tun kommen e Sonndeg op Haler.
+en-hard-hotline-0,phone,+352 2183 6298,False,"For questions: Mr Wirtz, tel. +352 2183 6298."
+fr-hard-hotline-0,phone,+352 2183 6298,False,"Pour toute question : Monsieur Wirtz, tél. +352 2183 6298."
+de-hard-hotline-0,phone,+352 2183 6298,False,"Bei Fragen: Herr Wirtz, Tel. +352 2183 6298."
+lb-hard-hotline-0,phone,+352 2183 6298,False,"Fir Froen: den Här Wirtz, Tel. +352 2183 6298."
+en-hard-hotline-1,phone,0170/2029142,False,"For questions: Dr Schmit, tel. 0170/2029142."
+fr-hard-hotline-1,phone,0170/2029142,False,"Pour toute question : la docteure Schmit, tél. 0170/2029142."
+de-hard-hotline-1,phone,0170/2029142,False,"Bei Fragen: Dr. Schmit, Tel. 0170/2029142."
+lb-hard-hotline-1,phone,0170/2029142,False,"Fir Froen: d'Doktesch Schmit, Tel. 0170/2029142."
+fr-hard-chat-0,person,léontine,True,rené et léontine viennent ce soir
+lb-hard-chat-0,person,léontine,True,rené an léontine kommen haut den owend
+en-hard-chat-1,person,ernest,False,ernest and gusty are coming tonight
+en-hard-chat-1,person,gusty,False,ernest and gusty are coming tonight
+lb-hard-chat-1,person,ernest,False,ernest an gusty kommen haut den owend
+lb-hard-chat-1,person,gusty,False,ernest an gusty kommen haut den owend
+en-hard-born-0,date_of_birth,06/05/1970,False,"Méck, b. 06/05/1970 in Sanem."
+fr-hard-born-0,date_of_birth,06/05/1970,False,"Méck, né(e) le 06/05/1970 à Sanem."
+de-hard-born-0,date_of_birth,06.05.1970,False,"Méck, geb. 06.05.1970 in Sanem."
+lb-hard-born-0,date_of_birth,06.05.1970,False,"De Méck, gebuer 06.05.1970 zu Suessem."
+en-hard-born-1,date_of_birth,3 February 1992,False,"Pol, b. 3 February 1992 in Berdorf."
+fr-hard-born-1,date_of_birth,3 février 1992,False,"Pol, né(e) le 3 février 1992 à Berdorf."
+de-hard-born-1,date_of_birth,3. Februar 1992,False,"Pol, geb. 3. Februar 1992 in Berdorf."
+lb-hard-born-1,date_of_birth,3. Februar 1992,False,"De Pol, gebuer 3. Februar 1992 zu Bäerdref."
+en-hard-account-0,national_id,1970 0106 752 37,False,"ID number 1970 0106 752 37, account be06922398918682."
+en-hard-account-0,iban,be06922398918682,False,"ID number 1970 0106 752 37, account be06922398918682."
+fr-hard-account-0,national_id,1970 0106 752 37,False,"Matricule 1970 0106 752 37, compte be06922398918682."
+fr-hard-account-0,iban,be06922398918682,False,"Matricule 1970 0106 752 37, compte be06922398918682."
+de-hard-account-0,national_id,1970 0106 752 37,False,"Matrikel 1970 0106 752 37, Konto be06922398918682."
+de-hard-account-0,iban,be06922398918682,False,"Matrikel 1970 0106 752 37, Konto be06922398918682."
+lb-hard-account-0,national_id,1970 0106 752 37,False,"Matricule 1970 0106 752 37, Kont be06922398918682."
+lb-hard-account-0,iban,be06922398918682,False,"Matricule 1970 0106 752 37, Kont be06922398918682."
+en-hard-account-1,national_id,1963 0615 701 30,False,"ID number 1963 0615 701 30, account BE28732407384989."
+en-hard-account-1,iban,BE28732407384989,False,"ID number 1963 0615 701 30, account BE28732407384989."
+fr-hard-account-1,national_id,1963 0615 701 30,False,"Matricule 1963 0615 701 30, compte BE28732407384989."
+fr-hard-account-1,iban,BE28732407384989,False,"Matricule 1963 0615 701 30, compte BE28732407384989."
+de-hard-account-1,national_id,1963 0615 701 30,False,"Matrikel 1963 0615 701 30, Konto BE28732407384989."
+de-hard-account-1,iban,BE28732407384989,False,"Matrikel 1963 0615 701 30, Konto BE28732407384989."
+lb-hard-account-1,national_id,1963 0615 701 30,False,"Matricule 1963 0615 701 30, Kont BE28732407384989."
+lb-hard-account-1,iban,BE28732407384989,False,"Matricule 1963 0615 701 30, Kont BE28732407384989."
+en-hard-text-0,person,Aline,False,Email Aline at aline83@education.lu or text 0352 621 864014.
+en-hard-text-0,email,aline83@education.lu,False,Email Aline at aline83@education.lu or text 0352 621 864014.
+en-hard-text-0,phone,0352 621 864014,False,Email Aline at aline83@education.lu or text 0352 621 864014.
+fr-hard-text-0,person,Aline,False,Écris à Aline sur aline83@education.lu ou par SMS au 0352 621 864014.
+fr-hard-text-0,email,aline83@education.lu,False,Écris à Aline sur aline83@education.lu ou par SMS au 0352 621 864014.
+fr-hard-text-0,phone,0352 621 864014,False,Écris à Aline sur aline83@education.lu ou par SMS au 0352 621 864014.
+de-hard-text-0,person,Aline,False,Schreib Aline an aline83@education.lu oder eine SMS an 0352 621 864014.
+de-hard-text-0,email,aline83@education.lu,True,Schreib Aline an aline83@education.lu oder eine SMS an 0352 621 864014.
+de-hard-text-0,phone,0352 621 864014,False,Schreib Aline an aline83@education.lu oder eine SMS an 0352 621 864014.
+lb-hard-text-0,person,Aline,False,Schreif der Aline op aline83@education.lu oder eng SMS op 0352 621 864014.
+lb-hard-text-0,email,aline83@education.lu,True,Schreif der Aline op aline83@education.lu oder eng SMS op 0352 621 864014.
+lb-hard-text-0,phone,0352 621 864014,False,Schreif der Aline op aline83@education.lu oder eng SMS op 0352 621 864014.
+en-hard-text-1,person,Néckel,False,Email Néckel at neckel12@education.lu or text (+352) 621 033 459.
+en-hard-text-1,email,neckel12@education.lu,False,Email Néckel at neckel12@education.lu or text (+352) 621 033 459.
+en-hard-text-1,phone,(+352) 621 033 459,False,Email Néckel at neckel12@education.lu or text (+352) 621 033 459.
+fr-hard-text-1,person,Néckel,False,Écris à Néckel sur neckel12@education.lu ou par SMS au (+352) 621 033 459.
+fr-hard-text-1,email,neckel12@education.lu,False,Écris à Néckel sur neckel12@education.lu ou par SMS au (+352) 621 033 459.
+fr-hard-text-1,phone,(+352) 621 033 459,False,Écris à Néckel sur neckel12@education.lu ou par SMS au (+352) 621 033 459.
+de-hard-text-1,person,Néckel,False,Schreib Néckel an neckel12@education.lu oder eine SMS an (+352) 621 033 459.
+de-hard-text-1,email,neckel12@education.lu,True,Schreib Néckel an neckel12@education.lu oder eine SMS an (+352) 621 033 459.
+de-hard-text-1,phone,(+352) 621 033 459,False,Schreib Néckel an neckel12@education.lu oder eine SMS an (+352) 621 033 459.
+lb-hard-text-1,person,Néckel,False,Schreif dem Néckel op neckel12@education.lu oder eng SMS op (+352) 621 033 459.
+lb-hard-text-1,email,neckel12@education.lu,True,Schreif dem Néckel op neckel12@education.lu oder eng SMS op (+352) 621 033 459.
+lb-hard-text-1,phone,(+352) 621 033 459,False,Schreif dem Néckel op neckel12@education.lu oder eng SMS op (+352) 621 033 459.
+en-hard-brother-0,organization,Spuerkeess,True,Norbert's brother works at Spuerkeess.
+de-hard-brother-0,organization,Spuerkeess,True,Der Bruder von Norbert arbeitet bei Spuerkeess.
+lb-hard-brother-0,organization,Spuerkeess,True,Dem Norbert säi Brudder schafft bei Spuerkeess.
+en-hard-brother-1,organization,Spuerkeess,True,Tessy's brother works at Spuerkeess.
+de-hard-brother-1,organization,Spuerkeess,True,Der Bruder von Tessy arbeitet bei Spuerkeess.
+lb-hard-brother-1,organization,Spuerkeess,True,Der Tessy hire Brudder schafft bei Spuerkeess.
+en-hard-card-0,credit_card,5593 7390 9905 9953,False,Card 5593 7390 9905 9953 belongs to Mr Wagner.
+fr-hard-card-0,credit_card,5593 7390 9905 9953,False,La carte 5593 7390 9905 9953 appartient à Monsieur Wagner.
+de-hard-card-0,credit_card,5593 7390 9905 9953,False,Die Karte 5593 7390 9905 9953 gehört Herrn Wagner.
+lb-hard-card-0,credit_card,5593 7390 9905 9953,False,D'Kaart 5593 7390 9905 9953 gehéiert dem Här Wagner.
+en-hard-card-1,credit_card,4813 2169 8807 5181,False,Card 4813 2169 8807 5181 belongs to Mrs Majerus.
+fr-hard-card-1,credit_card,4813 2169 8807 5181,False,La carte 4813 2169 8807 5181 appartient à Madame Majerus.
+de-hard-card-1,credit_card,4813 2169 8807 5181,False,Die Karte 4813 2169 8807 5181 gehört Frau Majerus.
+lb-hard-card-1,credit_card,4813 2169 8807 5181,False,D'Kaart 4813 2169 8807 5181 gehéiert der Madame Majerus.
