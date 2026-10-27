@@ -106,6 +106,12 @@ def gazetteer_coverage(gold):
     return names.assign(in_gazetteer=hits).groupby("type")["in_gazetteer"].agg(["size", "sum", "mean"])
 
 
+# Reports are committed, so config paths are written relative to the repository root.
+def shown(path):
+    path, root = Path(path).resolve(), ROOT.parent.resolve()
+    return path.relative_to(root).as_posix() if path.is_relative_to(root) else path.name
+
+
 def run(dataset, config, name):
     rows = load(dataset)
     tagging.detect("warm up model loading", config)
@@ -151,7 +157,7 @@ def run(dataset, config, name):
         f"# Evaluation: {name}",
         "",
         (
-            f"Config: `{json.dumps(config) if not isinstance(config, (str, Path)) else config}`. "
+            f"Config: `{json.dumps(config) if not isinstance(config, (str, Path)) else shown(config)}`. "
             f"{len(rows)} sentences, {words} words, {len(entity_spans)} gold spans."
         ),
         "",
