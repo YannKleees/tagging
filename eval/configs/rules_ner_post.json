@@ -1,1 +1,1 @@
-{"ner": {"postprocess": true, "confirm_ambiguous": true}}
+{"ner": {"threshold": 0.5}}

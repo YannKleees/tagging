@@ -10,7 +10,8 @@ __all__ = ["Tagger", "detect", "redact", "tagger"]
 NER_DEFAULTS = {
     "model": "urchade/gliner_multi_pii-v1",
     "device": None,
-    "threshold": 0.5,
+    # 0.4 was chosen on the dev split: +2 points Luxembourgish hard recall for one extra false positive.
+    "threshold": 0.4,
     "chunk_words": 200,
     "overlap_words": 50,
     "postprocess": True,
