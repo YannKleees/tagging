@@ -171,6 +171,34 @@ fn pseudonymization_is_consistent_within_document() {
 }
 
 #[test]
+fn pseudonymization_links_short_names_to_full_names() {
+    let t = "Jhemp Kieffer wrote. Jhemp is out, Kieffer too.";
+    let spans = [
+        span(EntityType::Person, 0, 13, 0.9, t),
+        span(EntityType::Person, 21, 26, 0.9, t),
+        span(EntityType::Person, 35, 42, 0.9, t),
+    ];
+    assert_eq!(
+        redact(t, &spans, Mode::Pseudo).unwrap(),
+        "[PERSON_1] wrote. [PERSON_1] is out, [PERSON_1] too."
+    );
+}
+
+#[test]
+fn pseudonymization_keeps_ambiguous_short_names_apart() {
+    let t = "Marie Schmit and Marie Weber met. Marie left.";
+    let spans = [
+        span(EntityType::Person, 0, 12, 0.9, t),
+        span(EntityType::Person, 17, 28, 0.9, t),
+        span(EntityType::Person, 34, 39, 0.9, t),
+    ];
+    assert_eq!(
+        redact(t, &spans, Mode::Pseudo).unwrap(),
+        "[PERSON_1] and [PERSON_2] met. [PERSON_3] left."
+    );
+}
+
+#[test]
 fn redact_accepts_unsorted_spans() {
     let t = "ab cd";
     let spans = [
