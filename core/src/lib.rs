@@ -9,6 +9,8 @@ pub mod resolve;
 pub mod span;
 pub mod tagger;
 pub mod tokenizer;
+#[cfg(feature = "wasm")]
+mod wasm;
 
 pub use config::{Config, DetectorKind};
 pub use error::{Error, Result};

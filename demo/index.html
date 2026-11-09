@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tagging demo</title>
+<meta name="description" content="Find and redact personal data in Luxembourgish, French, German and English text, in your browser.">
+<style>
+:root {
+  --bg: #ffffff; --panel: #f6f8fa; --border: #d8dee4; --text: #1f2328; --dim: #656d76; --accent: #0969da;
+  --person: #ddf4ff; --location: #dafbe1; --organization: #fbefff; --contact: #fff8c5; --number: #ffebe9; --date: #eaeef2;
+  --mark-text: #1f2328;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #e6edf3; --dim: #8d96a0; --accent: #4493f8;
+    --person: #0c2d6b; --location: #033a16; --organization: #3c1e70; --contact: #4b3800; --number: #5d0f12; --date: #2d333b;
+    --mark-text: #e6edf3;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+}
+main { max-width: 880px; margin: 0 auto; padding: 48px 16px 64px; }
+h1 { font-size: 28px; font-weight: 600; margin: 0 0 6px; }
+.lead { color: var(--dim); margin: 0 0 32px; max-width: 680px; }
+.label {
+  font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--dim);
+  margin: 0 0 8px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.examples { display: flex; gap: 6px; flex-wrap: wrap; }
+button {
+  font: inherit; font-size: 13px; color: var(--text); background: var(--panel); border: 1px solid var(--border);
+  border-radius: 8px; padding: 4px 12px; cursor: pointer; letter-spacing: 0; text-transform: none; font-weight: 500;
+}
+button:hover { border-color: var(--dim); }
+button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+textarea, .output {
+  width: 100%; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); color: var(--text);
+  font: 14px/1.7 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; padding: 14px 16px;
+}
+textarea { min-height: 150px; resize: vertical; margin-bottom: 28px; }
+textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+.output { min-height: 150px; white-space: pre-wrap; overflow-wrap: anywhere; }
+mark { color: var(--mark-text); border-radius: 4px; padding: 1px 3px; }
+mark small { font-size: 10px; font-weight: 600; letter-spacing: .5px; color: var(--dim); margin-left: 4px; }
+.person { background: var(--person); } .location, .address { background: var(--location); }
+.organization { background: var(--organization); }
+.email, .phone, .url, .ip_address { background: var(--contact); }
+.iban, .credit_card, .national_id { background: var(--number); }
+.date, .date_of_birth { background: var(--date); }
+.stats { color: var(--dim); font-size: 13px; margin: 10px 0 0; min-height: 1.6em; }
+.note { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--dim); font-size: 14px; }
+.note p { margin: 0 0 10px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<main>
+  <h1>tagging</h1>
+  <p class="lead">Finds personal data in Luxembourgish, French, German and English text and replaces it with placeholders. The Rust rule engine runs in your browser as WebAssembly, so nothing you type leaves this page.</p>
+
+  <div class="label"><span>Input</span><span class="examples" id="examples"></span></div>
+  <textarea id="input" spellcheck="false" aria-label="Text to check for personal data"></textarea>
+
+  <div class="label">
+    <span>Output</span>
+    <span class="examples" role="group" aria-label="Output mode">
+      <button data-mode="highlight" aria-pressed="true">Highlight</button>
+      <button data-mode="pseudo" aria-pressed="false">Pseudonymise</button>
+      <button data-mode="mask" aria-pressed="false">Mask</button>
+    </span>
+  </div>
+  <div class="output" id="output" aria-live="polite">Loading the rule engine…</div>
+  <p class="stats" id="stats"></p>
+
+  <div class="note">
+    <p>This page runs the rules and the Luxembourg gazetteers only. They catch emails, phone numbers, IBANs, card numbers, Luxembourg national IDs, dates of birth, URLs, IP addresses and known first names, places and organisations. A name that is in no list, such as the surname in the Luxembourgish example, needs the GLiNER model in the full Python package. With the model, recall on hard Luxembourgish names rises from 0.57 to 0.91 at a precision of 1.00.</p>
+    <p>All example data is made up. <a href="https://github.com/YannKleees/tagging">Code and evaluation on GitHub</a></p>
+  </div>
+</main>
+
+<script type="module">
+import init, { annotate, redact } from "./pkg/tagging_core.js";
+
+const EXAMPLES = {
+  "Lëtzebuergesch": "Moien, ech sinn de Jhemp Kieffer aus Ettelbréck. Schreif mer op jhemp.kieffer@pt.lu oder rouf um +352 621 555 123 un. Jhemp freet sech.",
+  "Français": "Bonjour, je m'appelle Sophie et j'habite à Esch-sur-Alzette. Merci de verser le montant sur LU28 0019 4006 4475 0000 et de m'écrire à sophie.weber@example.lu.",
+  "Deutsch": "Hallo, hier ist Carine aus Differdingen. Ich bin am 04.07.1988 geboren und arbeite bei POST Luxembourg. Sie erreichen mich unter Tel. 26 12 34 56.",
+  "English": "Hi, this is Paul from the University of Luxembourg. My matricule is 1988 0704 123 32, my card is 4111 1111 1111 1111 and my email is paul.hoffmann@example.lu.",
+};
+
+const input = document.getElementById("input");
+const output = document.getElementById("output");
+const stats = document.getElementById("stats");
+const modes = [...document.querySelectorAll("[data-mode]")];
+let mode = "highlight";
+
+const examples = document.getElementById("examples");
+for (const [name, text] of Object.entries(EXAMPLES)) {
+  const b = document.createElement("button");
+  b.textContent = name;
+  b.addEventListener("click", () => { input.value = text; render(); });
+  examples.append(b);
+}
+
+function render() {
+  const text = input.value;
+  const segments = JSON.parse(annotate(text));
+  const found = segments.filter(s => s.type);
+  if (mode === "highlight") {
+    output.replaceChildren(...segments.map(s => {
+      if (!s.type) return document.createTextNode(s.text);
+      const m = document.createElement("mark");
+      m.className = s.type;
+      const tag = document.createElement("small");
+      tag.textContent = s.type.replace("_", " ").toUpperCase();
+      m.append(s.text, tag);
+      return m;
+    }));
+  } else {
+    output.textContent = redact(text, mode);
+  }
+  const types = new Set(found.map(s => s.type));
+  stats.textContent = text.trim()
+    ? `${found.length} ${found.length === 1 ? "item" : "items"} found` + (types.size ? `, ${types.size} ${types.size === 1 ? "type" : "types"}` : "")
+    : "";
+}
+
+for (const b of modes) {
+  b.addEventListener("click", () => {
+    mode = b.dataset.mode;
+    modes.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    render();
+  });
+}
+
+await init();
+input.value = EXAMPLES["Lëtzebuergesch"];
+input.addEventListener("input", render);
+render();
+</script>
+</body>
+</html>

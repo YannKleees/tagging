@@ -1,0 +1,49 @@
+# Builds the Rust core as WebAssembly and publishes demo/ on GitHub Pages.
+name: Demo page
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "core/**"
+      - "demo/**"
+      - ".github/workflows/demo.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - name: Install wasm-bindgen
+        run: cargo install wasm-bindgen-cli --version 0.2.130 --locked
+      - name: Build
+        run: |
+          cargo build -p tagging-core --lib --release --target wasm32-unknown-unknown --features wasm
+          wasm-bindgen --target web --no-typescript --out-dir demo/pkg target/wasm32-unknown-unknown/release/tagging_core.wasm
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: demo
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

@@ -6,3 +6,4 @@ __pycache__/
 *.so
 /eval/results/*.tmp
 *.pdb
+/demo/pkg/

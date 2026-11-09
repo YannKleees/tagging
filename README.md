@@ -2,6 +2,8 @@
 
 Finds and redacts personal data (names, places, organisations, emails, phone numbers, IBANs, card numbers, national IDs, dates of birth, addresses, URLs, IP addresses) in English, French, German and Luxembourgish text. A Rust core with rules and Luxembourg gazetteers runs in milliseconds; an optional multilingual NER model (GLiNER) adds the names that rules cannot know.
 
+**Try it in your browser:** [yannkleees.github.io/tagging](https://yannkleees.github.io/tagging/). The demo runs the rules and gazetteers compiled to WebAssembly; the NER model needs the Python package.
+
 ## Result
 
 On a held-out set of 288 synthetic sentences (72 per language, including hard cases such as `d'Lis`, `den Här Kieffer` and lowercase chat):
