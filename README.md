@@ -14,7 +14,31 @@ On a held-out set of 288 synthetic sentences (72 per language, including hard ca
 | NER model alone | 0.74 | 0.79 | 0.66–0.82 | 92 |
 | **Rules + NER + post-processing** | **1.00** | **1.00** | **0.99–1.00** | **13** |
 
-These numbers are close to the ceiling of the test set, not of the task. The word lists now know all places and organisations and 82% of the person names in it, and the sentences come from the same templates as the development split. On real documents the rules will miss surnames without a first name or title, rare first names and small firms; that is what the model is for. See the caveats in [eval/README.md](eval/README.md).
+These numbers are the ceiling of the test set, not of the task. The word lists know all places and organisations and 82% of the person names in it, and the sentences come from the same templates as the development split.
+
+## How good it really is
+
+[eval/results/robustness.md](eval/results/robustness.md) has the checks the eval split cannot make. Recall, with names written without looking at the word lists and with two external datasets:
+
+| | Rules only | Rules + NER |
+|---|---|---|
+| Person, original eval split | 0.98 | 1.00 |
+| Person, unseen names | 0.52 | 0.92 |
+| Organisation, unseen small firms | 0.06 | 0.85 |
+| Location, unseen towns | 0.53 | 0.96 |
+| Email, phone, IBAN, card, national ID, address (unseen names) | 1.00 | 1.00 |
+| Persons in all-lowercase text | 0.72 | 0.98 |
+| WikiANN, Wikipedia sentences in four languages, all entities | 0.44–0.55 | 0.72–0.80 |
+| ai4privacy, synthetic letters and forms, all labelled items | 0.16–0.20 | 0.39–0.43 |
+
+What that means:
+
+- **Reliable:** checksum types (IBAN, card, Luxembourg national ID), emails, IP addresses, and phone numbers and addresses in Luxembourg's formats.
+- **Good with the model:** person names, about 0.92 on names it has not seen.
+- **Weak:** organisations, anything the rules alone must find without a list entry, and identifiers this tool has no detector for (passports, driving licences, foreign ID numbers).
+- **Not measured:** real letters, emails and forms. Every number here comes from synthetic or Wikipedia text.
+
+This is a portfolio project and a starting point, not a product to rely on for anonymisation. At 0.92 recall per name, a document with ten names leaks at least one more often than not.
 
 Over-redaction is the other half. On 120 everyday sentences without any personal data (`The Plumber fixed the Sink`, `Die Feuerwehr war schnell da`), the model alone marks 151 spans, the full pipeline 14, of which 9 are Luxembourgish ([eval/results/over_redaction.md](eval/results/over_redaction.md)).
 
@@ -75,7 +99,7 @@ many = tagging.detect_batch(["first text", "second text"], {"ner": True})  # one
 
 The CLI works without Python: `cargo run --release -- detect file.txt` or `-- redact file.txt --mode mask`.
 
-Tests: `cargo test` and `pytest`. Evaluation: `pip install -e ".[eval]"`, then `python eval/evaluate.py` (see [eval/README.md](eval/README.md)).
+Tests: `cargo test` and `pytest`. Evaluation: `pip install -e ".[eval]"`, then `python eval/evaluate.py` and `python eval/robustness.py` (see [eval/README.md](eval/README.md)).
 
 ## Data
 

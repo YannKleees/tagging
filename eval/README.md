@@ -58,6 +58,7 @@ python eval/compare.py --split dev    # tuning runs, written to results/dev/
 python eval/compare.py --split eval   # all variants on the held-out split, results/comparison.md
 python eval/over_redaction.py         # hits on the everyday sentences, results/over_redaction.md
 python eval/benchmark.py              # runtime per 1,000 words, results/runtime.md
+python eval/robustness.py             # unseen names, damaged text, external data, results/robustness.md
 TAGGING_NER_TESTS=1 pytest tests/test_ner_model.py
 ```
 
@@ -240,6 +241,40 @@ them. The model dominates the cost. A GPU should be much faster, but this has no
   the rules alone.
 - Thresholds 0.4 and 0.5 give the same result on the eval split. The default stays at 0.4, chosen on
   the dev split.
+
+## Robustness
+
+`robustness.py` answers what the eval split cannot: how much of the result is the word lists
+knowing the test names. From [`results/robustness.md`](results/robustness.md):
+
+| recall | `rules` | `rules_ner_post_tuned` |
+| --- | --- | --- |
+| person, original eval split | 0.98 | 1.00 |
+| person, 80 unseen first names and surnames | 0.52 | 0.92 |
+| organization, 20 unseen small firms | 0.06 | 0.85 |
+| location, 20 unseen towns | 0.53 | 0.96 |
+| structured types and addresses, unseen names | 1.00 | 1.00 |
+| person, text without diacritics | 0.86 | 0.98 |
+| person, all lowercase | 0.72 | 0.98 |
+| address, all lowercase | 0.00 | 1.00 |
+| WikiANN, all entities, by language | 0.44 to 0.55 | 0.72 to 0.80 |
+| WikiANN, organizations | 0.24 to 0.36 | 0.52 to 0.66 |
+| ai4privacy, all labelled items, by language | 0.16 to 0.20 | 0.39 to 0.43 |
+
+- The rules were overfitted to the eval names in the plain sense: with other names, person recall
+  halves and organizations all but vanish. Of the unseen names, 48% of the first names, 68% of the
+  surnames, 5% of the firms and half of the towns are in a list.
+- The model is what generalizes. With it, unseen persons stay at 0.92 and firms at 0.85.
+- The format-based detectors do not depend on names and keep 1.00. On ai4privacy, emails and IP
+  addresses are 1.00 and phone numbers 0.79, but passports, driving licences, foreign ID numbers,
+  passwords and times have no detector and are near zero.
+- The address rule needs capitals. In lowercase text only the model finds addresses.
+- The first run of these checks crashed: the address detector cut its search window inside a
+  multi-byte character. That is fixed and has a regression test, and the rules have since run over
+  46,000 texts in eleven languages without a crash.
+
+None of this is real text. Letters, emails and forms from an actual organization, labelled by hand,
+are the measurement that is still missing.
 
 ## Caveats
 
