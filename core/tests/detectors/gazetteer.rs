@@ -38,7 +38,7 @@ fn matches_multi_token_names() {
 #[test]
 fn is_case_insensitive() {
     assert_eq!(texts(&builtin(), "RÉIMECH"), ["RÉIMECH"]);
-    let s = &run(&builtin(), "ech war zu remich")[0];
+    let s = &run(&builtin(), "Ech war zu remich")[0];
     assert_eq!(s.text, "remich");
     assert!(s.score < 0.5);
 }
@@ -106,4 +106,17 @@ fn loads_custom_lists() {
     g.add_words(&["Acme Sàrl"], EntityType::Organization);
     assert_eq!(texts(&g, "den Här Kieffer an d'Acme Sàrl"), ["Kieffer", "Acme Sàrl"]);
     assert!(run(&g, "Schmit")[0].score < run(&g, "Kiefer")[0].score);
+}
+
+#[test]
+fn finds_places_and_organizations_outside_luxembourg() {
+    assert_eq!(
+        kinds("Si schafft bei Deloitte zu Bréissel"),
+        [
+            ("Deloitte".into(), EntityType::Organization),
+            ("Bréissel".into(), EntityType::Location)
+        ]
+    );
+    assert_eq!(texts(&builtin(), "von Berlin nach Tréier"), ["Berlin", "Tréier"]);
+    assert_eq!(texts(&builtin(), "KPMG and Deutsche Bank"), ["KPMG", "Deutsche Bank"]);
 }

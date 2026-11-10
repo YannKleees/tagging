@@ -5,33 +5,33 @@ Config: `eval/configs/rules_ner.json`. 248 sentences, 2297 words, 504 gold spans
 Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
 `overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
 
-Runtime: 66631.58 ms per 1,000 words (detection only).
+Runtime: 6021.63 ms per 1,000 words (detection only).
 
 ## By language and subset
 
 | lang | subset | recall_overlap | recall_exact | any_type_recall | precision_overlap | f1_overlap | f1_exact | n_gold | n_pred |
 |---|---|---|---|---|---|---|---|---|---|
-| de | hard | 0.95 | 0.73 | 0.97 | 0.97 | 0.96 | 0.74 | 60 | 59 |
-| de | standard | 0.98 | 0.98 | 0.98 | 1.00 | 0.99 | 0.99 | 66 | 65 |
-| en | hard | 0.90 | 0.68 | 0.92 | 0.95 | 0.92 | 0.70 | 60 | 57 |
-| en | standard | 0.97 | 0.94 | 1.00 | 1.00 | 0.98 | 0.95 | 66 | 64 |
-| fr | hard | 0.97 | 0.75 | 0.98 | 0.98 | 0.97 | 0.76 | 60 | 59 |
-| fr | standard | 0.98 | 0.98 | 0.98 | 1.00 | 0.99 | 0.99 | 66 | 65 |
-| lb | hard | 0.87 | 0.55 | 0.93 | 0.95 | 0.90 | 0.57 | 60 | 55 |
-| lb | standard | 0.98 | 0.98 | 0.98 | 1.00 | 0.99 | 0.99 | 66 | 65 |
+| de | hard | 0.98 | 0.77 | 1.00 | 0.97 | 0.98 | 0.76 | 60 | 61 |
+| de | standard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 66 | 66 |
+| en | hard | 0.98 | 0.77 | 1.00 | 0.95 | 0.97 | 0.75 | 60 | 62 |
+| en | standard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 66 | 66 |
+| fr | hard | 0.98 | 0.77 | 1.00 | 0.98 | 0.98 | 0.77 | 60 | 60 |
+| fr | standard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 66 | 66 |
+| lb | hard | 0.97 | 0.67 | 1.00 | 0.97 | 0.97 | 0.67 | 60 | 60 |
+| lb | standard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 66 | 66 |
 
 ## Names only (person, organization, location, address)
 
 | lang | subset | recall_overlap | recall_exact | precision_overlap | f1_overlap | n_gold | n_pred |
 |---|---|---|---|---|---|---|---|
-| de | hard | 0.93 | 0.65 | 0.96 | 0.95 | 46 | 45 |
-| de | standard | 0.98 | 0.98 | 1.00 | 0.99 | 42 | 41 |
-| en | hard | 0.91 | 0.63 | 0.93 | 0.92 | 46 | 45 |
-| en | standard | 0.95 | 0.90 | 1.00 | 0.98 | 42 | 40 |
-| fr | hard | 0.96 | 0.67 | 0.98 | 0.97 | 46 | 45 |
-| fr | standard | 0.98 | 0.98 | 1.00 | 0.99 | 42 | 41 |
-| lb | hard | 0.83 | 0.41 | 0.93 | 0.87 | 46 | 41 |
-| lb | standard | 0.98 | 0.98 | 1.00 | 0.99 | 42 | 41 |
+| de | hard | 0.98 | 0.70 | 0.96 | 0.97 | 46 | 47 |
+| de | standard | 1.00 | 1.00 | 1.00 | 1.00 | 42 | 42 |
+| en | hard | 0.98 | 0.70 | 0.94 | 0.96 | 46 | 48 |
+| en | standard | 1.00 | 1.00 | 1.00 | 1.00 | 42 | 42 |
+| fr | hard | 0.98 | 0.70 | 0.98 | 0.98 | 46 | 46 |
+| fr | standard | 1.00 | 1.00 | 1.00 | 1.00 | 42 | 42 |
+| lb | hard | 0.96 | 0.57 | 0.96 | 0.96 | 46 | 46 |
+| lb | standard | 1.00 | 1.00 | 1.00 | 1.00 | 42 | 42 |
 
 ## False positives on the entity-free subset
 
@@ -86,16 +86,16 @@ Runtime: 66631.58 ms per 1,000 words (detection only).
 
 | type | recall_overlap | recall_exact | any_type_recall | precision_overlap | f1_overlap | f1_exact | n_gold | n_pred |
 |---|---|---|---|---|---|---|---|---|
-| address | 1.00 | 0.75 | 1.00 | 1.00 | 1.00 | 0.75 | 8 | 8 |
+| address | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 8 | 8 |
 | credit_card | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 16 | 16 |
-| date_of_birth | 0.92 | 0.92 | 0.92 | 1.00 | 0.96 | 0.96 | 24 | 22 |
+| date_of_birth | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 24 | 24 |
 | email | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 32 | 32 |
 | iban | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 16 | 16 |
 | ip_address | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 8 | 8 |
-| location | 0.96 | 0.96 | 1.00 | 1.00 | 0.98 | 0.98 | 80 | 77 |
+| location | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 80 | 80 |
 | national_id | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 16 | 16 |
-| organization | 0.98 | 0.96 | 0.98 | 0.94 | 0.96 | 0.94 | 48 | 50 |
-| person | 0.92 | 0.65 | 0.94 | 0.97 | 0.94 | 0.67 | 216 | 204 |
+| organization | 1.00 | 1.00 | 1.00 | 0.96 | 0.98 | 0.98 | 48 | 50 |
+| person | 0.98 | 0.71 | 1.00 | 0.97 | 0.97 | 0.71 | 216 | 217 |
 | phone | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 32 | 32 |
 | url | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 8 | 8 |
 
@@ -112,19 +112,19 @@ Runtime: 66631.58 ms per 1,000 words (detection only).
 | de | location | 1.00 | 1.00 | 1.00 | 20 | 20 |
 | de | national_id | 1.00 | 1.00 | 1.00 | 4 | 4 |
 | de | organization | 1.00 | 1.00 | 1.00 | 12 | 12 |
-| de | person | 0.93 | 0.96 | 0.94 | 54 | 52 |
+| de | person | 0.98 | 0.96 | 0.97 | 54 | 55 |
 | de | phone | 1.00 | 1.00 | 1.00 | 8 | 8 |
 | de | url | 1.00 | 1.00 | 1.00 | 2 | 2 |
 | en | address | 1.00 | 1.00 | 1.00 | 2 | 2 |
 | en | credit_card | 1.00 | 1.00 | 1.00 | 4 | 4 |
-| en | date_of_birth | 0.67 | 1.00 | 0.80 | 6 | 4 |
+| en | date_of_birth | 1.00 | 1.00 | 1.00 | 6 | 6 |
 | en | email | 1.00 | 1.00 | 1.00 | 8 | 8 |
 | en | iban | 1.00 | 1.00 | 1.00 | 4 | 4 |
 | en | ip_address | 1.00 | 1.00 | 1.00 | 2 | 2 |
-| en | location | 0.90 | 1.00 | 0.95 | 20 | 18 |
+| en | location | 1.00 | 1.00 | 1.00 | 20 | 20 |
 | en | national_id | 1.00 | 1.00 | 1.00 | 4 | 4 |
 | en | organization | 1.00 | 1.00 | 1.00 | 12 | 12 |
-| en | person | 0.93 | 0.94 | 0.93 | 54 | 53 |
+| en | person | 0.98 | 0.95 | 0.96 | 54 | 56 |
 | en | phone | 1.00 | 1.00 | 1.00 | 8 | 8 |
 | en | url | 1.00 | 1.00 | 1.00 | 2 | 2 |
 | fr | address | 1.00 | 1.00 | 1.00 | 2 | 2 |
@@ -136,7 +136,7 @@ Runtime: 66631.58 ms per 1,000 words (detection only).
 | fr | location | 1.00 | 1.00 | 1.00 | 20 | 20 |
 | fr | national_id | 1.00 | 1.00 | 1.00 | 4 | 4 |
 | fr | organization | 1.00 | 1.00 | 1.00 | 12 | 12 |
-| fr | person | 0.94 | 0.98 | 0.96 | 54 | 52 |
+| fr | person | 0.98 | 0.98 | 0.98 | 54 | 54 |
 | fr | phone | 1.00 | 1.00 | 1.00 | 8 | 8 |
 | fr | url | 1.00 | 1.00 | 1.00 | 2 | 2 |
 | lb | address | 1.00 | 1.00 | 1.00 | 2 | 2 |
@@ -145,10 +145,10 @@ Runtime: 66631.58 ms per 1,000 words (detection only).
 | lb | email | 1.00 | 1.00 | 1.00 | 8 | 8 |
 | lb | iban | 1.00 | 1.00 | 1.00 | 4 | 4 |
 | lb | ip_address | 1.00 | 1.00 | 1.00 | 2 | 2 |
-| lb | location | 0.95 | 1.00 | 0.97 | 20 | 19 |
+| lb | location | 1.00 | 1.00 | 1.00 | 20 | 20 |
 | lb | national_id | 1.00 | 1.00 | 1.00 | 4 | 4 |
-| lb | organization | 0.92 | 0.79 | 0.85 | 12 | 14 |
-| lb | person | 0.87 | 1.00 | 0.93 | 54 | 47 |
+| lb | organization | 1.00 | 0.86 | 0.92 | 12 | 14 |
+| lb | person | 0.96 | 1.00 | 0.98 | 54 | 52 |
 | lb | phone | 1.00 | 1.00 | 1.00 | 8 | 8 |
 | lb | url | 1.00 | 1.00 | 1.00 | 2 | 2 |
 
@@ -158,35 +158,16 @@ Share of distinct gold person, location and organization strings that the built-
 
 | type | distinct | in_gazetteer | share |
 |---|---|---|---|
-| location | 42 | 32 | 0.76 |
-| organization | 11 | 6 | 0.55 |
-| person | 50 | 17 | 0.34 |
+| location | 42 | 42 | 1.00 |
+| organization | 11 | 11 | 1.00 |
+| person | 50 | 40 | 0.80 |
 
-## Missed spans (24)
+## Missed spans (5)
 
 | id | type | text | covered | sentence |
 |---|---|---|---|---|
-| fr-standard-matricule-1 | person | Pero Dietz | False | Matricule de Pero Dietz : 1944051285228. |
-| en-standard-address-0 | location | Dudelange | True | Jean Davies lives at 105, boulevard Royal, Dudelange. |
-| en-standard-address-1 | location | Luxembourg | True | Rachel O'Donnell lives at 46, rue de la Gare, Luxembourg. |
-| de-standard-meeting-1 | person | Ingo Butte | False | Tun Ries hat Ingo Butte am Montag in den Büros von KPMG getroffen. |
-| lb-standard-invoice-1 | organization | Google | False | Schéckt d'Rechnung un nathalie.pons@web.de, Comptabilitéit vun Google. |
 | en-hard-coordinated-0 | person | Charel | True | Lis and Charel drove to Betzdorf. |
 | fr-hard-coordinated-0 | person | Charel | True | Lis et Charel sont partis à Betzdorf. |
 | de-hard-coordinated-0 | person | Charel | True | Lis und Charel sind nach Betzdorf gefahren. |
 | lb-hard-coordinated-0 | person | Charel | True | D'Lis an de Charel sinn op Betzder gefuer. |
 | lb-hard-coordinated-1 | person | Léontine | True | De Méck an d'Léontine sinn op Buerschent gefuer. |
-| lb-hard-letter-1 | person | Feltgen | False | Den Här Feltgen vun CNS huet eis e Bréif geschriwwen. |
-| lb-hard-workplace-1 | location | Welschent | True | De Charel schafft zënter Joren bei ADEM zu Welschent. |
-| en-hard-chat-1 | person | jang | False | jang and gusty are coming tonight |
-| en-hard-chat-1 | person | gusty | False | jang and gusty are coming tonight |
-| de-hard-chat-1 | person | jang | False | jang und gusty kommen heute abend |
-| lb-hard-chat-1 | person | jang | False | jang an gusty kommen haut den owend |
-| lb-hard-chat-1 | person | gusty | False | jang an gusty kommen haut den owend |
-| en-hard-born-0 | date_of_birth | 08/02/1982 | False | Fernande, b. 08/02/1982 in Finsterthal. |
-| en-hard-born-1 | date_of_birth | 23/06/1983 | False | Pol, b. 23/06/1983 in Reisdorf. |
-| lb-hard-separated-0 | person | Ries | True | D'Doktesch Ries an den Här Weber hu sech getrennt. |
-| en-hard-text-0 | person | Norbert | False | Email Norbert at norbert58@gmail.com or text 0170/2470822. |
-| fr-hard-text-0 | person | Norbert | False | Écris à Norbert sur norbert58@gmail.com ou par SMS au 0170/2470822. |
-| de-hard-text-0 | person | Norbert | False | Schreib Norbert an norbert58@gmail.com oder eine SMS an 0170/2470822. |
-| lb-hard-text-0 | person | Norbert | False | Schreif dem Norbert op norbert58@gmail.com oder eng SMS op 0170/2470822. |

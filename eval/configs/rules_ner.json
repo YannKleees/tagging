@@ -1,1 +1,1 @@
-{"ner": {"threshold": 0.5, "postprocess": false, "confirm_ambiguous": false}}
+{"ner": {"threshold": 0.5, "postprocess": false, "confirm_ambiguous": false, "distractors": false}}

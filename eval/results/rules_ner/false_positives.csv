@@ -7,12 +7,12 @@ en-entity_free-01,person,The Neighbour,0.7725,The Neighbour took his car to the 
 en-entity_free-01,organization,Garage,0.778,The Neighbour took his car to the Garage.
 fr-entity_free-01,person,Le voisin,0.7977,Le voisin a amené sa voiture au garage.
 de-entity_free-01,person,Der Nachbar,0.6258,Der Nachbar hat sein Auto in die Garage gebracht.
-lb-entity_free-01,person,Den Noper,0.7031,Den Noper huet säin Auto an d'Garage bruecht.
+lb-entity_free-01,person,Den Noper,0.703,Den Noper huet säin Auto an d'Garage bruecht.
 en-entity_free-02,person,Director,0.8296,The Director and the Teacher are talking to the parents.
 en-entity_free-02,person,Teacher,0.8107,The Director and the Teacher are talking to the parents.
 en-entity_free-02,person,parents,0.5389,The Director and the Teacher are talking to the parents.
 fr-entity_free-02,person,Le directeur,0.5509,Le directeur et le professeur parlent avec les parents.
-fr-entity_free-02,person,professeur,0.5547,Le directeur et le professeur parlent avec les parents.
+fr-entity_free-02,person,professeur,0.5546,Le directeur et le professeur parlent avec les parents.
 fr-entity_free-02,person,parents,0.6228,Le directeur et le professeur parlent avec les parents.
 de-entity_free-02,person,Der Direktor,0.6059,Der Direktor und der Lehrer sprechen mit den Eltern.
 de-entity_free-02,person,Eltern,0.5129,Der Direktor und der Lehrer sprechen mit den Eltern.
@@ -35,6 +35,7 @@ lb-entity_free-05,organization,Post,0.5288,"De Bréif läit op der Post, de Pak 
 lb-entity_free-05,location,Gare,0.55,"De Bréif läit op der Post, de Pak an der Gare."
 en-entity_free-06,person,Auntie and Uncle,0.6568,Auntie and Uncle are coming at Christmas.
 fr-entity_free-06,person,La Tante et l'Oncle,0.6874,La Tante et l'Oncle viennent à Noël.
+fr-entity_free-06,person,Noël,0.85,La Tante et l'Oncle viennent à Noël.
 lb-entity_free-06,organization,D'Tatta an de Monni,0.6546,D'Tatta an de Monni kommen op Chrëschtdag.
 en-entity_free-07,person,My Sister,0.7406,My Sister is a Nurse at the Hospital.
 en-entity_free-07,organization,Hospital,0.7946,My Sister is a Nurse at the Hospital.
@@ -87,7 +88,6 @@ lb-entity_free-16,person,De Bauer,0.7473,De Bauer huet säi Wäin an der Kellere
 lb-entity_free-16,organization,Wäin,0.5114,De Bauer huet säi Wäin an der Kellerei verkaaft.
 lb-entity_free-16,organization,Kellerei,0.5525,De Bauer huet säi Wäin an der Kellerei verkaaft.
 en-entity_free-17,person,Mett,0.5506,Breakfast was Mett with onions.
-fr-entity_free-17,person,Mett,0.55,"Au petit-déjeuner, il y avait du Mett aux oignons."
 de-entity_free-17,person,Mett,0.55,Zum Frühstück gab es Mett mit Zwiebeln.
 lb-entity_free-17,person,Mett,0.55,Mir hunn Moies Mett mat Ënnen giess.
 en-entity_free-18,organization,The Train into Town,0.6491,The Train into Town was twenty minutes late.

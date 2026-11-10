@@ -82,8 +82,10 @@ fn find(
             continue;
         }
         // German and Luxembourgish put the verb last: "am 03.02.1961 in Luxemburg geboren".
-        let birth = has_keyword(&window_before(text, m.start(), 40), BIRTH_WORDS)
-            || has_keyword(&window_after(text, m.end(), 30), BIRTH_WORDS);
+        let before = window_before(text, m.start(), 40);
+        let birth = has_keyword(&before, BIRTH_WORDS)
+            || has_keyword(&window_after(text, m.end(), 30), BIRTH_WORDS)
+            || abbreviated_birth(&text[..m.start()]);
         let (kind, score) = match (birth, short_year) {
             (true, false) => (EntityType::DateOfBirth, 0.95),
             (true, true) => (EntityType::DateOfBirth, 0.9),
@@ -92,6 +94,15 @@ fn find(
         };
         out.push(Span::rule(text, kind, m.start(), m.end(), score));
     }
+}
+
+/// A lowercase `b.` (`b. 08/02/1982`) or the genealogical `*`, directly in front of the date.
+fn abbreviated_birth(before: &str) -> bool {
+    let before = before.trim_end();
+    let born = before
+        .strip_suffix("b.")
+        .is_some_and(|rest| !rest.ends_with(char::is_alphanumeric));
+    born || before.ends_with('*')
 }
 
 fn num(s: &str) -> u32 {

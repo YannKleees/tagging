@@ -7,3 +7,4 @@ __pycache__/
 /eval/results/*.tmp
 *.pdb
 /demo/pkg/
+core/data/.cache/

@@ -28,6 +28,8 @@ fn finds_birth_dates_with_context() {
     assert_dob("He was born March 12, 1985.", "March 12, 1985");
     assert_dob("né(e) le 3-4-1990", "3-4-1990");
     assert_dob("geb. 7 Abrëll 1960", "7 Abrëll 1960");
+    assert_dob("Fernande, b. 08/02/1982 in Finsterthal", "08/02/1982");
+    assert_dob("Müller, Hans (* 01.05.1990)", "01.05.1990");
 }
 
 #[test]
@@ -67,4 +69,11 @@ fn rejects_non_dates() {
 fn finds_birth_keyword_after_verb_final_date() {
     assert_dob("Norbert Muller wurde am 03.02.1961 in Luxemburg geboren.", "03.02.1961");
     assert_dob("Hien ass den 03.02.1961 zu Lëtzebuerg gebuer.", "03.02.1961");
+}
+
+#[test]
+fn a_capital_b_before_a_date_is_not_born() {
+    for t in ["Plan B. 08/02/2021 is the deadline", "tab. 08/02/2021"] {
+        assert_eq!(run(&d(), t)[0].kind, EntityType::Date, "{t}");
+    }
 }

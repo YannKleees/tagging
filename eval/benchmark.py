@@ -35,9 +35,13 @@ def main():
             texts = [r["text"] for r in rows if r["lang"] == lang]
             doc = " ".join(texts)
             words = len(doc.split())
-            # One long document is chunked into a few model calls; single sentences pay the per-call overhead.
+            # One long document is chunked into a few model calls; single sentences pay the per-call
+            # overhead, unless `detect_batch` puts them through the model together.
             doc_s = timed([doc], config, args.repeats)
             sent_s = timed(texts, config, 1)
+            t0 = time.perf_counter()
+            tagging.detect_batch(texts, config)
+            batch_s = time.perf_counter() - t0
             out.append(
                 {
                     "config": name,
@@ -45,6 +49,7 @@ def main():
                     "words": words,
                     "document_ms_per_1k_words": 1e6 * doc_s / words,
                     "sentences_ms_per_1k_words": 1e6 * sent_s / words,
+                    "batch_ms_per_1k_words": 1e6 * batch_s / words,
                 }
             )
     df = pd.DataFrame(out).set_index(["config", "lang"]).round(1)
@@ -54,10 +59,21 @@ def main():
         "",
         (
             f"CPU only ({cpu}), best of {args.repeats} runs for documents. Each language's evaluation sentences "
-            "are joined into one document of the given word count; the sentence column runs them one by one."
+            "are joined into one document of the given word count; the sentence column runs them one by one, "
+            "the batch column in one `detect_batch` call."
         ),
         "",
-        evaluate.md(df, ["config", "lang", "words", "document_ms_per_1k_words", "sentences_ms_per_1k_words"]),
+        evaluate.md(
+            df,
+            [
+                "config",
+                "lang",
+                "words",
+                "document_ms_per_1k_words",
+                "sentences_ms_per_1k_words",
+                "batch_ms_per_1k_words",
+            ],
+        ),
         "",
     ]
     path = ROOT / "results" / "runtime.md"

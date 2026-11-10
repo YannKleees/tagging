@@ -15,11 +15,12 @@ pub enum DetectorKind {
     CreditCard,
     NationalId,
     Date,
+    Address,
     Gazetteer,
 }
 
 impl DetectorKind {
-    pub const ALL: [Self; 9] = [
+    pub const ALL: [Self; 10] = [
         Self::Email,
         Self::Url,
         Self::Ip,
@@ -28,6 +29,7 @@ impl DetectorKind {
         Self::CreditCard,
         Self::NationalId,
         Self::Date,
+        Self::Address,
         Self::Gazetteer,
     ];
 }

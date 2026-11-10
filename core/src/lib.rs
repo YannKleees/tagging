@@ -2,6 +2,7 @@ pub mod config;
 pub mod detectors;
 pub mod error;
 pub mod gazetteer;
+mod names;
 #[cfg(feature = "python")]
 mod python;
 pub mod redact;

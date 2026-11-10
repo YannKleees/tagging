@@ -25,19 +25,85 @@ BIND("commune" AS ?type) {LABELS} }}""",
 }
 
 KEEP = {
-    "commune", "village", "town", "city", "hamlet", "locality", "lieu-dit", "human settlement",
-    "municipality seat", "quarter of Luxembourg City", "quarter", "neighborhood", "capital city",
-    "big city", "largest city", "border city",
+    "commune",
+    "village",
+    "town",
+    "city",
+    "hamlet",
+    "locality",
+    "lieu-dit",
+    "human settlement",
+    "municipality seat",
+    "quarter of Luxembourg City",
+    "quarter",
+    "neighborhood",
+    "capital city",
+    "big city",
+    "largest city",
+    "border city",
 }
 
 # Place names that are also everyday words in EN, FR, DE or LB; they get a lower score.
 AMBIGUOUS = {
-    "Ahn", "Bech", "Berg", "Bill", "Born", "Bour", "Bous", "Bruch", "Buer", "Cents", "Eich", "Ell",
-    "Fiels", "Gare", "Grund", "Hagen", "Hamm", "Holz", "Kehlen", "Kielen", "Merl", "Olm", "Perlé",
-    "Rost", "Rued", "Stad", "Strassen", "Stroossen", "Wahl", "Wecker", "Weiler", "Bettel", "Linger",
-    "Lasauvage", "Clausen", "Neudorf", "Beaufort", "Pfaffenthal", "Mühlenbach", "Weimerskirch",
-    "Belair", "Bierg", "Bur", "Eech", "Friedhof", "Grass", "Grenz", "Grenzen", "Gronn", "Holler",
-    "Italien", "Jäger", "Kohn", "Neumühle", "Rolling", "Schmiede", "Tomm", "Wal", "Weyer",
+    "Ahn",
+    "Bech",
+    "Berg",
+    "Bill",
+    "Born",
+    "Bour",
+    "Bous",
+    "Bruch",
+    "Buer",
+    "Cents",
+    "Eich",
+    "Ell",
+    "Fiels",
+    "Gare",
+    "Grund",
+    "Hagen",
+    "Hamm",
+    "Holz",
+    "Kehlen",
+    "Kielen",
+    "Merl",
+    "Olm",
+    "Perlé",
+    "Rost",
+    "Rued",
+    "Stad",
+    "Strassen",
+    "Stroossen",
+    "Wahl",
+    "Wecker",
+    "Weiler",
+    "Bettel",
+    "Linger",
+    "Lasauvage",
+    "Clausen",
+    "Neudorf",
+    "Beaufort",
+    "Pfaffenthal",
+    "Mühlenbach",
+    "Weimerskirch",
+    "Belair",
+    "Bierg",
+    "Bur",
+    "Eech",
+    "Friedhof",
+    "Grass",
+    "Grenz",
+    "Grenzen",
+    "Gronn",
+    "Holler",
+    "Italien",
+    "Jäger",
+    "Kohn",
+    "Neumühle",
+    "Rolling",
+    "Schmiede",
+    "Tomm",
+    "Wal",
+    "Weyer",
 }
 DROP = {"Keltescht Lëtzebuerg", "Celtic Luxembourg"}
 # Spellings in common use that Wikidata has no label for.
@@ -71,6 +137,15 @@ if "--offline" not in sys.argv:
     for name, q in QUERIES.items():
         (RAW / name).write_text(fetch(q), encoding="utf-8", newline="")
 
+# Everyday words from Wikipedia text catch what the hand-kept list misses: `Soup`, `Pull`, `Gëlt`.
+COMMON = Path(__file__).parents[2] / "tagging" / "common_words.txt"
+common = {w.lstrip("~") for w in COMMON.read_text(encoding="utf-8").splitlines() if not w.startswith("#")}
+
+
+def ambiguous(x):
+    return x in AMBIGUOUS or x.lower() in common
+
+
 rows = [r for name in QUERIES for r in csv.DictReader(io.StringIO((RAW / name).read_text(encoding="utf-8")))]
 places = {}
 for r in rows:
@@ -85,8 +160,8 @@ for r in rows:
 
 lines = set()
 for v in places.values():
-    plain = [x for x in v if x not in AMBIGUOUS]
-    lines |= {"~" + x for x in v if x in AMBIGUOUS}
+    plain = [x for x in v if not ambiguous(x)]
+    lines |= {"~" + x for x in v if ambiguous(x)}
     if plain:
         lines.add("|".join(plain))
 lines = sorted(lines, key=lambda x: x.lstrip("~").casefold())

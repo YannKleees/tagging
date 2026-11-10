@@ -61,7 +61,7 @@ Biebereg|Bettborn
 Biekerech|Beckerich
 Bieles|Belvaux|Beles
 Bierchem|Berchem
-Bierden|Burden|Bürden
+Bierden|Bürden
 Bierengerbierg|Beringerberg
 Biereng|Beringen
 Biereng|Burange|Büringen
@@ -107,7 +107,8 @@ Bouneweg|Bonnevoie|Bonneweg
 Bourbon Plateau
 ~Bous
 Bous-Waldbriedemes|Bous-Waldbredimus
-Boxer|Boxhorn
+~Boxer
+Boxhorn
 Branebuerg|Brandenbourg|Brandenburg
 Brattert
 Breedelt|Breidfeld
@@ -136,6 +137,7 @@ Buerschter Plage|Bourscheid-Plage|Burscheider Strand
 Bungerefer Millen|Bigonville-Moulin
 Bungeref|Bigonville|Bondorf
 ~Bur
+~Burden
 Butschebuerg|Budersberg
 Bäerdref|Berdorf
 Bäreldeng|Bereldange|Bereldingen
@@ -154,6 +156,7 @@ Capellen
 ~Cents
 Chrëschtnech|Christnach
 ~Clausen
+~Clemency
 Clierf|Clervaux|Clerf
 Cloche d'or
 Closbierg
@@ -209,21 +212,24 @@ Elz|Eltz
 Emeringerhaff
 Enteschbaach|Enteschbach
 Eppelduerf|Eppeldorf
+~Ernster
 Esch-Sauer|Esch-sur-Sûre
 Esch-sur-Sûre
 Esch-Uelzecht|Esch-sur-Alzette|Esch an der Alzette
 Eschduerf|Eschdorf
+Eschette|Escheid
 Eschweiler
 Essen|Essingen
 Ettelbréck|Ettelbruck|Ettelbrück
 Europaviertel|Quartier européen
 Fausermillen|Fausermuehle|Fausermühle
-Feelen|Feulen
+~Feelen
 Felleschmillen
 Fenneng|Fennange|Fenningen
 Fenteng|Fentange
 Fetschebuer
 Fetschenhaff|Fetschenhof
+Feulen
 ~Fiels
 Fiertgeshaff
 Findel
@@ -242,7 +248,8 @@ Frombuerg|Frombourg
 Fréiresmillen|Moulin Frères
 Fréiseng|Frisange|Frisingen
 Fréngerhaff
-Furen|Fouhren|Fuhren
+~Fuhren
+Furen|Fouhren
 Fuussbann
 Fuussekaul
 Fuusswiss
@@ -272,6 +279,7 @@ Gillenshaff
 Gilsdref|Gilsdorf
 Giwenech|Givenich
 Goeberhaff
+Goelt
 Gondel|Gondelange|Gondelingen
 Gonnereng|Gonderange|Gonderingen
 Gouschteng|Gostingen
@@ -307,7 +315,7 @@ Guedber|Godbrange|Godbringen
 Gäichel|Gaichel
 Géidgen|Goedange|Gödingen
 Géisdref|Goesdorf
-Gëlt|Goelt
+~Gëlt
 Gëtzen|Goetzingen|Götzingen
 Haarderbaach
 Haarthaff
@@ -390,7 +398,7 @@ Iechternach|Echternach
 Ielwen|Elvange|Elvingen
 Iener|Ehner
 Iermsdref|Ermsdorf
-Iernster|Ernster
+Iernster
 Iernzen|Ernzen|Iernz
 Ierpeldeng-Sauer|Erpeldange-sur-Sûre|Erpeldingen an der Sauer
 Ierpeldeng|Erpeldange|Erpeldingen
@@ -415,6 +423,7 @@ Kaaschtelmillen
 Kaaspelt|Kaaspelterhof
 Kackerterhaff
 Kaffishaff
+~Kahler
 Kalchesbréck
 Kalkesbaach|Kalkesbach
 Kanech|Canach
@@ -455,7 +464,7 @@ Knapphouschent|Knaphoscheid
 Kockelscheier|Kockelscheuer
 Koenerhaff
 ~Kohn
-Koler|Kahler
+Koler
 Kolwent|Colbette
 Konsdref|Consdorf
 Konstem|Consthum
@@ -483,7 +492,7 @@ Kéisfuert|Kaesfurt
 Kéisfuert|Kaesfurt|Käsfurt
 Kéngert
 Kënsecker Haff
-Kënzeg|Clemency|Küntzig
+Kënzeg|Küntzig
 Këppenhaff
 Laaschent|Landscheid
 Lalleng|Lallange|Lallingen
@@ -652,11 +661,12 @@ Pommerlach|Pommerloch
 Poschend
 Posselt
 Potaschbierg|Potaschberg
-Poul|Pull
+Poul
 Pretten|Prettingen
 Proz|Pratz
 Präiteler|Breidweiler
 Préizerdaul
+~Pull
 Pärel|Perl
 Péiteng|Pétange|Petingen
 Pënsch|Pintsch
@@ -691,12 +701,13 @@ Rolleng|Rollingen
 Rommeler Haff|Rommelerhaff
 Roodt
 Roodt-sur-Eisch|Roodt
+~Roost
 Rossmillen|Rossmühle
 Roudemer|Rodenbourg|Rodenburg
 Roudenhaff
 Rouderssen|Rodershausen
 Roumecht|Rombach-Martelange|Rombach-Martelingen
-Rouscht|Roost
+Rouscht
 Rouspert-Mompech|Rosport-Mompach
 Rouspert|Rosport
 ~Rued
@@ -739,7 +750,7 @@ Schleef|Schleif
 Schläifmillen
 Schlënnermanescht|Schlindermanderscheid
 ~Schmiede
-Schmuelen
+~Schmuelen
 Schmëdd
 Schmëdd|Huldange Forge
 Schmëttewier
@@ -780,6 +791,7 @@ Siwemuergen|Sept-Arpents
 Siwwenaler|Siebenaler
 Sliepenhaff
 Soller|Sonlez
+~Soup
 Sprénkeng|Sprinkange
 Stackem|Stockem
 Stadbriedemes|Stadtbredimus
@@ -798,7 +810,7 @@ Stuppecht|Stuppicht
 Suessem|Sanem
 Suessem|Sanem|Sassenheim
 Suewelbuer|Savelborn
-Supp|Soup
+Supp
 Sëll|Saeul
 Tandel
 Theinshaff
@@ -902,7 +914,7 @@ Zëtteg|Zittig
 Éilereng|Ehlerange
 Éimereng|Emerange|Emeringen
 Éinen|Ehnen
-Éischt|Eschette|Escheid
+~Éischt
 Éiter|Oetrange|Oetringen
 Ëlwen|Troisvierges|Ulflingen
 Ënnereesbech|Untereisenbach

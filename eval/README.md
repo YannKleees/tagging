@@ -36,6 +36,11 @@ python eval/build_dataset.py
 Span counts: person 216, location 80, organization 48, email 32, phone 32, date of birth 24,
 IBAN 16, credit card 16, national ID 16, address 8, URL 8, IP address 8.
 
+`data/everyday.jsonl` is a third, hand-written set: 120 sentences (30 per language) about plumbers,
+landlords, museums and fire brigades, with no personal data at all. English and French nouns are
+capitalized as in a heading, which is the hard case. It was written without looking at the
+entity-free sentences of the eval split and measures over-redaction only.
+
 ## Running
 
 ```
@@ -51,6 +56,7 @@ With the model installed (`pip install -e ".[ner,eval]"`):
 ```
 python eval/compare.py --split dev    # tuning runs, written to results/dev/
 python eval/compare.py --split eval   # all variants on the held-out split, results/comparison.md
+python eval/over_redaction.py         # hits on the everyday sentences, results/over_redaction.md
 python eval/benchmark.py              # runtime per 1,000 words, results/runtime.md
 TAGGING_NER_TESTS=1 pytest tests/test_ner_model.py
 ```
@@ -65,63 +71,72 @@ The metrics:
 Recall is listed first, because a missed identifier leaks data while an over-redaction only costs
 readability.
 
-## Results: rules and gazetteers only
+## Results: rules and word lists only
 
 From [`results/rules/report.md`](results/rules/report.md):
 
 | lang | subset | recall (overlap) | recall (exact) | precision | F1 (overlap) |
 | --- | --- | --- | --- | --- | --- |
-| en | standard | 0.59 | 0.50 | 1.00 | 0.74 |
-| en | hard | 0.63 | 0.63 | 1.00 | 0.78 |
-| fr | standard | 0.59 | 0.50 | 1.00 | 0.74 |
-| fr | hard | 0.67 | 0.67 | 1.00 | 0.80 |
-| de | standard | 0.59 | 0.50 | 1.00 | 0.74 |
-| de | hard | 0.67 | 0.67 | 1.00 | 0.80 |
-| lb | standard | 0.59 | 0.50 | 1.00 | 0.74 |
-| lb | hard | 0.67 | 0.67 | 1.00 | 0.80 |
+| en | standard | 0.98 | 0.98 | 1.00 | 0.99 |
+| en | hard | 1.00 | 1.00 | 1.00 | 1.00 |
+| fr | standard | 0.98 | 0.98 | 1.00 | 0.99 |
+| fr | hard | 1.00 | 1.00 | 1.00 | 1.00 |
+| de | standard | 0.98 | 0.98 | 1.00 | 0.99 |
+| de | hard | 1.00 | 1.00 | 1.00 | 1.00 |
+| lb | standard | 0.98 | 0.98 | 1.00 | 0.99 |
+| lb | hard | 1.00 | 1.00 | 1.00 | 1.00 |
 
-False positives on the entity-free subset: EN 1, FR 2, DE 2, LB 5. They are all names marked as
-ambiguous in the gazetteer (`Mett`, `Méck`, `Berg`, `Bierg`, `Gare`, `Stroossen`) and score 0.55.
+Before the name grammar, the Wikidata lists and the address rules, recall was 0.59 to 0.67 in every
+row and F1 0.74 to 0.80.
+
+False positives on the entity-free subset: EN 1, FR 2, DE 2, LB 4 (before: 10 in total). Eight are
+names marked as ambiguous that score 0.55: `Mett`, `Berg`, `Bierg`, `Gare`, `Stroossen`. `Méck`
+after `eng` is gone, because an indefinite article now lowers an ambiguous name. One is new: `Noël`,
+which is a first name and, with a capital, Christmas.
 
 Per type:
 
 - Every checksum or format-based type has 1.00 recall: email, URL, IP, phone, IBAN, card and
   national ID.
-- Date of birth: 0.92. The two misses are the English abbreviation `b.`.
-- Location: 0.80 and organization: 0.75. The misses are names outside the gazetteer (Paris,
-  Amazon, Garage Weis).
-- Person: 0.30. Rules cannot find surnames or most full names.
-- Address: 0.00. No rule covers addresses.
+- Date of birth: 1.00 (before 0.92). The English abbreviation `b.` is now read as born.
+- Address: 1.00 (before 0.00). Street and house number are a rule now.
+- Location and organization: 1.00 (before 0.80 and 0.75). Paris, Amazon and Garage Weis are found:
+  the first two by the Wikidata lists, the third by the rule for a business word in front of a
+  listed name.
+- Person: 0.98 (before 0.30). The four misses are one name, `Cilly Noack`, of which neither part is
+  in a list.
 
-Runtime is about 5 ms per 1,000 words.
+Runtime is about 2.5 ms per 1,000 words, against 0.8 ms before on the same machine. Most of the
+difference is the address patterns.
 
-What this shows:
+What this shows, and what it does not:
 
-- Rules are nearly language-independent, so parallel sentences score the same in every language.
-  The differences come from context words: the English `b.` for born, and Luxembourgish
-  articles and place spellings.
-- The gaps (person, address, names missing from lists) are what the contextual model in Phase 3
-  has to close.
-- Raising the threshold to 0.6 (`results/rules_threshold_060/`) removes all 10 false positives,
-  but hard-subset recall drops 7 to 9 points. With recall first, the default stays at 0.5, and
-  the ambiguous gazetteer hits are left for the model to confirm or reject.
-- 88% of gold locations, 80% of organizations and 32% of person names appear in the gazetteer,
-  partly because the generator and the gazetteer draw on the same knowledge. Rules-only recall on
-  names is optimistic for that reason.
+- The rules are no longer the weak half on this dataset. They are still nearly language-independent,
+  so parallel sentences score the same in every language.
+- **The dataset is saturated.** 100% of gold locations and organizations and 82% of person names
+  are in a list (before: 88%, 80% and 32%), and a first name or a title in front of the others
+  does the rest. None of the lists was built from the generator: names, places and organizations
+  come from Wikidata. But the generator draws on frequent real names, and Wikidata knows frequent
+  real names. A document with a rare surname on its own, a nickname or a two-person firm has
+  nothing for the rules to hold on to.
+- The eval split shares its sentence templates with the dev split; only the names and numbers
+  differ. Rules written for the dev sentences (`105, boulevard Royal`, `Dr Ries and Mr Weber`)
+  therefore fit the eval sentences by construction. The eval numbers confirm that nothing broke.
+  They do not estimate recall on real text.
 
 ## Results: rules plus contextual NER
 
-The model is GLiNER `urchade/gliner_multi_pii-v1` with descriptive labels. All tuning (filter
-lists, threshold, the ambiguous-gazetteer rule) used the dev split `data/dev.jsonl`: 248
-sentences from its own seed. The eval split was run once at the end. Full tables are in
+The model is GLiNER `urchade/gliner_multi_pii-v1` with descriptive labels. All tuning used the dev
+split `data/dev.jsonl` (248 sentences from its own seed) and the everyday sentences. The eval split
+was run once, after the code was frozen. Full tables are in
 [`results/comparison.md`](results/comparison.md).
 
 | variant | what runs |
 | --- | --- |
-| `rules` | Rules and gazetteers. |
-| `ner_only` | GLiNER alone, threshold 0.5, raw output. |
-| `rules_ner` | Rules, gazetteers and GLiNER merged by precedence, threshold 0.5, no post-processing. |
-| `rules_ner_post` | Adds post-processing: strip articles and titles, drop kinship, role and generic nouns, split coordinated names. Ambiguous gazetteer hits need the model to agree. Threshold 0.5. |
+| `rules` | Rules and word lists. |
+| `ner_only` | GLiNER alone, threshold 0.5, the four entity labels, raw output. |
+| `rules_ner` | Rules, word lists and GLiNER merged by precedence, threshold 0.5, no post-processing. |
+| `rules_ner_post` | Adds the distractor labels and the post-processing: strip articles and titles, drop kinship, role and generic nouns, drop spans made of everyday words, split coordinated names. Ambiguous list hits need the model to agree. Threshold 0.5. |
 | `rules_ner_post_tuned` | The package default: the same with threshold 0.4. |
 
 ### Luxembourgish, names only
@@ -131,91 +146,114 @@ entity-free sentences.
 
 | variant | hard recall (overlap) | hard recall (exact) | hard precision | standard recall (overlap) | false positives |
 | --- | --- | --- | --- | --- | --- |
-| `rules` | 0.57 | 0.57 | 1.00 | 0.36 | 5 |
+| `rules` | 1.00 | 1.00 | 1.00 | 0.98 | 4 |
 | `ner_only` | 0.74 | 0.30 | 0.79 | 0.98 | 23 |
-| `rules_ner` | 0.87 | 0.43 | 0.89 | 0.98 | 27 |
-| `rules_ner_post` | 0.91 | 0.89 | 1.00 | 0.98 | 10 |
-| `rules_ner_post_tuned` | 0.91 | 0.89 | 1.00 | 0.98 | 13 |
+| `rules_ner` | 0.93 | 0.50 | 0.90 | 1.00 | 27 |
+| `rules_ner_post` | 1.00 | 1.00 | 1.00 | 1.00 | 6 |
+| `rules_ner_post_tuned` | 1.00 | 1.00 | 1.00 | 1.00 | 6 |
 
-Against the baseline from a quick test of the model alone (threshold 0.5, descriptive labels):
-
-| | baseline | default config |
-| --- | --- | --- |
-| LB standard recall | 0.97 | 0.98 |
-| LB hard recall | 0.82 | 0.91 |
-| LB false positives | 9 on 8 sentences | 13 on 20 sentences |
-| DE hard recall | 1.00 | 0.98 |
-| DE false positives | 4 | 6 on 20 sentences |
-
-The baseline came from a different, smaller set of sentences, so this comparison is only
-indicative.
+The default config stood at 0.91 hard recall, 0.89 exact and 13 false positives before.
 
 ### All entity types, recall (overlap)
 
 | lang | subset | `rules` | `rules_ner` | `rules_ner_post` | `rules_ner_post_tuned` | precision (tuned) |
 | --- | --- | --- | --- | --- | --- | --- |
-| en | standard | 0.59 | 0.97 | 0.97 | 0.97 | 1.00 |
-| en | hard | 0.63 | 0.92 | 0.92 | 0.93 | 1.00 |
-| fr | standard | 0.59 | 0.98 | 0.98 | 1.00 | 1.00 |
-| fr | hard | 0.67 | 0.97 | 0.97 | 0.97 | 1.00 |
-| de | standard | 0.59 | 0.98 | 0.98 | 0.98 | 0.98 |
-| de | hard | 0.67 | 0.98 | 0.98 | 0.98 | 1.00 |
-| lb | standard | 0.59 | 0.98 | 0.98 | 0.98 | 0.98 |
-| lb | hard | 0.67 | 0.90 | 0.93 | 0.93 | 1.00 |
+| en | standard | 0.98 | 1.00 | 1.00 | 1.00 | 1.00 |
+| en | hard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| fr | standard | 0.98 | 1.00 | 1.00 | 1.00 | 1.00 |
+| fr | hard | 1.00 | 0.98 | 0.98 | 0.98 | 1.00 |
+| de | standard | 0.98 | 1.00 | 1.00 | 1.00 | 1.00 |
+| de | hard | 1.00 | 1.00 | 0.98 | 0.98 | 1.00 |
+| lb | standard | 0.98 | 1.00 | 1.00 | 1.00 | 1.00 |
+| lb | hard | 1.00 | 0.95 | 1.00 | 1.00 | 1.00 |
+
+Two spans are missed by the default config, both ambiguous names that the rules alone keep and the
+model does not confirm: `Tun` in `Meine Mutter und Tun kommen` and the supermarket `Cactus` in
+`Madame Schiltz de Cactus`. That is the price of asking for the model's agreement on ambiguous
+list hits.
 
 ### False positives on entity-free sentences (20 per language)
 
 | variant | en | fr | de | lb | total |
 | --- | --- | --- | --- | --- | --- |
-| `rules` | 1 | 2 | 2 | 5 | 10 |
+| `rules` | 1 | 2 | 2 | 4 | 9 |
 | `ner_only` | 27 | 23 | 19 | 23 | 92 |
 | `rules_ner` | 27 | 25 | 21 | 27 | 100 |
-| `rules_ner_post` | 9 | 7 | 4 | 10 | 30 |
-| `rules_ner_post_tuned` | 9 | 8 | 6 | 13 | 36 |
+| `rules_ner_post` | 3 | 3 | 1 | 6 | 13 |
+| `rules_ner_post_tuned` | 3 | 3 | 1 | 6 | 13 |
+
+Before, the default config made 36. The 13 that remain, from
+[`results/rules_ner_post_tuned/report.md`](results/rules_ner_post_tuned/report.md): the decoys
+`Mett` and `Méck` where the model insists (`Eng Méck`, `Moies Mett`), `Noël`, `The Council`, plural
+street words tagged as addresses (`Streets`, `Rues`, `Straßen`), and Luxembourgish phrases the
+model reads as a name or a firm (`Gaart Fussball`, `de Pak an der Gare`).
+
+### Over-redaction on everyday sentences
+
+From [`results/over_redaction.md`](results/over_redaction.md), 30 sentences per language:
+
+| variant | en | fr | de | lb | total |
+| --- | --- | --- | --- | --- | --- |
+| `rules` | 1 | 0 | 0 | 1 | 2 |
+| `ner_only` | 41 | 40 | 34 | 36 | 151 |
+| `rules_ner` | 42 | 40 | 34 | 37 | 153 |
+| `rules_ner_post_tuned` | 3 | 2 | 0 | 9 | 14 |
+
+The previous default config made 174 hits here: the hand-written filter lists covered the dev
+sentences and little else. Two changes account for the drop, and both were measured on this set and
+the dev split, not on the eval split:
+
+- **Distractor labels.** The model is also asked for `profession or role`, `relative`,
+  `building or facility`, `object` and `group of people`, and those spans are thrown away. A
+  plumber then competes for the label `profession or role` and no longer has to be a person or an
+  organization. Alone this cut the hits from 174 to 95 and raised dev recall from 0.968 to 0.978.
+- **Everyday words.** `tagging/common_words.txt` lists 130,000 words that Wikipedia text in the
+  four languages writes in lowercase or, for German and Luxembourgish nouns, after a determiner. A
+  model span made only of such words is dropped unless a word list knows a name in it.
+
+Luxembourgish keeps the most hits (`Klempner`, `Hiewan`, `Coiffer`, `Déierendoktesch`). The
+Luxembourgish Wikipedia is small and encyclopedic, so everyday nouns are missing from the list, and
+Luxembourgish puts the definite article before first names too, which rules out the cheapest signal
+for a noun.
 
 ### Runtime
 
-From [`results/runtime.md`](results/runtime.md), on a laptop CPU with no GPU:
+From [`results/runtime.md`](results/runtime.md), on two cores of a cloud CPU with no GPU:
 
-- Rules only: 1.5 to 2.1 ms per 1,000 words.
-- Rules plus NER: 14 to 18 s per 1,000 words for one long document, and 45 to 53 s when every
-  sentence is a separate call, because each call pays the model's fixed overhead.
+- Rules only: 2.5 to 2.8 ms per 1,000 words.
+- Rules plus NER: 6 to 11 s per 1,000 words for one long document, 15 to 17 s when every sentence is
+  a separate `detect` call, and 7 to 8 s when the same sentences go through `detect_batch`.
 
-The model dominates the cost. A GPU should be much faster, but this has not been measured.
+These figures replace the laptop measurements of the earlier version and are not comparable with
+them. The model dominates the cost. A GPU should be much faster, but this has not been measured.
 
 ### What this shows
 
-- The model closes the gaps the rules leave. Luxembourgish hard recall rises from 0.57 to 0.91
-  for names. With the default config, recall across all types is 0.93 to 1.00 in every language
-  and subset.
-- Post-processing matters as much as the model. Stripping articles and titles lifts Luxembourgish
-  hard exact recall from 0.43 to 0.89, so pseudonyms replace `Mett` and not `D'Mett`. The filters
-  cut false positives by 70%, from 100 to 30.
-- Luxembourgish is still the weakest language on hard sentences: 0.93 against 0.97 to 0.98 for
-  French and German. The remaining misses are lowercase chat names (`ernest an gusty`) and names
-  after the articles `den` and `der` (`den Tun`, `der Aline`).
-- The dev split chose threshold 0.4: 2 more points of Luxembourgish hard recall for one extra
-  false positive. On the eval split, 0.4 brings no Luxembourgish gain. English hard names rise
-  from 0.93 to 0.96 and French standard from 0.98 to 1.00, at the cost of 6 more false positives.
-  The default stays at 0.4, because recall comes first and changing it after seeing the eval split
-  would tune on the test set.
-- False positives were 0 on the dev split but 30 to 36 on the eval split, so the filter lists
-  partly fit the dev sentences. Most of what remains are generic nouns the model labels as
-  organizations or places: `Post Office`, `Winery`, `Kindergarten`, `The Council`, `Countryside`,
-  `Le Train pour la Ville`. The rest are role phrases the filters miss (`Director`, `Paysan`,
-  `Infirmière am Spidol`), plural street words (`Rues`, `Straßen`), and the decoys `Mett` (minced
-  pork) and `Méck` (mosquito). These were left unpatched for the same reason, and they mean the tool
-  over-redacts ordinary text.
+- With the rules as strong as they are on this dataset, the model adds little recall here: one
+  more name, `Cilly Noack`, in its four language versions. Its value lies in names that no list and no cue word reaches,
+  and this dataset has too few of those to measure it. A new hard subset with unlisted surnames on
+  their own and small firms would be the next step for the evaluation.
+- Post-processing still decides exact boundaries. Without it, Luxembourgish hard exact recall is
+  0.50 against 1.00 with it.
+- The model is the source of nearly all over-redaction, 92 hits on 80 entity-free sentences on its
+  own. Distractor labels and the everyday-word filter bring the pipeline to 13, but not to the 9 of
+  the rules alone.
+- Thresholds 0.4 and 0.5 give the same result on the eval split. The default stays at 0.4, chosen on
+  the dev split.
 
 ## Caveats
 
 - The sentences are template-generated. Real documents are longer, noisier and less regular.
-- The first evaluation run found four rule bugs, which were fixed with new unit tests:
+- Dev and eval share templates and differ in names and numbers only, and the word lists cover most
+  of those names. Both splits are close to their ceiling and can no longer rank improvements to
+  name detection.
+- `everyday.jsonl` was written by the same hand that tuned the filters against it. It is a
+  development set for over-redaction, not a held-out one. The entity-free subset of the eval split
+  is the held-out measure: 36 false positives before, 13 now.
+- The first evaluation run of the rules found four rule bugs, which were fixed with new unit tests:
   - Verb-final birth dates (`am 03.02.1961 … geboren`).
   - The Luxembourgish `Versioun` before a version number.
   - `(+352)` written with parentheses.
   - `0352` written instead of `+352`.
 
-  This lifted date-of-birth recall from 0.75 to 0.92 and exact phone matching from 0.75 to 1.00,
-  and removed one false positive. Because those fixes were informed by this set, it is no longer
-  fully held out for the rules. All Phase 3 tuning used the separate dev split.
+  Because those fixes were informed by the eval split, it was never fully held out for the rules.

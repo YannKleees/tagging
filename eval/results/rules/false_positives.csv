@@ -1,11 +1,10 @@
 id,type,text,score,sentence
-lb-entity_free-03,person,Méck,0.55,Eng Méck huet d'Bomi an den Aarm gestach.
 de-entity_free-04,location,Berg,0.55,Wir sind am Sonntag auf den Berg gestiegen.
 lb-entity_free-04,location,Bierg,0.55,Mir sinn e Sonndeg op de Bierg gaang.
 fr-entity_free-05,location,Gare,0.55,"La lettre est à la Poste, le colis à la Gare."
 lb-entity_free-05,location,Gare,0.55,"De Bréif läit op der Post, de Pak an der Gare."
+fr-entity_free-06,person,Noël,0.85,La Tante et l'Oncle viennent à Noël.
 lb-entity_free-11,location,Stroossen,0.55,D'Gemeng huet d'Stroossen nom Wanter nei gemaach.
 en-entity_free-17,person,Mett,0.55,Breakfast was Mett with onions.
-fr-entity_free-17,person,Mett,0.55,"Au petit-déjeuner, il y avait du Mett aux oignons."
 de-entity_free-17,person,Mett,0.55,Zum Frühstück gab es Mett mit Zwiebeln.
 lb-entity_free-17,person,Mett,0.55,Mir hunn Moies Mett mat Ënnen giess.

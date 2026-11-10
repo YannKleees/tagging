@@ -63,3 +63,25 @@ def test_redact_rejects_bad_input():
         tagging.redact("abcdef", [{"type": "person", "start": 0, "end": 4}, {"type": "person", "start": 2, "end": 6}])
     with pytest.raises(ValueError):
         tagging.redact("abc", [{"type": "person", "start": 0, "end": 2}], "blur")
+
+
+def test_detect_finds_full_names_addresses_and_companies():
+    text = "Den Här Feltgen an d'Marie Weber vun Arendt GmbH wunnen 12, rue de la Gare, L-1611 Lëtzebuerg."
+    assert [(s["type"], s["text"]) for s in tagging.detect(text)] == [
+        ("person", "Feltgen"),
+        ("person", "Marie Weber"),
+        ("organization", "Arendt GmbH"),
+        ("address", "12, rue de la Gare"),
+        ("address", "L-1611"),
+        ("location", "Lëtzebuerg"),
+    ]
+
+
+def test_everyday_text_has_no_hits():
+    for text in [
+        "The Plumber fixed the Sink in the Bathroom before lunch.",
+        "Die Feuerwehr war in wenigen Minuten beim Lagerhaus.",
+        "De Kellner huet d'Zopp an d'Brout op den Dësch bruecht.",
+        "Le Juge a écouté le Témoin et l'Avocat.",
+    ]:
+        assert tagging.detect(text) == [], text

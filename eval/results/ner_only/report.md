@@ -5,7 +5,7 @@ Config: `eval/configs/ner_only.json`. 288 sentences, 2637 words, 504 gold spans.
 Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
 `overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
 
-Runtime: 46808.97 ms per 1,000 words (detection only).
+Runtime: 6046.68 ms per 1,000 words (detection only).
 
 ## By language and subset
 
@@ -213,9 +213,9 @@ Share of distinct gold person, location and organization strings that the built-
 
 | type | distinct | in_gazetteer | share |
 |---|---|---|---|
-| location | 33 | 29 | 0.88 |
-| organization | 10 | 8 | 0.80 |
-| person | 50 | 16 | 0.32 |
+| location | 33 | 33 | 1.00 |
+| organization | 10 | 10 | 1.00 |
+| person | 50 | 41 | 0.82 |
 
 ## Missed spans (183)
 

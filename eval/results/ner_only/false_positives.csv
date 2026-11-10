@@ -7,12 +7,12 @@ en-entity_free-01,person,The Neighbour,0.7725,The Neighbour took his car to the 
 en-entity_free-01,organization,Garage,0.778,The Neighbour took his car to the Garage.
 fr-entity_free-01,person,Le voisin,0.7977,Le voisin a amené sa voiture au garage.
 de-entity_free-01,person,Der Nachbar,0.6258,Der Nachbar hat sein Auto in die Garage gebracht.
-lb-entity_free-01,person,Den Noper,0.7031,Den Noper huet säin Auto an d'Garage bruecht.
+lb-entity_free-01,person,Den Noper,0.703,Den Noper huet säin Auto an d'Garage bruecht.
 en-entity_free-02,person,Director,0.8296,The Director and the Teacher are talking to the parents.
 en-entity_free-02,person,Teacher,0.8107,The Director and the Teacher are talking to the parents.
 en-entity_free-02,person,parents,0.5389,The Director and the Teacher are talking to the parents.
 fr-entity_free-02,person,Le directeur,0.5509,Le directeur et le professeur parlent avec les parents.
-fr-entity_free-02,person,professeur,0.5547,Le directeur et le professeur parlent avec les parents.
+fr-entity_free-02,person,professeur,0.5546,Le directeur et le professeur parlent avec les parents.
 fr-entity_free-02,person,parents,0.6228,Le directeur et le professeur parlent avec les parents.
 de-entity_free-02,person,Der Direktor,0.6059,Der Direktor und der Lehrer sprechen mit den Eltern.
 de-entity_free-02,person,Eltern,0.5129,Der Direktor und der Lehrer sprechen mit den Eltern.

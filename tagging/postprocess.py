@@ -1,4 +1,6 @@
 import re
+from functools import lru_cache
+from pathlib import Path
 
 ARTICLES = set("d' d’ l' l’ de den dem der die das des le la les the".split())
 TITLES = set(
@@ -54,6 +56,11 @@ NOT_NAMES = ROLES | PRONOUNS | GENERIC | {t.rstrip(".") for t in TITLES}
 LEADING = re.compile(r"([dDlL]['’])|(\S+)\s+")
 CONJUNCTION = re.compile(r"\s+(?:an|a|und|et|and|&)\s+", re.IGNORECASE)
 WORDS = re.compile(r"[^\s'’]+")
+# What follows the owner in a possessive: "Charel's brother", "dem Charel säi Brudder".
+POSSESSIVE = re.compile(r"['’]s\b|\s+(?:säin?|seng(?:em|er)?|hir(?:en?|em|er)?)\s", re.IGNORECASE)
+# A place joined to a name by one of these is not part of the name: "ADEM zu Welschent".
+LOCATIVE = re.compile(r"\s+(?:zu|à|in|at|bei|near|no|nach|op)\s+$", re.IGNORECASE)
+COMMON_WORDS = Path(__file__).with_name("common_words.txt")
 
 
 def strip_titles(text, start, end):
@@ -76,6 +83,12 @@ def split_coordinated(text, start, end):
     return list(zip(bounds[::2], bounds[1::2]))
 
 
+# The owner of a possessive is the name; what is owned is not: "der Gréit hire Brudder".
+def cut_possessive(text, start, end):
+    m = POSSESSIVE.search(text, start, end)
+    return (start, m.start()) if m and m.start() > start else (start, end)
+
+
 def trim(text, start, end):
     while start < end and not text[start].isalnum():
         start += 1
@@ -91,8 +104,57 @@ def postprocess(text, spans):
         parts = split_coordinated(text, s["start"], s["end"]) if s["type"] == "person" else [(s["start"], s["end"])]
         for a, b in parts:
             if s["type"] == "person":
+                a, b = cut_possessive(text, a, b)
                 a, b = strip_titles(text, a, b)
             a, b = trim(text, a, b)
             if a < b and not not_a_name(text[a:b]):
                 out.append({**s, "start": a, "end": b, "text": text[a:b]})
+    return out
+
+
+# Everyday words from Wikipedia text; "~" marks those that are also frequent names ("rose", "baker").
+@lru_cache(maxsize=1)
+def common_words():
+    plain, marked = set(), set()
+    for line in COMMON_WORDS.read_text(encoding="utf-8").splitlines():
+        if not line.startswith("#"):
+            (marked if line.startswith("~") else plain).add(line.lstrip("~"))
+    return frozenset(plain), frozenset(marked)
+
+
+def content_words(span):
+    words = [w.strip('.,;:!?()"«»') for w in WORDS.findall(span.lower())]
+    return [w for w in words if w and w not in DETERMINERS and w not in FILLERS]
+
+
+# A span made of everyday words only ("Post Office", "le Plombier", "die Feuerwehr") is not a name.
+# Words that are also names ("Baker", "Berger") only count as everyday words after a determiner.
+def everyday(text, start, end):
+    plain, marked = common_words()
+    words = content_words(text[start:end])
+    known = [w in plain or w in marked or all(p in plain for p in w.split("-")) for w in words]
+    if not words or not all(known):
+        return False
+    if any(w not in marked for w in words):
+        return True
+    before = WORDS.findall(text[:start].lower())[-1:]
+    first = WORDS.findall(text[start:end].lower())[:1]
+    return bool(set(before + first) & DETERMINERS)
+
+
+# Byte offsets, like the list hits in `support`, which are all hits whatever their score. A model
+# span survives if it is not made of everyday words, or if a word list knows a name in it. A name
+# that is itself an everyday word (score below 0.45, `Romaine`) only vouches for a span it covers.
+def drop_everyday(text, spans, support):
+    raw = text.encode()
+    out = []
+    for s in spans:
+        supported = any(
+            s["start"] < k["end"] and k["start"] < s["end"] and k["source"] == "gazetteer"
+            for k in support
+            if k["score"] >= 0.45 or (k["start"] <= s["start"] and s["end"] <= k["end"])
+        )
+        start, end = len(raw[: s["start"]].decode()), len(raw[: s["end"]].decode())
+        if s["type"] == "address" or supported or not everyday(text, start, end):
+            out.append(s)
     return out

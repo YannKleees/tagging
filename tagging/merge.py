@@ -1,4 +1,4 @@
-from tagging.postprocess import CONJUNCTION
+from tagging.postprocess import CONJUNCTION, LOCATIVE, strip_titles, trim
 
 CHECKSUM_TYPES = {"iban", "credit_card", "national_id"}
 # Gazetteer entries that are also common words score 0.55; with NER enabled they need its support.
@@ -15,9 +15,29 @@ def contains(a, b):
 
 # A model span that strictly contains gazetteer spans of another type replaces them (an address
 # around "Gare"), except when it is a coordination of several gazetteer names ("D'Mett an de Méck").
+# A model span that is only a title in front of a listed person ("D'Doktesch Ries" as an
+# organization) does not replace the person either.
 def replaces(s, clash):
     coordinated = len(clash) > 1 and CONJUNCTION.search(s["text"])
-    return not coordinated and all(tier(s) == 3 and tier(k) == 2 and contains(s, k) for k in clash)
+    a, b = trim(s["text"], *strip_titles(s["text"], 0, len(s["text"])))
+    titled = any(k["type"] == "person" and k["text"] == s["text"][a:b] for k in clash)
+    return not (coordinated or titled) and all(tier(s) == 3 and tier(k) == 2 and contains(s, k) for k in clash)
+
+
+# "Brasserie Schuman zu Luerenzweiler", "ADEM zu Welschent": a model span that ends in a listed
+# place after a locative preposition is cut before the preposition, so the place keeps its own span.
+def cut_trailing_place(text, s, gazetteer):
+    raw = text.encode()
+    for g in gazetteer:
+        tail = g["type"] == "location" and g["score"] >= AMBIGUOUS_BELOW and g["end"] == s["end"]
+        if not tail or s["type"] in ("location", "address") or g["start"] <= s["start"]:
+            continue
+        head = raw[s["start"] : g["start"]].decode()
+        m = LOCATIVE.search(head)
+        if m and m.start() > 0:
+            end = s["start"] + len(head[: m.start()].encode())
+            return {**s, "end": end, "text": raw[s["start"] : end].decode()}
+    return s
 
 
 def tier(s):
@@ -61,6 +81,7 @@ def merge(text, rule_spans, ner_spans, confirm_ambiguous=True):
     ner = [s for s in ner_spans if not any(overlaps(s, r) for r in rules)]
     if confirm_ambiguous:
         gazetteer = [g for g in gazetteer if g["score"] >= AMBIGUOUS_BELOW or any(overlaps(g, n) for n in ner)]
+    ner = [cut_trailing_place(text, s, gazetteer) for s in ner]
     names = merge_same_type(text, gazetteer + ner)
     kept = []
     ranked = sorted(names, key=lambda s: (tier(s), -(s["end"] - s["start"]), -s["score"]))

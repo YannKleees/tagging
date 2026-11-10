@@ -116,7 +116,7 @@ def run(dataset, config, name):
     rows = load(dataset)
     tagging.detect("warm up model loading", config)
     t0 = time.perf_counter()
-    preds = [tagging.detect(r["text"], config) for r in rows]
+    preds = tagging.detect_batch([r["text"] for r in rows], config)
     elapsed = time.perf_counter() - t0
     words = sum(len(r["text"].split()) for r in rows)
     gold, pred = score(rows, preds)

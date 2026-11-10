@@ -1,1 +1,1 @@
-{"detectors": [], "ner": {"threshold": 0.5, "postprocess": false, "confirm_ambiguous": false}}
+{"detectors": [], "ner": {"threshold": 0.5, "postprocess": false, "confirm_ambiguous": false, "distractors": false}}

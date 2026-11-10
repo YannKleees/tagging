@@ -1,3 +1,4 @@
+mod address;
 mod card;
 mod date;
 mod email;
@@ -7,6 +8,7 @@ mod national_id;
 mod phone;
 mod url;
 
+pub use address::AddressDetector;
 pub use card::CardDetector;
 pub use date::DateDetector;
 pub use email::EmailDetector;

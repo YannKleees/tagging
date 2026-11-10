@@ -3,7 +3,7 @@ import re
 import tagging
 from tagging import ner
 from tagging.merge import merge
-from tagging.postprocess import postprocess
+from tagging.postprocess import drop_everyday, postprocess
 
 
 class FakeModel:
@@ -11,13 +11,17 @@ class FakeModel:
         self.entities = entities
         self.calls = 0
 
-    def predict_entities(self, text, labels, threshold=0.5):
-        self.calls += 1
-        out = []
-        for name, label in self.entities.items():
-            for m in re.finditer(re.escape(name), text):
-                out.append({"start": m.start(), "end": m.end(), "text": name, "label": label, "score": 0.9})
-        return out
+    def batch_predict_entities(self, texts, labels, threshold=0.5, batch_size=8):
+        self.calls += len(texts)
+        self.labels = labels
+        return [
+            [
+                {"start": m.start(), "end": m.end(), "text": name, "label": label, "score": 0.9}
+                for name, label in self.entities.items()
+                for m in re.finditer(re.escape(name), text)
+            ]
+            for text in texts
+        ]
 
 
 def span(text, sub, type, source, score=0.9):
@@ -155,3 +159,98 @@ def test_postprocess_drops_pronouns_generic_places_and_coordinated_roles():
 def test_postprocess_keeps_named_businesses():
     for text, phrase in [("Hien schafft am Garage Weis.", "Garage Weis"), ("Café Majerus ass zou.", "Café Majerus")]:
         assert [s["text"] for s in postprocess(text, [char_span(text, phrase, "organization")])] == [phrase]
+
+
+def test_predict_many_keeps_texts_apart_and_drops_distractor_labels():
+    model = FakeModel({"Jhemp": "person name", "Plumber": "profession or role"})
+    spans = ner.predict_many(["The Plumber called Jhemp.", "Jhemp again"], model)
+    assert [[(s["type"], s["text"], s["start"]) for s in t] for t in spans] == [
+        [("person", "Jhemp", 19)],
+        [("person", "Jhemp", 0)],
+    ]
+    assert set(ner.DISTRACTORS) <= set(model.labels)
+    ner.predict_many(["Jhemp"], model, distractors=False)
+    assert model.labels == list(ner.LABELS)
+
+
+def test_postprocess_keeps_the_owner_of_a_possessive():
+    for text, phrase, name in [
+        ("Der Gréit hire Brudder schafft.", "Der Gréit hire Brudder", "Gréit"),
+        ("Dem Charel säi Brudder schafft.", "Dem Charel säi Brudder", "Charel"),
+        ("Charel's brother works.", "Charel's brother", "Charel"),
+    ]:
+        assert [s["text"] for s in postprocess(text, [char_span(text, phrase)])] == [name], text
+
+
+def test_drop_everyday_removes_spans_made_of_common_words():
+    for text, phrase, type in [
+        ("The Fire Brigade arrived at the Warehouse.", "Fire Brigade", "organization"),
+        ("Le Plombier a réparé l'évier.", "Le Plombier", "organization"),
+        ("Die Feuerwehr war schnell da.", "Die Feuerwehr", "organization"),
+        ("Das Museum schließt früher.", "Das Museum", "organization"),
+        ("D'Schoul ass zou.", "Schoul", "organization"),
+    ]:
+        assert drop_everyday(text, [span(text, phrase, type, "ner")], []) == [], text
+
+
+def test_drop_everyday_keeps_names():
+    for text, phrase, type in [
+        ("Den Här Kieffer ass do.", "Kieffer", "person"),
+        ("Si schafft bei Garage Weis.", "Garage Weis", "organization"),
+        # A word that is also a frequent name is only dropped after a determiner.
+        ("Rose called yesterday.", "Rose", "person"),
+        ("Wir trafen Richter gestern.", "Richter", "person"),
+    ]:
+        s = span(text, phrase, type, "ner")
+        assert drop_everyday(text, [s], []) == [s], text
+    text = "Der Richter hörte zu."
+    assert drop_everyday(text, [span(text, "Richter", "person", "ner")], []) == []
+
+
+def test_drop_everyday_keeps_spans_a_word_list_vouches_for():
+    text = "Si schafft bei Deutsche Bank."
+    ner_span = span(text, "Deutsche Bank", "organization", "ner")
+    assert drop_everyday(text, [ner_span], []) == []
+    assert drop_everyday(text, [ner_span], [span(text, "Deutsche Bank", "organization", "gazetteer", 0.85)]) == [
+        ner_span
+    ]
+    # A name that is itself an everyday word only vouches for a span it covers.
+    text = "An der Kantin an der Rei."
+    weak = span(text, "An", "person", "gazetteer", 0.3)
+    assert drop_everyday(text, [span(text, "An der Kantin", "organization", "ner")], [weak]) == []
+
+
+def test_merge_cuts_a_listed_place_off_the_end_of_a_model_span():
+    text = "Hie schafft bei Brasserie Schuman zu Luerenzweiler."
+    place = span(text, "Luerenzweiler", "location", "gazetteer", 0.85)
+    out = merge(text, [place], [span(text, "Brasserie Schuman zu Luerenzweiler", "organization", "ner")])
+    assert [(s["type"], s["text"]) for s in out] == [
+        ("organization", "Brasserie Schuman"),
+        ("location", "Luerenzweiler"),
+    ]
+    # `du` builds names, it does not locate them.
+    text = "Université du Luxembourg"
+    place = span(text, "Luxembourg", "location", "gazetteer", 0.85)
+    out = merge(text, [place], [span(text, text, "organization", "ner")])
+    assert [(s["type"], s["text"]) for s in out] == [("organization", text)]
+
+
+def test_merge_keeps_a_listed_person_under_a_titled_model_span():
+    text = "D'Doktesch Ries ass do"
+    person = span(text, "Ries", "person", "gazetteer", 0.85)
+    out = merge(text, [person], [span(text, "D'Doktesch Ries", "organization", "ner")])
+    assert [(s["type"], s["text"]) for s in out] == [("person", "Ries")]
+
+
+def test_detect_batch_matches_detect(monkeypatch):
+    model = FakeModel({"den Här Kieffer": "person name", "Die Feuerwehr": "organization name"})
+    monkeypatch.setattr(ner, "load", lambda name, device: model)
+    texts = ["Ech hunn den Här Kieffer gesinn.", "Die Feuerwehr war schnell da.", "De Jhemp wunnt zu Réimech."]
+    batch = tagging.detect_batch(texts, {"ner": True})
+    assert batch == [tagging.detect(t, {"ner": True}) for t in texts]
+    assert [[(s["type"], s["text"]) for s in spans] for spans in batch] == [
+        [("person", "Kieffer")],
+        [],
+        [("person", "Jhemp"), ("location", "Réimech")],
+    ]
+    assert tagging.detect_batch(texts) == [tagging.detect(t) for t in texts]

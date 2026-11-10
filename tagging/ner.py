@@ -12,6 +12,9 @@ LABELS = {
     "city or place name": "location",
     "street address": "address",
 }
+# Labels the model may pick instead of a name. Their spans are thrown away, so "the Plumber" or
+# "the Museum" compete with "person name" and lose. On the dev split they raise recall as well.
+DISTRACTORS = ["profession or role", "relative", "building or facility", "object", "group of people"]
 WORD = re.compile(r"\S+")
 
 
@@ -42,21 +45,34 @@ def dedupe(spans):
 
 
 # Character offsets; chunks overlap so entities cut at a window edge are seen whole in the next one.
-def predict(text, model, threshold=0.5, size=200, overlap=50):
-    spans = []
-    for a, b in windows(text, size, overlap):
-        for e in model.predict_entities(text[a:b], list(LABELS), threshold=threshold):
-            spans.append(
-                {
-                    "type": LABELS[e["label"]],
-                    "start": a + e["start"],
-                    "end": a + e["end"],
-                    "text": text[a + e["start"] : a + e["end"]],
-                    "score": round(float(e["score"]), 4),
-                    "source": "ner",
-                }
-            )
-    return dedupe(spans)
+def predict(text, model, threshold=0.5, size=200, overlap=50, distractors=True, batch_size=8):
+    return predict_many([text], model, threshold, size, overlap, distractors, batch_size)[0]
+
+
+# All chunks of all texts go through the model in batches, which is two to three times faster on
+# short texts than one call per text.
+def predict_many(texts, model, threshold=0.5, size=200, overlap=50, distractors=True, batch_size=8):
+    chunks = [(i, a, b) for i, text in enumerate(texts) for a, b in windows(text, size, overlap)]
+    labels = list(LABELS) + (DISTRACTORS if distractors else [])
+    # GLiNER 0.2.30 renamed `batch_predict_entities` to `inference`.
+    run = getattr(model, "inference", None) or model.batch_predict_entities
+    found = run([texts[i][a:b] for i, a, b in chunks], labels, threshold=threshold, batch_size=batch_size)
+    spans = [[] for _ in texts]
+    for (i, a, _), entities in zip(chunks, found):
+        for e in entities:
+            if e["label"] in LABELS:
+                start, end = a + e["start"], a + e["end"]
+                spans[i].append(
+                    {
+                        "type": LABELS[e["label"]],
+                        "start": start,
+                        "end": end,
+                        "text": texts[i][start:end],
+                        "score": round(float(e["score"]), 4),
+                        "source": "ner",
+                    }
+                )
+    return [dedupe(s) for s in spans]
 
 
 def byte_offsets(text):

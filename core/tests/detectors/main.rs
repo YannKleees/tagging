@@ -1,9 +1,11 @@
+mod address;
 mod card;
 mod date;
 mod email;
 mod gazetteer;
 mod iban;
 mod ip;
+mod names;
 mod national_id;
 mod phone;
 mod url;

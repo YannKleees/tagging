@@ -8,21 +8,21 @@ en-entity_free-01,person,The Mayor,0.7633,The Mayor opened the new School next t
 en-entity_free-01,organization,new School,0.7515,The Mayor opened the new School next to the Church.
 fr-entity_free-01,person,Le Maire,0.8219,Le Maire a inauguré la nouvelle École à côté de l'Église.
 fr-entity_free-01,organization,École,0.7681,Le Maire a inauguré la nouvelle École à côté de l'Église.
-de-entity_free-01,person,Der Bürgermeister,0.5748,Der Bürgermeister hat die neue Schule neben der Kirche eröffnet.
+de-entity_free-01,person,Der Bürgermeister,0.5749,Der Bürgermeister hat die neue Schule neben der Kirche eröffnet.
 de-entity_free-01,organization,Schule,0.6216,Der Bürgermeister hat die neue Schule neben der Kirche eröffnet.
 lb-entity_free-01,person,De Buergermeeschter,0.6264,De Buergermeeschter huet déi nei Schoul nieft der Kierch opgemaach.
 lb-entity_free-01,organization,Schoul,0.5374,De Buergermeeschter huet déi nei Schoul nieft der Kierch opgemaach.
 en-entity_free-02,person,My Father,0.5333,My Father and my Uncle repaired the roof of the Barn.
 fr-entity_free-02,person,Mon Père et mon Oncle,0.5645,Mon Père et mon Oncle ont réparé le toit de la Grange.
-fr-entity_free-02,organization,la Grange,0.5904,Mon Père et mon Oncle ont réparé le toit de la Grange.
+fr-entity_free-02,organization,la Grange,0.5903,Mon Père et mon Oncle ont réparé le toit de la Grange.
 de-entity_free-02,person,Mein Vater,0.6291,Mein Vater und mein Onkel haben das Dach der Scheune repariert.
 en-entity_free-04,person,The Boy and the Girl,0.581,The Boy and the Girl are playing in the Park.
-fr-entity_free-04,person,Le Garçon et la Fille,0.64,Le Garçon et la Fille jouent dans le Parc.
+fr-entity_free-04,person,Le Garçon et la Fille,0.6401,Le Garçon et la Fille jouent dans le Parc.
 lb-entity_free-04,person,De Jong an d'Meedchen,0.6787,De Jong an d'Meedchen spillen am Park.
 en-entity_free-05,organization,Pharmacist,0.5932,The Pharmacist gave the Patient new tablets.
 en-entity_free-05,person,Patient,0.7219,The Pharmacist gave the Patient new tablets.
 fr-entity_free-05,organization,Le Pharmacien,0.956,Le Pharmacien a donné de nouveaux comprimés au Patient.
-fr-entity_free-05,person,Patient,0.8014,Le Pharmacien a donné de nouveaux comprimés au Patient.
+fr-entity_free-05,person,Patient,0.8013,Le Pharmacien a donné de nouveaux comprimés au Patient.
 de-entity_free-05,person,Der Apotheker,0.5589,Der Apotheker hat dem Patienten neue Tabletten gegeben.
 lb-entity_free-05,organization,Den Apdikter,0.7816,Den Apdikter huet dem Patient nei Pëllen ginn.
 en-entity_free-06,person,We,0.5,We walked along the River up to the Castle.

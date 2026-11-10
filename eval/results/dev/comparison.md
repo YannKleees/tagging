@@ -1,68 +1,128 @@
 # Variant comparison (dev split)
 
-Variants: `rules_ner_post` ({"ner": {"postprocess": true, "confirm_ambiguous": true}}), `post_t040`.
+Variants: `rules` ({}), `ner_only` ({"detectors": [], "ner": {"threshold": 0.5, "postprocess": false, "confirm_ambiguous": false, "distractors": false}}), `rules_ner` ({"ner": {"threshold": 0.5, "postprocess": false, "confirm_ambiguous": false, "distractors": false}}), `rules_ner_post` ({"ner": {"threshold": 0.5}}), `rules_ner_post_tuned` ({"ner": true}).
 
 ## Luxembourgish, names only (person, organization, location, address)
 
 | lang | subset | variant | recall_overlap | recall_exact | precision_overlap | f1_overlap |
 |---|---|---|---|---|---|---|
-| lb | hard | post_t040 | 0.89 | 0.83 | 0.95 | 0.92 |
-| lb | hard | rules_ner_post | 0.87 | 0.83 | 0.98 | 0.92 |
-| lb | standard | post_t040 | 1.00 | 0.98 | 1.00 | 1.00 |
-| lb | standard | rules_ner_post | 0.98 | 0.98 | 1.00 | 0.99 |
+| lb | hard | ner_only | 0.67 | 0.26 | 0.91 | 0.78 |
+| lb | hard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| lb | hard | rules_ner | 0.96 | 0.57 | 0.96 | 0.96 |
+| lb | hard | rules_ner_post | 1.00 | 1.00 | 1.00 | 1.00 |
+| lb | hard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
+| lb | standard | ner_only | 0.98 | 0.98 | 0.93 | 0.95 |
+| lb | standard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| lb | standard | rules_ner | 1.00 | 1.00 | 1.00 | 1.00 |
+| lb | standard | rules_ner_post | 1.00 | 0.98 | 1.00 | 1.00 |
+| lb | standard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
 
 ## False positives on entity-free sentences
 
 | variant | en | fr | de | lb | sentences_per_lang |
 |---|---|---|---|---|---|
+| rules | 0 | 0 | 0 | 0 | 10 |
+| ner_only | 12 | 11 | 7 | 7 | 10 |
+| rules_ner | 12 | 11 | 7 | 7 | 10 |
 | rules_ner_post | 0 | 0 | 0 | 0 | 10 |
-| post_t040 | 0 | 1 | 0 | 0 | 10 |
+| rules_ner_post_tuned | 0 | 0 | 0 | 0 | 10 |
 
 ## Runtime (CPU, detection only)
 
 | variant | ms per 1,000 words |
 |---|---|
-| rules_ner_post | 312935.50 |
-| post_t040 | 107843.10 |
+| rules | 4.40 |
+| ner_only | 5773.70 |
+| rules_ner | 6021.60 |
+| rules_ner_post | 7426.30 |
+| rules_ner_post_tuned | 7633.50 |
 
 ## All entity types, by language and subset
 
 | lang | subset | variant | recall_overlap | recall_exact | precision_overlap | f1_overlap |
 |---|---|---|---|---|---|---|
-| en | hard | post_t040 | 0.92 | 0.88 | 1.00 | 0.96 |
-| en | hard | rules_ner_post | 0.92 | 0.88 | 1.00 | 0.96 |
-| en | standard | post_t040 | 0.97 | 0.94 | 1.00 | 0.98 |
-| en | standard | rules_ner_post | 0.97 | 0.94 | 1.00 | 0.98 |
-| fr | hard | post_t040 | 0.98 | 0.95 | 1.00 | 0.99 |
-| fr | hard | rules_ner_post | 0.98 | 0.95 | 1.00 | 0.99 |
-| fr | standard | post_t040 | 0.98 | 0.98 | 1.00 | 0.99 |
-| fr | standard | rules_ner_post | 0.98 | 0.98 | 1.00 | 0.99 |
-| de | hard | post_t040 | 0.98 | 0.95 | 1.00 | 0.99 |
-| de | hard | rules_ner_post | 0.97 | 0.93 | 1.00 | 0.98 |
-| de | standard | post_t040 | 0.98 | 0.98 | 1.00 | 0.99 |
-| de | standard | rules_ner_post | 0.98 | 0.98 | 1.00 | 0.99 |
-| lb | hard | post_t040 | 0.92 | 0.87 | 0.96 | 0.94 |
-| lb | hard | rules_ner_post | 0.90 | 0.87 | 0.98 | 0.94 |
-| lb | standard | post_t040 | 1.00 | 0.98 | 1.00 | 1.00 |
-| lb | standard | rules_ner_post | 0.98 | 0.98 | 1.00 | 0.99 |
+| en | hard | ner_only | 0.68 | 0.47 | 0.93 | 0.79 |
+| en | hard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| en | hard | rules_ner | 0.98 | 0.77 | 0.95 | 0.97 |
+| en | hard | rules_ner_post | 1.00 | 1.00 | 1.00 | 1.00 |
+| en | hard | rules_ner_post_tuned | 1.00 | 1.00 | 1.00 | 1.00 |
+| en | standard | ner_only | 0.61 | 0.58 | 0.98 | 0.75 |
+| en | standard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| en | standard | rules_ner | 1.00 | 1.00 | 1.00 | 1.00 |
+| en | standard | rules_ner_post | 1.00 | 0.98 | 1.00 | 1.00 |
+| en | standard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
+| fr | hard | ner_only | 0.72 | 0.50 | 0.96 | 0.82 |
+| fr | hard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| fr | hard | rules_ner | 0.98 | 0.77 | 0.98 | 0.98 |
+| fr | hard | rules_ner_post | 0.98 | 0.98 | 1.00 | 0.99 |
+| fr | hard | rules_ner_post_tuned | 0.98 | 0.98 | 1.00 | 0.99 |
+| fr | standard | ner_only | 0.62 | 0.62 | 0.95 | 0.75 |
+| fr | standard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| fr | standard | rules_ner | 1.00 | 1.00 | 1.00 | 1.00 |
+| fr | standard | rules_ner_post | 1.00 | 1.00 | 1.00 | 1.00 |
+| fr | standard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
+| de | hard | ner_only | 0.70 | 0.48 | 0.93 | 0.80 |
+| de | hard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| de | hard | rules_ner | 0.98 | 0.77 | 0.97 | 0.98 |
+| de | hard | rules_ner_post | 1.00 | 1.00 | 1.00 | 1.00 |
+| de | hard | rules_ner_post_tuned | 1.00 | 1.00 | 1.00 | 1.00 |
+| de | standard | ner_only | 0.62 | 0.62 | 0.95 | 0.75 |
+| de | standard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| de | standard | rules_ner | 1.00 | 1.00 | 1.00 | 1.00 |
+| de | standard | rules_ner_post | 1.00 | 0.98 | 1.00 | 1.00 |
+| de | standard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
+| lb | hard | ner_only | 0.52 | 0.20 | 0.91 | 0.66 |
+| lb | hard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| lb | hard | rules_ner | 0.97 | 0.67 | 0.97 | 0.97 |
+| lb | hard | rules_ner_post | 1.00 | 1.00 | 1.00 | 1.00 |
+| lb | hard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
+| lb | standard | ner_only | 0.62 | 0.62 | 0.93 | 0.75 |
+| lb | standard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| lb | standard | rules_ner | 1.00 | 1.00 | 1.00 | 1.00 |
+| lb | standard | rules_ner_post | 1.00 | 0.98 | 1.00 | 1.00 |
+| lb | standard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
 
 ## Names only, by language and subset
 
 | lang | subset | variant | recall_overlap | recall_exact | precision_overlap | f1_overlap |
 |---|---|---|---|---|---|---|
-| en | hard | post_t040 | 0.93 | 0.89 | 1.00 | 0.97 |
-| en | hard | rules_ner_post | 0.93 | 0.89 | 1.00 | 0.97 |
-| en | standard | post_t040 | 0.95 | 0.90 | 1.00 | 0.98 |
-| en | standard | rules_ner_post | 0.95 | 0.90 | 1.00 | 0.98 |
-| fr | hard | post_t040 | 0.98 | 0.93 | 1.00 | 0.99 |
-| fr | hard | rules_ner_post | 0.98 | 0.93 | 1.00 | 0.99 |
-| fr | standard | post_t040 | 0.98 | 0.98 | 1.00 | 0.99 |
-| fr | standard | rules_ner_post | 0.98 | 0.98 | 1.00 | 0.99 |
-| de | hard | post_t040 | 0.98 | 0.93 | 1.00 | 0.99 |
-| de | hard | rules_ner_post | 0.96 | 0.91 | 1.00 | 0.98 |
-| de | standard | post_t040 | 0.98 | 0.98 | 1.00 | 0.99 |
-| de | standard | rules_ner_post | 0.98 | 0.98 | 1.00 | 0.99 |
-| lb | hard | post_t040 | 0.89 | 0.83 | 0.95 | 0.92 |
-| lb | hard | rules_ner_post | 0.87 | 0.83 | 0.98 | 0.92 |
-| lb | standard | post_t040 | 1.00 | 0.98 | 1.00 | 1.00 |
-| lb | standard | rules_ner_post | 0.98 | 0.98 | 1.00 | 0.99 |
+| en | hard | ner_only | 0.89 | 0.61 | 0.93 | 0.91 |
+| en | hard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| en | hard | rules_ner | 0.98 | 0.70 | 0.94 | 0.96 |
+| en | hard | rules_ner_post | 1.00 | 1.00 | 1.00 | 1.00 |
+| en | hard | rules_ner_post_tuned | 1.00 | 1.00 | 1.00 | 1.00 |
+| en | standard | ner_only | 0.95 | 0.90 | 0.98 | 0.96 |
+| en | standard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| en | standard | rules_ner | 1.00 | 1.00 | 1.00 | 1.00 |
+| en | standard | rules_ner_post | 1.00 | 0.98 | 1.00 | 1.00 |
+| en | standard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
+| fr | hard | ner_only | 0.93 | 0.65 | 0.96 | 0.95 |
+| fr | hard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| fr | hard | rules_ner | 0.98 | 0.70 | 0.98 | 0.98 |
+| fr | hard | rules_ner_post | 0.98 | 0.98 | 1.00 | 0.99 |
+| fr | hard | rules_ner_post_tuned | 0.98 | 0.98 | 1.00 | 0.99 |
+| fr | standard | ner_only | 0.98 | 0.98 | 0.95 | 0.96 |
+| fr | standard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| fr | standard | rules_ner | 1.00 | 1.00 | 1.00 | 1.00 |
+| fr | standard | rules_ner_post | 1.00 | 1.00 | 1.00 | 1.00 |
+| fr | standard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
+| de | hard | ner_only | 0.91 | 0.63 | 0.93 | 0.92 |
+| de | hard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| de | hard | rules_ner | 0.98 | 0.70 | 0.96 | 0.97 |
+| de | hard | rules_ner_post | 1.00 | 1.00 | 1.00 | 1.00 |
+| de | hard | rules_ner_post_tuned | 1.00 | 1.00 | 1.00 | 1.00 |
+| de | standard | ner_only | 0.98 | 0.98 | 0.95 | 0.96 |
+| de | standard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| de | standard | rules_ner | 1.00 | 1.00 | 1.00 | 1.00 |
+| de | standard | rules_ner_post | 1.00 | 0.98 | 1.00 | 1.00 |
+| de | standard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
+| lb | hard | ner_only | 0.67 | 0.26 | 0.91 | 0.78 |
+| lb | hard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| lb | hard | rules_ner | 0.96 | 0.57 | 0.96 | 0.96 |
+| lb | hard | rules_ner_post | 1.00 | 1.00 | 1.00 | 1.00 |
+| lb | hard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
+| lb | standard | ner_only | 0.98 | 0.98 | 0.93 | 0.95 |
+| lb | standard | rules | 0.98 | 0.98 | 1.00 | 0.99 |
+| lb | standard | rules_ner | 1.00 | 1.00 | 1.00 | 1.00 |
+| lb | standard | rules_ner_post | 1.00 | 0.98 | 1.00 | 1.00 |
+| lb | standard | rules_ner_post_tuned | 1.00 | 0.98 | 1.00 | 1.00 |
