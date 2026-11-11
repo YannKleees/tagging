@@ -2,15 +2,19 @@ import re
 from functools import lru_cache
 from pathlib import Path
 
+from tagging.lang import guess
+
 ARTICLES = set("d' d’ l' l’ de den dem der die das des le la les the".split())
 TITLES = set(
     "här madame monsieur herr herrn frau dokter doktesch docteur docteure dr dr. mr mr. mrs mrs. ms ms. mme mme. "
     "mlle m. prof prof. professor sir miss".split()
 )
 DETERMINERS = ARTICLES | set(
-    "d l a an e en eng ein eine un une my your his her our their meng mäi mäin däin deng säin säi seng hir hire "
-    "eis eisen äre mein meine meinem meiner dein deine sein seine ihr ihre unser unsere ma mon mes ta ton sa son "
-    "ses notre nos votre vos leur".split()
+    "d l a an e en eng engem enger ein eine einen einem einer un une my your his her our their this that these "
+    "those meng mengem menger mäi mäin däin deng dengem säin säi seng sengem senger hir hire hiren hirem hirer eis "
+    "eise eisen eisem eiser äre ären ärem dësen dës dëst dësem dëser mein meine meinem meiner meinen dein deine "
+    "sein seine seinem seiner seinen ihr ihre ihrem ihrer ihren unser unsere unserem unserer dieser diese dieses "
+    "diesem diesen ma mon mes ta ton sa son ses notre nos votre vos leur leurs ce cet cette ces du au aux".split()
 )
 # Words that may sit between role nouns without making the span a name: "the Baker and the Butcher".
 FILLERS = set(
@@ -61,6 +65,12 @@ POSSESSIVE = re.compile(r"['’]s\b|\s+(?:säin?|seng(?:em|er)?|hir(?:en?|em|er)
 # A place joined to a name by one of these is not part of the name: "ADEM zu Welschent".
 LOCATIVE = re.compile(r"\s+(?:zu|à|in|at|bei|near|no|nach|op)\s+$", re.IGNORECASE)
 COMMON_WORDS = Path(__file__).with_name("common_words.txt")
+NUMBER = re.compile(r"[\d.,:/\-]+")
+# Lowercase words that can stand inside a name: "Banque de Luxembourg", "Esch an der Alzette".
+PARTICLES = set(
+    "de du des d la le les l et en sur sous aux au à of the and for in on von vom van der den dem zu zur und am im "
+    "an op vun a y e da do dos di del della".split()
+)
 
 
 def strip_titles(text, start, end):
@@ -97,6 +107,17 @@ def trim(text, start, end):
     return start, end
 
 
+# A model sometimes runs on into the sentence: "Musée mécht op Feierdeeg", "Schéifer huet d'Schof".
+# The span is cut before the first lowercase everyday word that is no name particle.
+def cut_at_sentence_word(text, start, end):
+    plain, _ = common_words()
+    for m in WORDS.finditer(text, start, end):
+        w = m.group().strip('.,;:!?()"«»')
+        if m.start() > start and w.islower() and w in plain and w not in PARTICLES and w not in FILLERS:
+            return start, m.start()
+    return start, end
+
+
 # Spans here use character offsets; they are converted to bytes after post-processing.
 def postprocess(text, spans):
     out = []
@@ -106,8 +127,10 @@ def postprocess(text, spans):
             if s["type"] == "person":
                 a, b = cut_possessive(text, a, b)
                 a, b = strip_titles(text, a, b)
+            if s["type"] != "address":
+                a, b = cut_at_sentence_word(text, a, b)
             a, b = trim(text, a, b)
-            if a < b and not not_a_name(text[a:b]):
+            if a < b and any(c.isalpha() for c in text[a:b]) and not not_a_name(text[a:b]):
                 out.append({**s, "start": a, "end": b, "text": text[a:b]})
     return out
 
@@ -124,22 +147,29 @@ def common_words():
 
 def content_words(span):
     words = [w.strip('.,;:!?()"«»') for w in WORDS.findall(span.lower())]
-    return [w for w in words if w and w not in DETERMINERS and w not in FILLERS]
+    # Numbers say nothing either way: "Invoice 4471" is as much an everyday phrase as "Invoice".
+    return [w for w in words if w and w not in DETERMINERS and w not in FILLERS and not NUMBER.fullmatch(w)]
 
 
-# A span made of everyday words only ("Post Office", "le Plombier", "die Feuerwehr") is not a name.
-# Words that are also names ("Baker", "Berger") only count as everyday words after a determiner.
+# A span made of everyday words only ("le Plombier", "die Feuerwehr", "the Post Office") is not a
+# name. Two things speak for a name all the same, and both only count without a determiner in front:
+# a word that is also a frequent name ("Baker", "Berger"), and several capitalized words in a row
+# ("National Water Well Association", "Motor Coach Industries").
 def everyday(text, start, end):
     plain, marked = common_words()
-    words = content_words(text[start:end])
+    span = text[start:end]
+    words = content_words(span)
     known = [w in plain or w in marked or all(p in plain for p in w.split("-")) for w in words]
     if not words or not all(known):
         return False
-    if any(w not in marked for w in words):
-        return True
     before = WORDS.findall(text[:start].lower())[-1:]
-    first = WORDS.findall(text[start:end].lower())[:1]
-    return bool(set(before + first) & DETERMINERS)
+    first = WORDS.findall(span.lower())[:1]
+    if set(before + first) & DETERMINERS:
+        return True
+    # German and Luxembourgish capitalize every noun, so a row of capitals proves nothing there.
+    title_case = [w[:1].isupper() for w in WORDS.findall(span) if w.lower() not in FILLERS]
+    several = len(title_case) >= 2 and all(title_case) and guess(text) not in ("de", "lb")
+    return not (all(w in marked for w in words) or several)
 
 
 # Byte offsets, like the list hits in `support`, which are all hits whatever their score. A model
@@ -152,7 +182,7 @@ def drop_everyday(text, spans, support):
         supported = any(
             s["start"] < k["end"] and k["start"] < s["end"] and k["source"] == "gazetteer"
             for k in support
-            if k["score"] >= 0.45 or (k["start"] <= s["start"] and s["end"] <= k["end"])
+            if k["score"] > 0.45 or (k["start"] <= s["start"] and s["end"] <= k["end"])
         )
         start, end = len(raw[: s["start"]].decode()), len(raw[: s["end"]].decode())
         if s["type"] == "address" or supported or not everyday(text, start, end):

@@ -254,3 +254,114 @@ def test_detect_batch_matches_detect(monkeypatch):
         [("person", "Jhemp"), ("location", "Réimech")],
     ]
     assert tagging.detect_batch(texts) == [tagging.detect(t) for t in texts]
+
+
+def test_postprocess_cuts_a_span_that_runs_into_the_sentence():
+    for text, phrase, kept in [
+        ("De Schmit huet d'Schof gefouert.", "Schmit huet d'Schof", "Schmit"),
+        ("Den Zöllner kontrolliert den Lastwagen.", "Zöllner kontrolliert den Lastwagen", "Zöllner"),
+        # Lowercase particles belong to names.
+        ("Si schafft bei der Banque de Luxembourg.", "Banque de Luxembourg", "Banque de Luxembourg"),
+        ("Hie wunnt zu Esch an der Alzette.", "Esch an der Alzette", "Esch an der Alzette"),
+    ]:
+        got = postprocess(text, [char_span(text, phrase, "organization")])
+        assert [s["text"] for s in got] == [kept], text
+
+
+def test_postprocess_drops_spans_without_letters():
+    text = "Version 2.3.0.1 ass do."
+    assert postprocess(text, [char_span(text, "2.3.0.1")]) == []
+
+
+def test_drop_everyday_ignores_numbers_and_knows_dictionary_words():
+    for text, phrase in [
+        ("Invoice 4471 is paid.", "Invoice 4471"),
+        ("D'Hiewan huet de Puppelchen besicht.", "Hiewan"),
+        ("De Coiffer huet méindes zou.", "Coiffer"),
+    ]:
+        assert drop_everyday(text, [span(text, phrase, "person", "ner")], []) == [], text
+
+
+def test_drop_everyday_keeps_several_capitalized_words_without_a_determiner():
+    text = "She joined National Water Well Association last year."
+    name = span(text, "National Water Well Association", "organization", "ner")
+    assert drop_everyday(text, [name], []) == [name]
+    # After a determiner the same shape is a description, and German capitalizes every noun.
+    for text, phrase in [
+        ("The Fire Brigade arrived at the Tax Office.", "Fire Brigade"),
+        ("Heute bleibt Kindergarten Schule geschlossen und wir warten.", "Kindergarten Schule"),
+    ]:
+        assert drop_everyday(text, [span(text, phrase, "organization", "ner")], []) == [], text
+
+
+class FakeDoc:
+    def __init__(self, text, entities):
+        self.ents = [FakeEntity(text, name, label) for name, label in entities.items() if name in text]
+
+
+class FakeEntity:
+    def __init__(self, text, name, label):
+        self.text, self.label_ = name, label
+        self.start_char = text.index(name)
+        self.end_char = self.start_char + len(name)
+
+
+class FakeNlp:
+    def __init__(self, name, entities, loaded):
+        self.name, self.entities = name, entities
+        loaded.append(name)
+
+    def pipe(self, texts, batch_size=64):
+        return [FakeDoc(t, self.entities) for t in texts]
+
+
+def fake_spacy(monkeypatch, entities):
+    from tagging import spacy_ner
+
+    loaded = []
+    monkeypatch.setattr(spacy_ner, "load", lambda name: FakeNlp(name, entities, loaded))
+    return loaded
+
+
+def test_spacy_backend_picks_a_model_per_language(monkeypatch):
+    from tagging import spacy_ner
+
+    loaded = fake_spacy(monkeypatch, {"Nzuzi": "PER", "Zzyzx": "ORG", "tomorrow": "DATE"})
+    texts = ["Ech hunn d'Nzuzi gëschter gesinn.", "Wir haben Nzuzi von Zzyzx gesehen.", "See you tomorrow.", "Nzuzi"]
+    spans = spacy_ner.predict_many(texts)
+    assert [[(s["type"], s["text"]) for s in t] for t in spans] == [
+        [("person", "Nzuzi")],
+        [("person", "Nzuzi"), ("organization", "Zzyzx")],
+        [],
+        [("person", "Nzuzi")],
+    ]
+    assert set(loaded) == {spacy_ner.MULTILINGUAL, "de_core_news_sm", "en_core_web_sm"}
+    assert all(t[s["start"] : s["end"]] == s["text"] for t, ss in zip(texts, spans) for s in ss)
+    loaded.clear()
+    spacy_ner.predict_many(texts, {"de": "de_core_news_lg"}, language="de")
+    assert loaded == ["de_core_news_lg"]
+
+
+def test_detect_with_the_fast_backend(monkeypatch):
+    fake_spacy(monkeypatch, {"Nzuzi": "PER", "Die Feuerwehr": "ORG"})
+    text = "Die Feuerwehr hat Nzuzi in Trier gesehen."
+    spans = tagging.detect(text, {"ner": {"backend": "spacy"}})
+    assert [(s["type"], s["text"], s["source"]) for s in spans] == [
+        ("person", "Nzuzi", "ner"),
+        ("location", "Trier", "gazetteer"),
+    ]
+
+
+def test_both_backends_are_combined(monkeypatch):
+    fake_spacy(monkeypatch, {"Nzuzi": "PER"})
+    monkeypatch.setattr(ner, "load", lambda name, device: FakeModel({"Zzyzx Consulting": "organization name"}))
+    text = "Nzuzi schafft bei Zzyzx Consulting."
+    spans = tagging.detect(text, {"ner": {"backend": "both"}})
+    assert [(s["type"], s["text"]) for s in spans] == [("person", "Nzuzi"), ("organization", "Zzyzx Consulting")]
+
+
+def test_unknown_backend_is_an_error():
+    import pytest
+
+    with pytest.raises(ValueError, match="backend"):
+        tagging.detect("x", {"ner": {"backend": "bert"}})

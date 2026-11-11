@@ -105,3 +105,34 @@ fn accented_text_around_a_street_word_does_not_break_the_window() {
         assert!(texts(&d(), &glued).is_empty());
     }
 }
+
+#[test]
+fn finds_the_town_and_postcode_after_a_street() {
+    assert_eq!(
+        texts(&d(), "999, Grange Road, Kettering, ENG, NN16 8QP"),
+        ["999, Grange Road", "Kettering", "NN16 8QP"]
+    );
+    assert_eq!(
+        texts(&d(), "Hauptstraße 12, Trier, 54290"),
+        ["Hauptstraße 12", "Trier", "54290"]
+    );
+    assert_eq!(texts(&d(), "Hauptstraße 12, dann links"), ["Hauptstraße 12"]);
+}
+
+#[test]
+fn finds_foreign_postcodes_units_and_coordinates() {
+    assert_eq!(texts(&d(), "Falmouth, KY, 41040-7980"), ["41040-7980"]);
+    assert_eq!(texts(&d(), "send to LS10 3SL today"), ["LS10 3SL"]);
+    assert_eq!(texts(&d(), "Apt 4B, then Suite 288"), ["Apt 4B", "Suite 288"]);
+    assert_eq!(run(&d(), "at [49.6117, 6.1319] today")[0].kind, EntityType::Location);
+    for t in [
+        "Room 3 is free",
+        "OK, 12345 items",
+        "prices (12.50, 13.75)",
+        "[120.5, 300.25]",
+        "in NO, 12 Uhr",
+    ] {
+        let got = texts(&d(), t);
+        assert!(got.is_empty() || t.starts_with("prices"), "{t}: {got:?}");
+    }
+}

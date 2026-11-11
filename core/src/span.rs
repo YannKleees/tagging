@@ -16,6 +16,8 @@ pub enum EntityType {
     Organization,
     Location,
     Address,
+    IdNumber,
+    Credential,
 }
 
 impl EntityType {
@@ -34,6 +36,8 @@ impl EntityType {
             Self::Organization => "organization",
             Self::Location => "location",
             Self::Address => "address",
+            Self::IdNumber => "id_number",
+            Self::Credential => "credential",
         }
     }
 

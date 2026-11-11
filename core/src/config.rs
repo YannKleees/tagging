@@ -16,11 +16,13 @@ pub enum DetectorKind {
     NationalId,
     Date,
     Address,
+    IdNumber,
+    Field,
     Gazetteer,
 }
 
 impl DetectorKind {
-    pub const ALL: [Self; 10] = [
+    pub const ALL: [Self; 12] = [
         Self::Email,
         Self::Url,
         Self::Ip,
@@ -30,6 +32,8 @@ impl DetectorKind {
         Self::NationalId,
         Self::Date,
         Self::Address,
+        Self::IdNumber,
+        Self::Field,
         Self::Gazetteer,
     ];
 }
@@ -55,6 +59,9 @@ pub struct Wordlist {
 pub struct Config {
     pub detectors: Vec<DetectorKind>,
     pub threshold: f64,
+    /// Also report dates that are not birth dates, and times of day. Off by default: a date alone
+    /// rarely identifies anyone, and marking every one costs readability.
+    pub dates_and_times: bool,
     pub builtin_gazetteers: bool,
     pub gazetteers: Vec<GazetteerFile>,
     pub wordlists: Vec<Wordlist>,
@@ -65,6 +72,7 @@ impl Default for Config {
         Self {
             detectors: DetectorKind::ALL.to_vec(),
             threshold: 0.5,
+            dates_and_times: false,
             builtin_gazetteers: true,
             gazetteers: Vec::new(),
             wordlists: Vec::new(),

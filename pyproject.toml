@@ -13,6 +13,9 @@ dependencies = []
 [project.optional-dependencies]
 # gliner_multi_pii-v1 ships a SentencePiece tokenizer that transformers 5 fails to convert.
 ner = ["gliner>=0.2.29", "transformers>=4.51.3,<5", "protobuf>=4", "numpy>=1.26"]
+# The fast NER backend. Its pipelines are separate downloads:
+# python -m spacy download xx_ent_wiki_sm en_core_web_sm fr_core_news_sm de_core_news_sm
+fast = ["spacy>=3.7,<4", "numpy>=1.26"]
 eval = ["faker>=30", "pandas>=2"]
 dev = ["pytest>=8", "ruff>=0.6"]
 

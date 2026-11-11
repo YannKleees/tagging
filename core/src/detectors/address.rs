@@ -30,12 +30,24 @@ const OPENERS: &[&str] = &[
 /// on these windows.
 const WINDOW: (usize, usize) = (80, 120);
 
+#[rustfmt::skip]
+const US_STATES: &[&str] = &[
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME",
+    "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA",
+    "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC",
+];
+
 pub struct AddressDetector {
     anchor: Regex,
     leading: Regex,
     trailing: Regex,
     english: Regex,
     postcode: Regex,
+    us_zip: Regex,
+    uk_postcode: Regex,
+    coordinates: Regex,
+    unit: Regex,
+    rest_of_line: Regex,
 }
 
 impl AddressDetector {
@@ -59,6 +71,19 @@ impl AddressDetector {
             english: Regex::new(&format!(
                 r"(?P<before>\d{{1,5}}[A-Za-z]?),?[ \u{{a0}}]+(?:\p{{Lu}}[\p{{L}}'’.-]+[ \u{{a0}}]+){{1,3}}(?:{TRAILING_EN})\b"
             ))?,
+            // The state follows the town after a comma: `Falmouth, KY, 41040-7980`.
+            us_zip: Regex::new(r",[ \u{a0}]([A-Z]{2}),?[ \u{a0}](\d{5}(?:-\d{4})?)")?,
+            uk_postcode: Regex::new(r"\b[A-Z]{1,2}\d[A-Z\d]?[ \u{a0}]\d[A-Z]{2}")?,
+            // `Apt 4B`, `Suite 288`, `Wohnung 12`. Rooms and floors are in offices too and stay.
+            unit: Regex::new(
+                r"(?i)\b(?:apartment|apt|suite|flat|maisonette|duplex|penthouse|appartement|app|wohnung|whg)\.?[ \u{a0}](?:n°[ \u{a0}]?)?\d{1,4}[A-Za-z]?\b",
+            )?,
+            // What follows the street on one line: `, Kettering, ENG, NN16 8QP` or `, Trier, 54290`.
+            rest_of_line: Regex::new(
+                r"^,[ \u{a0}](\p{Lu}[\p{L}'’.\- ]{1,40}?)(?:,[ \u{a0}][\p{L}\- ]{2,25})?,[ \u{a0}](\d{4,5}(?:-\d{4})?|[A-Z]{1,2}\d[A-Z\d]?(?:[ \u{a0}]\d[A-Z]{2})?)\b",
+            )?,
+            // Latitude and longitude in brackets: `[49.6117, 6.1319]`.
+            coordinates: Regex::new(r"[\[(](-?\d{1,2}\.\d{1,7}),[ \u{a0}]?(-?\d{1,3}\.\d{1,7})[\])]")?,
             // Luxembourg writes `L-1234`; letters from neighbouring countries need five digits.
             postcode: Regex::new(r"\b(?:L[-–]\d{4}|[DF][-–]\d{5})\b")?,
         })
@@ -162,6 +187,45 @@ impl Detector for AddressDetector {
             number_bounded(text, m.start(), m.end())
                 .then(|| Span::rule(text, EntityType::Address, m.start(), m.end(), 0.85))
         }));
+        // A street with a house number opens a postal address; the town and the postcode follow.
+        for street in spans.clone().iter().filter(|s| s.score >= 0.9) {
+            let Some(c) = self.rest_of_line.captures(&text[street.end..]) else {
+                continue;
+            };
+            let (Some(town), Some(code)) = (c.get(1), c.get(2)) else {
+                continue;
+            };
+            let (a, b) = (street.end + town.start(), street.end + town.end());
+            let (x, y) = (street.end + code.start(), street.end + code.end());
+            spans.push(Span::rule(text, EntityType::Location, a, b, 0.75));
+            spans.push(Span::rule(text, EntityType::Address, x, y, 0.7));
+        }
+        spans.extend(scan(&self.unit, text, |m| {
+            word_bounded(text, m.start(), m.end())
+                .then(|| Span::rule(text, EntityType::Address, m.start(), m.end(), 0.6))
+        }));
+        // `KY, 41040-7980`: only the ZIP code is reported, the state is no address.
+        for c in self.us_zip.captures_iter(text) {
+            let (Some(state), Some(zip)) = (c.get(1), c.get(2)) else {
+                continue;
+            };
+            if US_STATES.contains(&state.as_str()) && number_bounded(text, zip.start(), zip.end()) {
+                spans.push(Span::rule(text, EntityType::Address, zip.start(), zip.end(), 0.7));
+            }
+        }
+        spans.extend(scan(&self.uk_postcode, text, |m| {
+            word_bounded(text, m.start(), m.end())
+                .then(|| Span::rule(text, EntityType::Address, m.start(), m.end(), 0.75))
+        }));
+        for c in self.coordinates.captures_iter(text) {
+            let (Some(m), Some(lat), Some(lon)) = (c.get(0), c.get(1), c.get(2)) else {
+                continue;
+            };
+            let within = |s: &str, max: f64| s.parse::<f64>().is_ok_and(|x| x.abs() <= max);
+            if within(lat.as_str(), 90.0) && within(lon.as_str(), 180.0) {
+                spans.push(Span::rule(text, EntityType::Location, m.start(), m.end(), 0.8));
+            }
+        }
         resolve(spans)
     }
 }

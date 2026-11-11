@@ -1,7 +1,7 @@
 use crate::config::read_to_string;
 use crate::detectors::{
-    AddressDetector, CardDetector, DateDetector, Detector, EmailDetector, IbanDetector, IpDetector, NationalIdDetector,
-    PhoneDetector, UrlDetector,
+    AddressDetector, CardDetector, DateDetector, Detector, EmailDetector, FieldDetector, IbanDetector,
+    IdNumberDetector, IpDetector, NationalIdDetector, PhoneDetector, UrlDetector,
 };
 use crate::gazetteer::Gazetteer;
 use crate::{Config, DetectorKind, Result, Span, resolve, tokenize};
@@ -26,7 +26,9 @@ impl Tagger {
                 DetectorKind::Iban => Box::new(IbanDetector::new()?),
                 DetectorKind::CreditCard => Box::new(CardDetector::new()?),
                 DetectorKind::NationalId => Box::new(NationalIdDetector::new()?),
-                DetectorKind::Date => Box::new(DateDetector::new()?),
+                DetectorKind::Date => Box::new(DateDetector::new(config.dates_and_times)?),
+                DetectorKind::IdNumber => Box::new(IdNumberDetector::new()?),
+                DetectorKind::Field => Box::new(FieldDetector::new(config.dates_and_times)?),
                 DetectorKind::Address => Box::new(AddressDetector::new()?),
                 DetectorKind::Gazetteer => Box::new(gazetteer(config)?),
             });

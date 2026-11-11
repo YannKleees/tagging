@@ -1,6 +1,6 @@
 use regex::{Captures, Regex};
 
-use super::{Detector, has_keyword, number_bounded, window_after, window_before, word_bounded};
+use super::{Detector, has_keyword, next_char, number_bounded, prev_char, window_after, window_before, word_bounded};
 use crate::{EntityType, Result, Span, Token, resolve};
 
 #[rustfmt::skip]
@@ -22,27 +22,42 @@ const BIRTH_WORDS: &[&str] = &[
     "born", "birth*", "dob", "d.o.b", "né", "née", "naiss*", "geboren", "geb", "geburt*", "gebuer*",
 ];
 
+/// Score of a date that is no birth date, and of a time of day, when the config asks for them.
+const REPORTED: f64 = 0.6;
+
 pub struct DateDetector {
     numeric: Regex,
     iso: Regex,
     day_month: Regex,
     month_day: Regex,
+    month_year: Regex,
+    time: Regex,
+    all: bool,
 }
 
 impl DateDetector {
-    pub fn new() -> Result<Self> {
+    /// With `all`, dates that are no birth dates and times of day are reported too.
+    pub fn new(all: bool) -> Result<Self> {
         let mut names: Vec<&str> = MONTHS.iter().map(|(m, _)| *m).collect();
         names.sort_by_key(|m| std::cmp::Reverse(m.chars().count()));
         let months = names.iter().map(|m| regex::escape(m)).collect::<Vec<_>>().join("|");
         Ok(Self {
             numeric: Regex::new(r"(\d{1,2})([./-])(\d{1,2})([./-])(\d{4}|\d{2})")?,
-            iso: Regex::new(r"(\d{4})-(\d{2})-(\d{2})")?,
+            // The time of an ISO timestamp belongs to the date: `1960-05-20T00:00:00`.
+            iso: Regex::new(r"(\d{4})-(\d{2})-(\d{2})(?:T\d{2}:\d{2}(?::\d{2})?)?")?,
             day_month: Regex::new(&format!(
-                r"(?i)(\d{{1,2}})(?:\.|er|st|nd|rd|th)?\s+(?:of\s+)?({months})\.?,?\s+(\d{{4}})"
+                r"(?i)(\d{{1,2}})(?:\.|er|e|ème|st|nd|rd|th)?\s+(?:of\s+)?({months})\.?,?\s+(\d{{4}})"
             ))?,
             month_day: Regex::new(&format!(
-                r"(?i)({months})\.?\s+(\d{{1,2}})(?:st|nd|rd|th)?,?\s+(\d{{4}})"
+                r"(?i)({months})\.?\s+(\d{{1,2}})(?:st|nd|rd|th|er|e|\.)?,?\s+(\d{{4}})"
             ))?,
+            // A month and a year: `June 1942`, `juin/55`.
+            month_year: Regex::new(&format!(r"(?i)({months})(?:[ \u{{a0}}](\d{{4}})|/(\d{{4}}|\d{{2}}))"))?,
+            // `14:30`, `8:20 PM`, `02:40:19`, `14h30`, `18 Uhr`.
+            time: Regex::new(
+                r"(?i)\b(?:[01]?\d|2[0-3])(?::[0-5]\d(?::[0-5]\d)?(?:[ \u{a0}]?[ap]\.?m\b\.?)?|h[0-5]\d\b|[ \u{a0}]?(?:[ap]\.?m\b\.?|uhr\b|auer\b|heures\b|o'clock\b))",
+            )?,
+            all,
         })
     }
 }
@@ -50,29 +65,55 @@ impl DateDetector {
 impl Detector for DateDetector {
     fn detect(&self, text: &str, _: &[Token]) -> Vec<Span> {
         let mut spans = Vec::new();
-        find(text, &self.numeric, number_bounded, &mut spans, |c| {
+        let generic = if self.all { REPORTED } else { 0.4 };
+        let find = |re: &Regex, bounded: Bounded, out: &mut Vec<Span>, parse: &dyn Fn(&Captures) -> Option<Parsed>| {
+            find(text, re, bounded, generic, out, parse)
+        };
+        find(&self.numeric, number_bounded, &mut spans, &|c| {
             (c[2] == c[4]).then(|| (expand_year(&c[5]), num(&c[3]), num(&c[1]), c[5].len() == 2))
         });
-        find(text, &self.iso, number_bounded, &mut spans, |c| {
+        find(&self.iso, number_bounded, &mut spans, &|c| {
             Some((num(&c[1]), num(&c[2]), num(&c[3]), false))
         });
-        find(text, &self.day_month, word_bounded, &mut spans, |c| {
+        find(&self.day_month, word_bounded, &mut spans, &|c| {
             Some((num(&c[3]), month(&c[2])?, num(&c[1]), false))
         });
-        find(text, &self.month_day, word_bounded, &mut spans, |c| {
+        find(&self.month_day, word_bounded, &mut spans, &|c| {
             Some((num(&c[3]), month(&c[1])?, num(&c[2]), false))
         });
+        find(&self.month_year, word_bounded, &mut spans, &|c| {
+            // After a day number this is a full date, and an impossible one if it got here.
+            let before = text[..c.get(0)?.start()].trim_end_matches([' ', '\u{a0}', '.']);
+            if before.ends_with(|ch: char| ch.is_ascii_digit()) {
+                return None;
+            }
+            let year = c.get(2).or(c.get(3))?.as_str();
+            Some((expand_year(year), month(&c[1])?, 1, year.len() == 2))
+        });
+        if self.all {
+            for m in self.time.find_iter(text) {
+                // `12:30:45` inside an IPv6 address or a ratio such as `3:1` is no time.
+                let glued = |c: Option<char>| c.is_some_and(|c| c.is_alphanumeric() || c == ':');
+                if !glued(prev_char(text, m.start())) && !glued(next_char(text, m.end())) {
+                    spans.push(Span::rule(text, EntityType::Date, m.start(), m.end(), REPORTED));
+                }
+            }
+        }
         resolve(spans)
     }
 }
 
-/// `parse` returns year, month, day and whether the year was written with two digits.
+type Bounded = fn(&str, usize, usize) -> bool;
+/// Year, month, day and whether the year was written with two digits.
+type Parsed = (u32, u32, u32, bool);
+
 fn find(
     text: &str,
     re: &Regex,
-    bounded: fn(&str, usize, usize) -> bool,
+    bounded: Bounded,
+    generic: f64,
     out: &mut Vec<Span>,
-    parse: impl Fn(&Captures) -> Option<(u32, u32, u32, bool)>,
+    parse: &dyn Fn(&Captures) -> Option<Parsed>,
 ) {
     for c in re.captures_iter(text) {
         let (Some(m), Some((year, month, day, short_year))) = (c.get(0), parse(&c)) else {
@@ -89,8 +130,8 @@ fn find(
         let (kind, score) = match (birth, short_year) {
             (true, false) => (EntityType::DateOfBirth, 0.95),
             (true, true) => (EntityType::DateOfBirth, 0.9),
-            (false, false) => (EntityType::Date, 0.4),
-            (false, true) => (EntityType::Date, 0.35),
+            (false, false) => (EntityType::Date, generic),
+            (false, true) => (EntityType::Date, generic - 0.05),
         };
         out.push(Span::rule(text, kind, m.start(), m.end(), score));
     }

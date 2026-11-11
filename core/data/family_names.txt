@@ -171,7 +171,6 @@ Aixalà
 Aizpuru
 Aizpurua
 Ajello
-Akers
 Akhtar
 Akkermann
 Alabart
@@ -529,7 +528,6 @@ Apollonio
 ?Appel
 Appelius
 Appelt
-Appert
 Appia
 Appiah
 Appleby
@@ -732,7 +730,6 @@ Atlan
 Attal
 Attanasio
 Attard
-Atten
 Attenborough
 Attia
 Attlee
@@ -945,7 +942,6 @@ Baiocchi
 Baird
 Bairstow
 Bajo
-Bak
 Bakayoko
 Baker
 Bakewell
@@ -1854,7 +1850,6 @@ Biasi
 Biasini
 Bibby
 Bibra
-Bich
 Bichel
 Bicheler
 Bichet
@@ -1867,7 +1862,6 @@ Bidault
 Biddulph
 Bideau
 Bidegain
-Bidet
 Bidinger
 Bieberstein
 Biebl
@@ -1917,7 +1911,6 @@ Bindels
 Binder
 Binet
 Binetti
-Bing
 Bingham
 Bini
 Binns
@@ -2173,13 +2166,11 @@ Bolelli
 Boles
 Bolis
 Bolkaerts
-Boll
 Bolla
 Bollaert
 Bolland
 Bollati
 Bolle
-Bollen
 Bollendorf
 Bollendorff
 Bollig
@@ -2255,7 +2246,6 @@ Bonino
 Bonis
 Bonivento
 Bonjean
-Bonjour
 Bonk
 Bonmatí
 Bonn
@@ -2411,7 +2401,6 @@ Botana
 Botelho
 Botella
 Bothe
-Bott
 Botta
 Bottacin
 Bottari
@@ -2634,7 +2623,6 @@ Brassel
 Brasseur
 Brassey
 Brasó
-Brau
 Brauchitsch
 Braud
 Brauer
@@ -2691,7 +2679,6 @@ Bretschneider
 Brett
 Brette
 Brettner
-Bretz
 Breuer
 Breuil
 Breunig
@@ -2751,7 +2738,6 @@ Brisson
 Bristow
 Brito
 Brittain
-Britten
 Britton
 Britz
 Brivio
@@ -2798,7 +2784,6 @@ Broos
 Brophy
 Broquet
 Bros
-Brosch
 Brosius
 Brossard
 Brosset
@@ -2923,8 +2908,6 @@ Budgen
 Bue
 Buendía
 Bueno
-Buergen
-Buet
 ?Buffet
 Buffon
 Buffoni
@@ -3053,7 +3036,6 @@ Butterfield
 Butterworth
 Butti
 Buttler
-Butz
 Buxton
 Buxó
 Buyle
@@ -3069,7 +3051,6 @@ Byrne
 Byttebier
 Bähr
 ?Bär
-Bätz
 Bäuerle
 Bäumer
 Bäumler
@@ -3197,7 +3178,6 @@ Caille
 Cailleau
 Caillet
 Cailleux
-Caillot
 Cain
 Caine
 Caire
@@ -3537,7 +3517,6 @@ Carter
 Carteret
 Carteron
 Cartier
-Cartron
 Cartuyvels
 Cartwright
 Caruana
@@ -3848,7 +3827,6 @@ Chalmers
 Chalois
 Chalon
 Chalopin
-Chalumeau
 Chalvin
 Chamard
 Chambard
@@ -3997,7 +3975,6 @@ Chiarelli
 Chiari
 Chiarini
 Chiavacci
-Chiche
 Chichester
 Chico
 Chicot
@@ -4241,7 +4218,6 @@ Cohn
 Coignard
 Coignet
 Coimbra
-Cola
 Colabianchi
 Colacicchi
 Colajanni
@@ -4457,7 +4433,6 @@ Cornwallis
 Cornwell
 Coromina
 Corominas
-Corona
 Corr
 Corradi
 Corradini
@@ -4620,7 +4595,6 @@ Crespi
 Crespin
 Crespo
 Crespí
-Cresson
 Cresswell
 Cretin
 Creus
@@ -4730,7 +4704,6 @@ Curnier
 Curran
 Currey
 Currie
-Curry
 Curt
 Curtet
 Curti
@@ -4789,7 +4762,6 @@ D'andrea
 D'astorg
 D'hont
 Dabadie
-Dabo
 Dabrowska
 Daco
 Dacosta
@@ -4909,7 +4881,6 @@ Daudet
 Dauffenbach
 Dauga
 Dauge
-Daum
 Daumas
 ?Dauphin
 Daussy
@@ -4952,7 +4923,6 @@ Dearden
 Debacker
 Debaisieux
 Debard
-Debat
 Debenedetti
 Debenham
 Debes
@@ -5156,7 +5126,6 @@ Denis
 Deniz
 Denizot
 Denjean
-Denk
 Denker
 Denman
 Dennemeyer
@@ -5272,7 +5241,6 @@ Deydier
 Deyrolle
 Dhondt
 Dhont
-Dia
 Diaby
 Diagne
 Diakité
@@ -5341,7 +5309,6 @@ Diez
 Digby
 Dilger
 Diliberto
-Dillen
 Dillenburg
 Diller
 Dillies
@@ -5349,7 +5316,6 @@ Dillmann
 Dillon
 Dimbleby
 Dimier
-Dimmer
 Dinarès
 Dinet
 Dinger
@@ -5519,12 +5485,9 @@ Dragović
 Drake
 Draper
 Drauth
-Drechsel
 Drechsler
-Drees
 Dreesen
 ?Dreher
-Dresch
 Drescher
 Dressel
 Dressler
@@ -5587,7 +5550,6 @@ Ducat
 Ducci
 Duce
 Ducellier
-Duch
 Duchamp
 Duchateau
 Duchaussoy
@@ -5811,7 +5773,6 @@ Eckhoff
 Eckl
 Eckstein
 Ede
-Edel
 ?Eden
 Eder
 Ederer
@@ -5920,7 +5881,6 @@ Eloy
 Elphinstone
 Elsen
 Elsner
-Elster
 Elstner
 Elter
 Elton
@@ -5960,7 +5920,6 @@ Endres
 ?Engel
 Engelbrecht
 Engeldinger
-Engelen
 Engelhard
 Engelhardt
 Engelke
@@ -6057,7 +6016,6 @@ Esparza
 Espasa
 España
 Espejo
-Espen
 Espigares
 Espina
 Espinasse
@@ -6321,7 +6279,6 @@ Fearon
 Featherstone
 Febvre
 Fechner
-Fecht
 Feddersen
 Fedele
 Fedeli
@@ -6351,7 +6308,6 @@ Feige
 Feijoo
 Feijóo
 Feilding
-Feiler
 Feindt
 Feipel
 Feist
@@ -6578,7 +6534,6 @@ Fité
 Fixemer
 Fiévet
 ?Flach
-Flack
 Flad
 Flade
 Flahaut
@@ -6821,7 +6776,6 @@ Frattini
 Fraysse
 Frayssinet
 Frazer
-Frech
 Freddi
 Frede
 Frederes
@@ -6888,7 +6842,6 @@ Frieling
 ?Fries
 Friese
 Frigerio
-Frigo
 Frigola
 Frings
 Friob
@@ -6915,7 +6868,6 @@ Frontera
 Frosini
 Frossard
 Frost
-Frot
 Frutos
 Fry
 Frydman
@@ -7017,7 +6969,6 @@ Gaillot
 Gailly
 Gaiser
 Gajin
-Gal
 Galan
 Galand
 Galard
@@ -7093,7 +7044,6 @@ Gambardella
 Gambaro
 Gamberini
 Gambetta
-Gambier
 Gambini
 Gambino
 Gamble
@@ -7137,7 +7087,6 @@ Garcin
 Garcés
 García
 García-Margallo
-Gard
 Gardel
 Gardelle
 Gardet
@@ -7616,7 +7565,6 @@ Glanville
 Glasauer
 Glaser
 Glasgow
-Glatz
 Glatzel
 Glaß
 Gleave
@@ -7771,7 +7719,6 @@ Gorr
 Gorski
 Gorza
 Gosling
-Goss
 Gosselin
 Gosset
 Gossler
@@ -7934,13 +7881,10 @@ Greig
 Grein
 Greindl
 Greiner
-Greis
 Greisch
 Greischer
-Greisen
 Greivelding
 Greiveldinger
-Grell
 Grellet
 Grellier
 Gremling
@@ -8375,7 +8319,6 @@ Halsall
 Halsdorf
 Halsey
 Halévy
-Ham
 Hamacher
 Hamann
 Hamard
@@ -8384,7 +8327,6 @@ Hambro
 Hamdi
 Hamel
 Hamelin
-Hamen
 Hamer
 Hames
 Hamilius
@@ -8393,7 +8335,6 @@ Hamilton
 Hamm
 Hammang
 Hammann
-Hammel
 Hammelmann
 ?Hammer
 Hammerschmidt
@@ -8675,7 +8616,6 @@ Hellmich
 Hellmuth
 Hellwig
 ?Helm
-Helmer
 Helmig
 Helminger
 Helmke
@@ -8757,7 +8697,6 @@ Hepworth
 Heras
 Herault
 Herber
-Herberg
 Herbert
 Herbet
 Herbette
@@ -8808,7 +8747,6 @@ Herter
 Hertert
 Herting
 Hertwig
-Hertz
 Herveg
 Hervet
 Hervey
@@ -8849,7 +8787,6 @@ Hevia
 Hewitt
 Hewlett
 Hewson
-Hey
 Heyar
 Heyart
 Heydenreich
@@ -8877,7 +8814,6 @@ Hicks
 Hidalgo
 Hieber
 Hielscher
-Hiemer
 Hienckes
 Hierl
 Hierro
@@ -8921,7 +8857,6 @@ Hindley
 Hinds
 Hine
 Hines
-Hinger
 Hinrichs
 Hinrichsen
 Hinterscheid
@@ -8929,7 +8864,6 @@ Hinton
 Hintze
 Hinz
 Hinze
-Hipp
 Hippe
 Hippert
 Hirche
@@ -8959,7 +8893,6 @@ Hobson
 Hochart
 Hochhausen
 Hochmuth
-Hock
 Hocke
 Hocking
 Hocquart
@@ -8976,7 +8909,6 @@ Hoeppner
 Hoesch
 Hofbauer
 ?Hofer
-Hoff
 Hoffelt
 Hoffman
 Hoffmann
@@ -8997,7 +8929,6 @@ Hohenlohe
 Hohler
 Hohlfeld
 Hohmann
-Hohn
 Hoischen
 Holbe
 Holbrook
@@ -9006,7 +8937,6 @@ Holden
 Holdsworth
 Holford
 Holgate
-Holl
 Holland
 Hollande
 Hollander
@@ -9064,7 +8994,6 @@ Hopkin
 ?Hopkins
 Hopkinson
 Hopmann
-Hopp
 Hoppe
 Hoppenstedt
 Hopper
@@ -9114,7 +9043,6 @@ Houillon
 Houllier
 Hourcade
 Houssaye
-Housse
 Houssin
 Houston
 Hout
@@ -9151,7 +9079,6 @@ Huc
 Huch
 Huchet
 Huchon
-Huck
 Hude
 Hudry
 ?Hudson
@@ -9251,7 +9178,6 @@ Häberle
 Häfner
 Hähnel
 Hämäläinen
-Hänsel
 Häring
 Härtel
 Härtl
@@ -9831,7 +9757,6 @@ Kearney
 Kearns
 Keating
 Keay
-Keck
 Keeble
 Keegan
 Keeley
@@ -9941,7 +9866,6 @@ Kihn
 Kilian
 Killat
 Kim
-Kimmel
 Kimmerle
 Kimmig
 Kindelán
@@ -9962,7 +9886,6 @@ Kinsey
 Kintziger
 Kintzinger
 Kipgen
-Kipp
 Kips
 Kirby
 Kirch
@@ -9999,14 +9922,12 @@ Kistner
 Kitchener
 Kitching
 Kitson
-Kittel
 Kittler
 Kittner
 Klaas
 Klages
 Klaiber
 Klamt
-Klapp
 Klapproth
 Klasen
 Klatt
@@ -10035,7 +9956,6 @@ Klenk
 Klensch
 Klepsch
 Klerf
-Klett
 Klewitz
 Kley
 Kleyer
@@ -10056,7 +9976,6 @@ Klinkenberg
 Klock
 Kloos
 Klopp
-Klos
 Klose
 Kloss
 Klostermann
@@ -10073,7 +9992,6 @@ Knatchbull
 Knauer
 Knauf
 Knauff
-Knaus
 Knebel
 Kneip
 Knepper
@@ -10194,9 +10112,7 @@ Krahl
 Krajewski
 Kramer
 Kramm
-Kramp
 Krantz
-Krapp
 Kratochwil
 Kratz
 Kratzenberg
@@ -10263,7 +10179,6 @@ Krull
 Krumbiegel
 Krumm
 Krummacher
-Krupp
 Krusche
 Kruse
 Krämer
@@ -10311,7 +10226,6 @@ Kurt
 Kurth
 Kurtz
 ?Kurz
-Kusch
 Kusche
 Kuschmann
 ?Kutter
@@ -10322,7 +10236,6 @@ Kämmer
 Kämmerer
 Kämmerling
 Kämper
-Kämpf
 Kändler
 Kästner
 Köhler
@@ -10357,7 +10270,6 @@ Kühnel
 Kühnemund
 Kühner
 Kühnle
-Kümmel
 Künzel
 Küper
 Küpper
@@ -10574,7 +10486,6 @@ Lanners
 Lannes
 Lannoy
 Lanoë
-Lanter
 Lantz
 Lanuza
 Lanvin
@@ -10593,7 +10504,6 @@ Lapointe
 Laporta
 Laporte
 Lapouge
-Lapp
 Laprade
 Lara
 Larche
@@ -10647,8 +10557,6 @@ Lattanzi
 Lattmann
 Lattuada
 Lattès
-Latz
-Lau
 Laubach
 Laube
 Lauber
@@ -10790,7 +10698,6 @@ Lee
 Leeb
 Leemans
 Leenhardt
-Lees
 Leese
 Lefebvre
 Lefeuvre
@@ -10896,7 +10803,6 @@ Lenfant
 Lenger
 Lenglet
 Lenhardt
-Lenk
 Lennartz
 Lenne
 Lenners
@@ -10911,7 +10817,6 @@ Lentini
 Lentz
 Lentz-Cornette
 Lenz
-Lenzen
 Lenzi
 Leo
 Leon
@@ -11193,7 +11098,6 @@ Lobkowicz
 Lobo
 Lobstein
 Locatelli
-Locher
 Lochmann
 Lochner
 ?Lock
@@ -11204,7 +11108,6 @@ Lockwood
 Locquet
 Loddo
 Loder
-Lodge
 Lodi
 Loeb
 Loenertz
@@ -11267,7 +11170,6 @@ Lopez
 Lora
 Lorain
 Lorang
-Lorber
 Lorca
 Lorch
 Lordong
@@ -11301,7 +11203,6 @@ Loschetter
 Losert
 Losito
 Loth
-Lott
 Lotte
 Lotter
 Lotti
@@ -11456,7 +11357,6 @@ Löwenberg
 Löwenstein
 Lübbe
 Lübke
-Lück
 Lücker
 Lüdecke
 Lüdemann
@@ -11521,7 +11421,6 @@ Machado
 ?Macher
 Machet
 Machin
-Macho
 Macià
 Mack
 Mackay
@@ -11709,7 +11608,6 @@ Mancini
 Mancino
 Mancisidor
 Mancuso
-Mandel
 Mandelli
 Mander
 Manderscheid
@@ -12091,7 +11989,6 @@ Mathon
 Mathot
 Mathy
 Mathys
-Mathé
 Matias
 Matignon
 Matilla
@@ -12635,7 +12532,6 @@ Migliore
 Migliori
 Migliorini
 Mignard
-Mignon
 Mignot
 Miguel
 Miguet
@@ -13057,7 +12953,6 @@ Mottet
 Mottez
 Mottola
 Mottram
-Motz
 Mouchard
 Mouchel
 Mouchet
@@ -13113,7 +13008,6 @@ Mulder
 Muldoon
 Mulholland
 Mullan
-Mullen
 Mullenbach
 Mullendorff
 Muller
@@ -13125,7 +13019,6 @@ Mulot
 Mulè
 Mumford
 Munari
-Munch
 Munchen
 Munck
 Mundt
@@ -13163,7 +13056,6 @@ Murphy
 ?Murray
 Murrell
 Murua
-Mus
 Musa
 Musacchio
 Musco
@@ -13456,7 +13348,6 @@ Niemeyer
 Nieri
 Niermann
 Nies
-Niessen
 Niethammer
 Nieto
 Nieves
@@ -13485,7 +13376,6 @@ Nivard
 Nivelle
 Niven
 Nivet
-Nix
 Nixon
 Nizard
 Nizet
@@ -13643,7 +13533,6 @@ Obregón
 Ocaña
 Occhipinti
 Ochoa
-Ochs
 Oddi
 Oddo
 Odell
@@ -14092,7 +13981,6 @@ Patrick
 Patrizi
 Patry
 Patrício
-Patten
 Patterson
 Patti
 Pattinson
@@ -14202,13 +14090,10 @@ Pelegrí
 Pelet
 Pelham
 Pelissier
-Pell
 Pellat
 Pellegrin
 Pellegrini
 Pellegrino
-Pellen
-Pellerin
 Pelletan
 Pelletier
 Pellew
@@ -14223,7 +14108,6 @@ Pelosi
 Peltier
 Peltzer
 Peluso
-Pelzer
 Peláez
 Pelé
 Pemberton
@@ -14554,7 +14438,6 @@ Pinner
 Pinnock
 Pino
 Pinon
-Pinot
 Pinoteau
 Pinotti
 Pinson
@@ -14572,7 +14455,6 @@ Piper
 Piperno
 Piquemal
 Piqueras
-Piquet
 Pira
 Pirani
 Piras
@@ -14642,7 +14524,6 @@ Plath
 Platon
 Platt
 Plattner
-Platz
 ?Plaza
 Plebani
 Pleger
@@ -14664,7 +14545,6 @@ Plunket
 Plunkett
 Plé
 Plée
-Poch
 Pochet
 Pochon
 Pocock
@@ -14702,7 +14582,6 @@ Politi
 Polito
 Polizzi
 Pollack
-Pollak
 Pollard
 Pollet
 Polley
@@ -14712,7 +14591,6 @@ Pollmann
 Pollock
 ?Polo
 Poloni
-Polster
 Polte
 Polzin
 Poma
@@ -14818,7 +14696,6 @@ Pourcel
 Pourchet
 Pous
 Pousa
-Poussin
 Poveda
 Povey
 Powell
@@ -14832,7 +14709,6 @@ Pozzato
 Pozzi
 Pozzo
 Prache
-Pracht
 Prada
 Pradal
 Pradas
@@ -14863,15 +14739,12 @@ Precht
 Preece
 Prego
 Prehn
-Preiss
 Preiß
 Preißler
-Prell
 Premoli
 Prentice
 Prescher
 Prescott
-Press
 Prestel
 Presti
 Preston
@@ -14955,7 +14828,6 @@ Puel
 Puente
 Puertas
 Pueyo
-Puff
 Puga
 Puget
 Pugh
@@ -15135,7 +15007,6 @@ Raineri
 Raiser
 Raizada
 Rajniak
-Rall
 Ralli
 Rallo
 Ralph
@@ -15240,7 +15111,6 @@ Ravaioli
 Ravarani
 Ravasi
 Ravel
-Raven
 Ravenel
 Ravenscroft
 Raventós
@@ -15291,7 +15161,6 @@ Redinger
 Redlich
 Redman
 Redmond
-Redon
 Redondo
 Redwitz
 Reece
@@ -15343,9 +15212,7 @@ Reig
 Reiland
 Reille
 Reilly
-Reim
 Reimann
-Reimen
 Reimer
 Reimers
 ?Rein
@@ -15411,7 +15278,6 @@ Renda
 Rendall
 Rendell
 Renier
-Renn
 Renna
 Renner
 Rennert
@@ -15586,7 +15452,6 @@ Rimbaud
 Rimbault
 Rimbert
 Rimkus
-Rimmer
 Rimoldi
 Rimpau
 Rinaldetti
@@ -15608,7 +15473,6 @@ Ripamonti
 Ripert
 Ripley
 Ripoll
-Ripp
 Rippert
 Riquelme
 Riquet
@@ -15627,7 +15491,6 @@ Rist
 Ristow
 ?Ritchie
 ?Ritter
-Ritz
 Riu
 Rius
 ?Riva
@@ -15649,7 +15512,6 @@ Rizzi
 Rizzo
 Rizzoli
 Roach
-Robb
 Robbe
 Robbins
 Robelin
@@ -15738,7 +15600,6 @@ Roggeman
 Roggero
 Rogier
 Rogiers
-Rognon
 Rognoni
 Roguet
 Rohart
@@ -15803,7 +15664,6 @@ Romeu
 Romieu
 Romiti
 Romito
-Rommel
 Rommelfangen
 Rommes
 Romo
@@ -15820,11 +15680,9 @@ Ronco
 Ronconi
 Roncoroni
 Rondeau
-Rondel
 Rondot
 Ronge
 Rongoni
-Ronk
 Ronse
 Ronson
 Ronvaux
@@ -15948,7 +15806,6 @@ Rouquet
 Rouquette
 Roura
 Roure
-Rous
 Rouse
 Rousseau
 Rousseaux
@@ -16035,7 +15892,6 @@ Ruhlmann
 Ruibal
 Ruiz
 Ruland
-Rull
 Rullier
 Rumeau
 Rummel
@@ -16067,7 +15923,6 @@ Rustichelli
 Ruth
 Rutherford
 Rutili
-Rutten
 Rutter
 Rutz
 Ruysschaert
@@ -16078,7 +15933,6 @@ Rychlicki
 Rycroft
 Ryder
 Ryssel
-Rächel
 Réal
 Régis
 Régnier
@@ -16178,7 +16032,6 @@ Saint-André
 Saint-Hilaire
 Saint-Jean
 Saint-Martin
-Saint-Pierre
 Saint-Yves
 Sainte-Colombe
 Sainz
@@ -16239,7 +16092,6 @@ Salviati
 Salvini
 ?Salvo
 Salvà
-Salzer
 Salzmann
 Sammarco
 Sammartino
@@ -16463,7 +16315,6 @@ Schaffer
 Schaffrath
 Schaible
 Schalk
-Schall
 Schaller
 Schammel
 Schanen
@@ -16478,7 +16329,6 @@ Scharrer
 Scharry
 Schartz
 Schaub
-Schauer
 Schauerte
 Schaufler
 Schaul
@@ -16503,7 +16353,6 @@ Scheidt
 Scheithauer
 Scheitler
 Scheler
-Schell
 Schelle
 Schellenberg
 Schellenberger
@@ -16535,7 +16384,6 @@ Schick
 Schieber
 Schieder
 Schiefer
-Schiel
 Schiele
 Schiemann
 Schiertz
@@ -16588,7 +16436,6 @@ Schlüter
 Schmahl
 Schmalenbach
 Schmaltz
-Schmalz
 Schmartz
 Schmeisser
 Schmelzer
@@ -16610,7 +16457,6 @@ Schmoll
 Schmucker
 Schmutzler
 ?Schnabel
-Schneck
 Schneckenburger
 Schneegans
 Schneider
@@ -16664,7 +16510,6 @@ Schrader
 Schram
 Schramm
 Schranz
-Schreck
 Schreiber
 Schreier
 ?Schreiner
@@ -16676,7 +16521,6 @@ Schroder
 Schroeder
 Schroedter
 Schroell
-Schroer
 Schroeter
 Schroth
 Schröder
@@ -16706,9 +16550,7 @@ Schulze
 Schumacher
 Schuman
 Schumann
-Schumm
 Schummer
-Schupp
 Schur
 Schurig
 Schuster
@@ -16733,7 +16575,6 @@ Schweikert
 Schweisthal
 Schweitzer
 ?Schweizer
-Schwenk
 Schwenke
 Schwenn
 Schwerdt
@@ -16821,7 +16662,6 @@ Sedó
 Seeber
 Seeberger
 Seeger
-Seeler
 Seeley
 Seelig
 Seeliger
@@ -17055,7 +16895,6 @@ Silva
 Silvani
 Silveira
 Silvela
-Silvester
 Silvestre
 Silvestri
 Silvestrini
@@ -17274,7 +17113,6 @@ Spagnuolo
 Spahn
 Spalding
 Spampinato
-Spang
 Spangenberg
 Spanghero
 ?Spanier
@@ -17311,8 +17149,6 @@ Spiegelberg
 Spieker
 Spiekermann
 Spielmann
-Spier
-Spiers
 ?Spies
 Spiess
 Spieß
@@ -17393,7 +17229,6 @@ Steadman
 Stecher
 Steck
 Steckel
-Steeg
 Steegmans
 ?Steel
 Steele
@@ -17416,7 +17251,6 @@ Stehle
 Stehr
 Steichen
 Steidl
-Steiger
 Steimes
 ?Stein
 Steinacker
@@ -17443,7 +17277,6 @@ Steinke
 Steinmetzer
 Steinmüller
 Steitz
-Steiwer
 Steland
 Stella
 Stelling
@@ -17465,7 +17298,6 @@ Stephen
 Stephens
 ?Stephenson
 Sterckx
-Sterling
 ?Stern
 Sternberg
 Stetten
@@ -17477,13 +17309,11 @@ Stewart
 Steyaert
 Steyer
 Stieber
-Stief
 Stiefer
 Stiegler
 Stieglitz
 Stiehl
 Stieler
-Stiller
 Stilwell
 Stingl
 Stinnes
@@ -17510,13 +17340,11 @@ Stoltz
 Stolwijk
 ?Stolz
 Stommel
-Stomp
 ?Stone
 Stoney
 Stonor
 Stopford
 Stoppa
-Storch
 Storchi
 Storck
 Storer
@@ -17530,7 +17358,6 @@ Stotz
 Stourton
 Strachan
 Strachey
-Strack
 Stracke
 Strainchamps
 Straker
@@ -17545,11 +17372,9 @@ Strauss
 ?Strauß
 Streatfeild
 Strecker
-Street
 Streff
 Strehl
 Streitz
-Strempel
 Stricker
 Strickland
 Stringer
@@ -17587,7 +17412,6 @@ Sturgess
 Sturgis
 ?Sturm
 Sturrock
-Stutz
 Stählin
 Stärk
 Stéphan
@@ -17681,7 +17505,6 @@ Sénac
 Séverac
 Séverin
 Söllner
-Süss
 Tabacchi
 Tabanelli
 Tabary
@@ -18075,11 +17898,9 @@ Toni
 Tonini
 Tonino
 Toniolo
-Tonks
 Tonnar
 Tonon
 Topham
-Topp
 Torelli
 Torfs
 Toribio
@@ -18209,7 +18030,6 @@ Tricarico
 Tricaud
 Trichet
 Tricoire
-Tricot
 Triebel
 Trierweiler
 Triffaux
@@ -18224,7 +18044,6 @@ Trinquier
 Trintignant
 Tripier
 Tripodi
-Tripp
 Tritarelli
 Tritton
 Tritz
@@ -18268,7 +18087,6 @@ Tshilumba
 Tshinza
 Tual
 Tucci
-Tuck
 Tucker
 Tudela
 Tudor
@@ -18315,7 +18133,6 @@ Téllez-Girón
 Tétart
 Tóth
 Tönnies
-Türk
 Ubach
 Ubaldi
 Uberti
@@ -18606,7 +18423,6 @@ Verdaguer
 Verde
 Verdejo
 Verdet
-Verdi
 Verdier
 Verdin
 Verdon
@@ -18868,7 +18684,6 @@ Volkmann
 Volkmar
 Volkmer
 Volland
-Vollert
 Vollmann
 Vollmar
 Vollmer
@@ -18989,7 +18804,6 @@ Warken
 Warker
 Warling
 Warmuth
-Warne
 Warnecke
 Warner
 Warnier
@@ -19031,7 +18845,6 @@ Webb
 Webber
 Weber
 Webster
-Weck
 Weckbecker
 Wecker
 Weckerle
@@ -19225,7 +19038,6 @@ Whyte
 Wiart
 Wichert
 Wichmann
-Wick
 Wicke
 Wickede
 Wickert
@@ -19348,7 +19160,6 @@ Wingfield
 Winkelmann
 Winkhaus
 Winkler
-Winn
 Winstanley
 ?Winter
 Winterberg
@@ -19358,7 +19169,6 @@ Wintersdorff
 Winterstein
 Wirion
 Wiroth
-Wirsing
 ?Wirtgen
 Wirth
 Wirty
@@ -19402,7 +19212,6 @@ Wolff
 Wolfgang
 Wolfram
 Wolfrum
-Woll
 Wollaston
 Wollenberg
 Wollmann
@@ -19471,7 +19280,6 @@ Wünsch
 Würtenberger
 Würtz
 ?Wüst
-Wüster
 Xavier
 Ximénez
 Xirau
@@ -19555,9 +19363,7 @@ Zanussi
 Zaoui
 Zapata
 Zapatero
-Zapf
 Zapico
-Zapp
 Zappa
 Zappalà
 Zara
@@ -19606,7 +19412,6 @@ Zeppenfeld
 Zerbe
 Zerbini
 Zerbst
-Zerr
 Zettl
 Zettler
 Zetzsche
@@ -19668,7 +19473,6 @@ Zucca
 Zuccarelli
 Zucchelli
 Zucchi
-Zucchini
 Zucconi
 Zucker
 Zugasti

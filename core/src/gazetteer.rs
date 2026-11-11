@@ -17,6 +17,7 @@ const LOWERCASE_SCORE: f64 = 0.45;
 /// A name that is also an everyday word (`Rose`, `Orange`, `Split`) and stands alone. It stays
 /// below the default threshold; a cue word or another name part lifts it.
 const CONTEXT_SCORE: f64 = 0.3;
+const POSTCODE_SCORE: f64 = 0.7;
 /// An ambiguous place or organization right after a preposition that asks for one.
 const CUE_SCORE: f64 = 0.65;
 #[rustfmt::skip]
@@ -133,7 +134,11 @@ impl Detector for Gazetteer {
                 if !matches {
                     continue;
                 }
-                let lowercase = window[0].text.chars().next().is_some_and(char::is_lowercase);
+                // `La réunion a lieu` is a meeting, `La Réunion` the island: every word the list
+                // writes with a capital must have one in the text.
+                let lower = |s: &str| s.chars().next().is_some_and(char::is_lowercase);
+                let upper = |s: &str| s.chars().next().is_some_and(char::is_uppercase);
+                let lowercase = window.iter().zip(&e.original).any(|(t, o)| lower(t.text) && upper(o));
                 // In lowercase a name that is also an everyday word is just the word: `an`, `rose`.
                 if lowercase && e.score <= CONTEXT_SCORE {
                     continue;
@@ -155,6 +160,18 @@ impl Detector for Gazetteer {
                     e.score
                 };
                 let end = window[window.len() - 1].end;
+                // `54290 Trier`, `8001 Zürich`: four or five digits in front of a listed place.
+                if e.kind == EntityType::Location && score >= SCORE && i > 0 && postcode_shaped(tokens[i - 1].text) {
+                    let code = &tokens[i - 1];
+                    spans.push(Span::new(
+                        text,
+                        EntityType::Address,
+                        code.start,
+                        code.end,
+                        POSTCODE_SCORE,
+                        Source::Gazetteer,
+                    ));
+                }
                 spans.push(Span::new(text, e.kind, window[0].start, end, score, Source::Gazetteer));
             }
         }
@@ -212,6 +229,12 @@ impl Lookup for Lists<'_> {
         self.single(self.word(i), EntityType::Location)
             .is_some_and(|s| s >= SCORE)
     }
+}
+
+/// Four or five digits, but no year: `2024 Trier gewann` is no address.
+fn postcode_shaped(token: &str) -> bool {
+    let year = token.len() == 4 && (token.starts_with("19") || token.starts_with("20"));
+    matches!(token.len(), 4 | 5) && token.bytes().all(|b| b.is_ascii_digit()) && !year
 }
 
 fn lines(src: &str) -> impl Iterator<Item = &str> {

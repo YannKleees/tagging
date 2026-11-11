@@ -49,7 +49,7 @@ mark small { font-size: 10px; font-weight: 600; letter-spacing: .5px; color: var
 .person { background: var(--person); } .location, .address { background: var(--location); }
 .organization { background: var(--organization); }
 .email, .phone, .url, .ip_address { background: var(--contact); }
-.iban, .credit_card, .national_id { background: var(--number); }
+.iban, .credit_card, .national_id, .id_number, .credential { background: var(--number); }
 .date, .date_of_birth { background: var(--date); }
 .stats { color: var(--dim); font-size: 13px; margin: 10px 0 0; min-height: 1.6em; }
 .note { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--dim); font-size: 14px; }
@@ -78,7 +78,7 @@ a:hover { text-decoration: underline; }
   <p class="stats" id="stats"></p>
 
   <div class="note">
-    <p>This page runs the rules and the word lists only. They catch emails, phone numbers, IBANs, card numbers, Luxembourg national IDs, dates of birth, addresses, URLs, IP addresses, and names that a list knows or that a first name, a title or a company form points to. A surname on its own or a small firm that is in no list needs the GLiNER model in the full Python package.</p>
+    <p>This page runs the rules and the word lists only. They catch emails, phone numbers, IBANs, card numbers, national IDs of Luxembourg and its neighbours, document numbers, dates of birth, addresses, URLs, IP addresses, the fields of a form (<code>Passwort: …</code>, <code>Name: …</code>), and names that a list knows or that a first name, a title or a company form points to. A surname on its own or a small firm that is in no list needs one of the models in the full Python package.</p>
     <p>All example data is made up. <a href="https://github.com/YannKleees/tagging">Code and evaluation on GitHub</a></p>
   </div>
 </main>
@@ -91,6 +91,7 @@ const EXAMPLES = {
   "Français": "Bonjour, je m'appelle Sophie et j'habite à Esch-sur-Alzette. Merci de verser le montant sur LU28 0019 4006 4475 0000 et de m'écrire à sophie.weber@example.lu.",
   "Deutsch": "Hallo, hier ist Carine aus Differdingen. Ich bin am 04.07.1988 geboren und arbeite bei POST Luxembourg. Sie erreichen mich unter Tel. 26 12 34 56.",
   "English": "Hi, this is Paul from the University of Luxembourg. My matricule is 1988 0704 123 32, my card is 4111 1111 1111 1111 and my email is paul.hoffmann@example.lu.",
+  "Form": "Nom: Reuter\nPrénom: Marie-Josée\nDate de naissance: 12/03/1985\nNuméro de sécurité sociale: 2 85 03 57 463 025 20\nReisepass: C4FH7K2P1\nAdresse: 12, rue de la Gare, L-1611 Luxembourg\nPasswort: V+B9o-ctO",
 };
 
 const input = document.getElementById("input");

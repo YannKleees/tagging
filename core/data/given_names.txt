@@ -104,7 +104,7 @@ Alban
 Albane
 Albano
 Albert
-Alberta
+?Alberta
 Alberte
 ?Albertina
 Albertine
@@ -417,7 +417,7 @@ Ascensión
 ?Ash
 Ashleigh
 Ashley
-Asia
+?Asia
 Asier
 Assumpció
 Assunta
@@ -2640,7 +2640,7 @@ Loretta
 ?Loris
 Lorna
 Lorne
-Lorraine
+?Lorraine
 Lothar
 Lotta
 Lotte
@@ -2937,7 +2937,7 @@ Maura
 Maureen
 ?Maurice
 Mauricette
-Mauricio
+?Mauricio
 Maurilio
 Maurits
 Maurizio
@@ -3639,7 +3639,7 @@ Rosamund
 Rosana
 Rosanna
 Rosaria
-Rosario
+?Rosario
 ?Rose
 Roseline
 Rosella
@@ -3703,7 +3703,7 @@ Sabina
 Sabine
 Sabino
 Sabrina
-Sacha
+?Sacha
 Sadie
 Sagrario
 ?Said
@@ -4193,8 +4193,8 @@ Violeta
 Virgil
 Virgile
 Virgilio
-Virginia
-Virginie
+?Virginia
+?Virginie
 Virginio
 ?Vital
 Vitaliano

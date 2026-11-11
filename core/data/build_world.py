@@ -20,11 +20,22 @@ OPTIONAL{?item rdfs:label ?en FILTER(lang(?en)="en")}
 # Sitelinks count the Wikipedia language editions with an article, a cheap measure of how well
 # known something is.
 CITY_TYPES = "wd:Q515 wd:Q1549591 wd:Q1637706 wd:Q5119 wd:Q174844 wd:Q200250 wd:Q208511"
+# Countries also get their Italian, Spanish, Portuguese and Dutch names: forms are often filled in
+# in the writer's own language (`Italia`, `España`, `Nederland`).
+COUNTRY_LABELS = "".join(
+    f'\nOPTIONAL{{?item rdfs:label ?{k} FILTER(lang(?{k})="{k}")}}' for k in ("it", "es", "pt", "nl")
+)
 PLACE_QUERIES = {
-    "countries.csv": f"""SELECT ?item ?lb ?fr ?de ?en WHERE {{
-?item wdt:P31 wd:Q3624078. FILTER NOT EXISTS {{?item wdt:P576 ?end}} {LABELS} }}""",
+    "countries.csv": f"""SELECT ?item ?lb ?fr ?de ?en ?it ?es ?pt ?nl WHERE {{
+?item wdt:P31 wd:Q3624078. FILTER NOT EXISTS {{?item wdt:P576 ?end}} {LABELS} {COUNTRY_LABELS} }}""",
     "cities.csv": f"""SELECT DISTINCT ?item ?lb ?fr ?de ?en ?sl WHERE {{
 VALUES ?t {{{CITY_TYPES}}} ?item wdt:P31 ?t; wikibase:sitelinks ?sl. FILTER(?sl >= 90) {LABELS} }}""",
+    # Whatever has 100,000 inhabitants and an article in 110 language editions, whichever type
+    # Wikidata gives it: Zürich is no `city` there, and regions such as Bavaria belong here too.
+    "populated.csv": f"""SELECT DISTINCT ?item ?lb ?fr ?de ?en ?sl WHERE {{
+{{ SELECT ?item ?sl WHERE {{ ?item wikibase:sitelinks ?sl. FILTER(?sl >= 110)
+   ?item wdt:P1082 ?pop; wdt:P625 ?loc. FILTER(?pop >= 100000) }} }}
+FILTER NOT EXISTS {{ ?item wdt:P31 wd:Q3624078 }} {LABELS} }}""",
     # Populated places within 110 km of Luxembourg City: Trier, Metz, Arlon, Thionville...
     "greater_region.csv": f"""SELECT DISTINCT ?item ?lb ?fr ?de ?en ?sl WHERE {{
 SERVICE wikibase:around {{ ?item wdt:P625 ?loc. bd:serviceParam wikibase:center "Point(6.13 49.61)"^^geo:wktLiteral;
@@ -63,6 +74,10 @@ EXTRA_ORGS = [
 ]  # fmt: skip
 
 
+# Wikidata's sovereign state is the Kingdom of the Netherlands; people write the country.
+EXTRA_PLACES = [["Nidderlanden", "Pays-Bas", "Niederlande", "Netherlands", "Nederland", "Holland"]]
+
+
 def read(name):
     return list(csv.DictReader(io.StringIO((RAW / name).read_text(encoding="utf-8"))))
 
@@ -74,7 +89,7 @@ def clean(x):
 
 def labels(row, max_words):
     names = []
-    for k in ("lb", "fr", "de", "en"):
+    for k in ("lb", "fr", "de", "en", "it", "es", "pt", "nl"):
         name = clean(row.get(k) or "")
         if name and len(name.split()) <= max_words and name not in names:
             names.append(name)
@@ -117,9 +132,9 @@ def main():
     luxembourg = (HERE / "lu_places.txt").read_text(encoding="utf-8")
     known = {n.lstrip("~") for line in luxembourg.splitlines() for n in line.split("|")}
 
-    places = [labels(r, 3) for name in ("countries.csv", "cities.csv") for r in read(name)]
+    places = [labels(r, 3) for name in ("countries.csv", "cities.csv", "populated.csv") for r in read(name)]
     places += [labels(r, 3) for r in read("greater_region.csv") if not NOT_PLACES.search(r["en"] + r["fr"] + r["de"])]
-    places = [[n for n in names if n not in known] for names in places]
+    places = [[n for n in names if n not in known] for names in places + EXTRA_PLACES]
     write(
         HERE / "world_places.txt",
         [

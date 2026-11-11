@@ -8,6 +8,13 @@ from tagging._core import redact as _redact
 __all__ = ["Tagger", "detect", "detect_batch", "redact", "tagger"]
 
 NER_DEFAULTS = {
+    # "gliner" is the accurate model, "spacy" a fast one (about 100 times faster on a CPU), and "both"
+    # takes what either finds.
+    "backend": "gliner",
+    # spaCy pipeline per language code, merged into spacy_ner.MODELS, and the language of the
+    # texts if it is known. Without it the language is guessed for each text.
+    "spacy_models": None,
+    "language": None,
     "model": "urchade/gliner_multi_pii-v1",
     "device": None,
     # 0.4 was chosen on the dev split: +2 points Luxembourgish hard recall for one extra false positive.
@@ -65,16 +72,25 @@ def detect_batch(texts, config=None):
     from tagging.postprocess import drop_everyday, postprocess
 
     opts = NER_DEFAULTS | (ner_cfg if isinstance(ner_cfg, dict) else {})
-    model = ner.load(opts["model"], opts["device"])
-    found = ner.predict_many(
-        texts,
-        model,
-        opts["threshold"],
-        opts["chunk_words"],
-        opts["overlap_words"],
-        opts["distractors"],
-        opts["batch_size"],
-    )
+    if opts["backend"] not in ("gliner", "spacy", "both"):
+        raise ValueError(f"unknown NER backend: {opts['backend']!r}")
+    found = [[] for _ in texts]
+    if opts["backend"] in ("gliner", "both"):
+        model = ner.load(opts["model"], opts["device"])
+        found = ner.predict_many(
+            texts,
+            model,
+            opts["threshold"],
+            opts["chunk_words"],
+            opts["overlap_words"],
+            opts["distractors"],
+            opts["batch_size"],
+        )
+    if opts["backend"] in ("spacy", "both"):
+        from tagging import spacy_ner
+
+        fast = spacy_ner.predict_many(texts, opts["spacy_models"], opts["language"])
+        found = [ner.dedupe(a + b) for a, b in zip(found, fast)]
     # Every list hit, also those below the threshold, counts as evidence that a model span is a name.
     lists = _cached(json.dumps(cfg | {"threshold": 0}, sort_keys=True))
     out = []

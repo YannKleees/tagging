@@ -120,3 +120,41 @@ fn finds_places_and_organizations_outside_luxembourg() {
     assert_eq!(texts(&builtin(), "von Berlin nach Tréier"), ["Berlin", "Tréier"]);
     assert_eq!(texts(&builtin(), "KPMG and Deutsche Bank"), ["KPMG", "Deutsche Bank"]);
 }
+
+#[test]
+fn finds_a_postcode_in_front_of_a_listed_place() {
+    assert_eq!(
+        kinds("54290 Trier"),
+        [
+            ("54290".into(), EntityType::Address),
+            ("Trier".into(), EntityType::Location)
+        ]
+    );
+    assert_eq!(texts(&builtin(), "75008 Paris"), ["75008", "Paris"]);
+    assert_eq!(texts(&builtin(), "2024 Trier gewann"), ["Trier"]);
+}
+
+#[test]
+fn finds_names_inside_markup_and_delimited_data() {
+    assert_eq!(texts(&builtin(), "<City>Trier</City>"), ["Trier"]);
+    assert_eq!(
+        texts(&builtin(), r#"{"city":"Trier","who":"Jhemp"}"#),
+        ["Trier", "Jhemp"]
+    );
+    assert_eq!(
+        texts(&builtin(), "Kieffer;Jhemp;Remich;Schweiz"),
+        ["Jhemp", "Remich", "Schweiz"]
+    );
+    assert_eq!(
+        texts(&builtin(), "**Nederland** an `Lëtzebuerg`"),
+        ["Nederland", "Lëtzebuerg"]
+    );
+}
+
+#[test]
+fn every_capitalized_word_of_a_name_needs_its_capital() {
+    assert_eq!(texts(&builtin(), "Vacances à La Réunion"), ["La Réunion"]);
+    let meeting = &run(&builtin(), "La réunion a lieu demain.")[0];
+    assert!(meeting.score < 0.5);
+    assert_eq!(texts(&builtin(), "zu Esch an der Alzette"), ["Esch an der Alzette"]);
+}

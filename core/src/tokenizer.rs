@@ -5,22 +5,30 @@ pub struct Token<'a> {
     pub end: usize,
 }
 
-const LEADING: &[char] = &['(', '[', '{', '"', '\'', '«', '„', '“', '‘', '‹', '¿', '¡'];
-const TRAILING: &[char] = &[
-    '.', ',', ';', ':', '!', '?', ')', ']', '}', '"', '\'', '»', '“', '”', '’', '›', '…',
+const LEADING: &[char] = &[
+    '(', '[', '{', '"', '\'', '«', '„', '“', '‘', '‹', '¿', '¡', '*', '`', '#',
 ];
+const TRAILING: &[char] = &[
+    '.', ',', ';', ':', '!', '?', ')', ']', '}', '"', '\'', '»', '“', '”', '’', '›', '…', '*', '`',
+];
+/// Characters of markup and of delimited data. They end a token wherever they stand, so the names
+/// in `<City>Trier</City>`, `"city": "Trier"` and `Schmit;Jhemp;Trier` are tokens of their own.
+const DELIMITERS: &[char] = &[';', '|', '<', '>', '"', '\\', '{', '}', '[', ']'];
 const ELISIONS: &[&str] = &["qu", "d", "l", "j", "m", "n", "s", "t", "c", "z"];
 const APOSTROPHES: &[char] = &['\'', '’'];
 
-/// Splits on whitespace, then peels punctuation off token edges only, so emails, URLs, decimals
-/// and domains stay whole. Elided articles (`D'Mett`, `l’État`) become their own token.
+/// Splits on whitespace and delimiters, then peels punctuation off token edges only, so emails,
+/// URLs, decimals and domains stay whole. Elided articles (`D'Mett`, `l’État`) become their own token.
 pub fn tokenize(text: &str) -> Vec<Token<'_>> {
     let mut out = Vec::new();
     let mut chunk = None;
     for (i, c) in text.char_indices() {
-        if c.is_whitespace() {
+        if c.is_whitespace() || DELIMITERS.contains(&c) {
             if let Some(start) = chunk.take() {
                 split_chunk(text, start, i, &mut out);
+            }
+            if !c.is_whitespace() {
+                push(text, i, i + c.len_utf8(), &mut out);
             }
         } else if chunk.is_none() {
             chunk = Some(i);

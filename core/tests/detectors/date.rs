@@ -2,7 +2,7 @@ use super::{run, texts};
 use tagging_core::{EntityType, detectors::DateDetector};
 
 fn d() -> DateDetector {
-    DateDetector::new().unwrap()
+    DateDetector::new(false).unwrap()
 }
 
 fn assert_dob(text: &str, date: &str) {
@@ -76,4 +76,28 @@ fn a_capital_b_before_a_date_is_not_born() {
     for t in ["Plan B. 08/02/2021 is the deadline", "tab. 08/02/2021"] {
         assert_eq!(run(&d(), t)[0].kind, EntityType::Date, "{t}");
     }
+}
+
+#[test]
+fn reads_timestamps_ordinals_and_partial_dates() {
+    assert_dob("Born on: 1960-06-24T00:00:00 |", "1960-06-24T00:00:00");
+    assert_dob("née le 30e juin 2002", "30e juin 2002");
+    assert_dob("geboren am Januar 19., 2000", "Januar 19., 2000");
+    assert_dob("born in June 1942", "June 1942");
+    assert_dob("Born on: December/38", "December/38");
+}
+
+#[test]
+fn other_dates_and_times_need_the_option() {
+    let text = "Termin am 14.11.2024 um 14:30, nicht 8:20 PM oder 18 Uhr.";
+    assert!(run(&d(), text).iter().all(|s| s.score < 0.5));
+    let all = DateDetector::new(true).unwrap();
+    assert_eq!(texts(&all, text), ["14.11.2024", "14:30", "8:20 PM", "18 Uhr"]);
+    assert!(
+        run(&all, text)
+            .iter()
+            .all(|s| s.score >= 0.5 && s.kind == EntityType::Date)
+    );
+    // Not times: a ratio, a score, part of an IPv6 address.
+    assert!(texts(&all, "ratio 3:1, 2a02:12:30::1").is_empty());
 }
