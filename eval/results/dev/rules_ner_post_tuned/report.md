@@ -5,7 +5,7 @@ Config: `eval/configs/rules_ner_post_tuned.json`. 248 sentences, 2297 words, 504
 Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
 `overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
 
-Runtime: 7633.54 ms per 1,000 words (detection only).
+Runtime: 7471.68 ms per 1,000 words (detection only).
 
 ## By language and subset
 
@@ -14,7 +14,7 @@ Runtime: 7633.54 ms per 1,000 words (detection only).
 | de | hard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 60 | 60 |
 | de | standard | 1.00 | 0.98 | 1.00 | 1.00 | 1.00 | 0.98 | 66 | 66 |
 | en | hard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 60 | 60 |
-| en | standard | 1.00 | 0.98 | 1.00 | 1.00 | 1.00 | 0.98 | 66 | 66 |
+| en | standard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 66 | 66 |
 | fr | hard | 0.98 | 0.98 | 0.98 | 1.00 | 0.99 | 0.99 | 60 | 59 |
 | fr | standard | 1.00 | 0.98 | 1.00 | 1.00 | 1.00 | 0.98 | 66 | 66 |
 | lb | hard | 1.00 | 0.98 | 1.00 | 1.00 | 1.00 | 0.98 | 60 | 60 |
@@ -27,7 +27,7 @@ Runtime: 7633.54 ms per 1,000 words (detection only).
 | de | hard | 1.00 | 1.00 | 1.00 | 1.00 | 46 | 46 |
 | de | standard | 1.00 | 0.98 | 1.00 | 1.00 | 42 | 42 |
 | en | hard | 1.00 | 1.00 | 1.00 | 1.00 | 46 | 46 |
-| en | standard | 1.00 | 0.98 | 1.00 | 1.00 | 42 | 42 |
+| en | standard | 1.00 | 1.00 | 1.00 | 1.00 | 42 | 42 |
 | fr | hard | 0.98 | 0.98 | 1.00 | 0.99 | 46 | 45 |
 | fr | standard | 1.00 | 0.98 | 1.00 | 1.00 | 42 | 42 |
 | lb | hard | 1.00 | 0.98 | 1.00 | 1.00 | 46 | 46 |
@@ -56,7 +56,7 @@ None.
 | ip_address | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 8 | 8 |
 | location | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 80 | 80 |
 | national_id | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 16 | 16 |
-| organization | 1.00 | 0.94 | 1.00 | 1.00 | 1.00 | 0.94 | 48 | 48 |
+| organization | 1.00 | 0.96 | 1.00 | 1.00 | 1.00 | 0.96 | 48 | 48 |
 | person | 1.00 | 0.99 | 1.00 | 1.00 | 1.00 | 0.99 | 216 | 215 |
 | phone | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 32 | 32 |
 | url | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 8 | 8 |

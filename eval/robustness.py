@@ -18,7 +18,7 @@ import evaluate
 import tagging
 
 ROOT = Path(__file__).parent
-CONFIGS = {"rules": None, "rules + NER": {"ner": True}}
+CONFIGS = {"rules": None, "rules + fast NER": {"ner": {"backend": "spacy"}}, "rules + NER": {"ner": True}}
 NAMES = ["person", "organization", "location"]
 # Names as they are common in Luxembourg today, written without looking at the word lists:
 # Balkan, Cape Verdean, West African, Turkish, Polish, Asian, East African, Ukrainian, Italian,
@@ -301,7 +301,7 @@ def main():
     report = [
         "# Robustness",
         "",
-        "Recall only. `rules + NER` is the package default with the GLiNER model.",
+        "Recall only. `rules + NER` is the package default with the GLiNER model, `rules + fast NER` the spaCy backend.",
         "",
         "## The eval split with other names and damaged text",
         "",
@@ -321,8 +321,9 @@ def main():
         "",
         f"## ai4privacy pii-masking-300k, {args.ai4privacy} synthetic documents per language",
         "",
-        "Share of labelled items that any predicted span overlaps. Many labels have no detector here (passports,",
-        "driving licences, foreign ID numbers, passwords, times), and the formats are not Luxembourg's.",
+        "Share of labelled items that any predicted span overlaps, with the default config: dates that are no birth",
+        "dates and times of day are off, and sex and title have no detector on purpose. A different sample of the",
+        "same dataset served to develop the form-field and ID rules; these documents were not looked at.",
         "",
         evaluate.md(by_lang.reset_index(), ["lang", *CONFIGS]),
         "",

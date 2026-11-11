@@ -5,7 +5,7 @@ Config: `eval/configs/rules.json`. 288 sentences, 2637 words, 504 gold spans.
 Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
 `overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
 
-Runtime: 3.61 ms per 1,000 words (detection only).
+Runtime: 8.31 ms per 1,000 words (detection only).
 
 ## By language and subset
 
@@ -38,7 +38,7 @@ Runtime: 3.61 ms per 1,000 words (detection only).
 | lang | false positives | sentences |
 |---|---|---|
 | en | 1 | 20 |
-| fr | 2 | 20 |
+| fr | 3 | 20 |
 | de | 2 | 20 |
 | lb | 4 | 20 |
 
@@ -50,6 +50,7 @@ Runtime: 3.61 ms per 1,000 words (detection only).
 | lb-entity_free-05 | location | Gare | 0.55 |
 | fr-entity_free-06 | person | Noël | 0.85 |
 | lb-entity_free-11 | location | Stroossen | 0.55 |
+| fr-entity_free-13 | location | La Réunion | 0.85 |
 | en-entity_free-17 | person | Mett | 0.55 |
 | de-entity_free-17 | person | Mett | 0.55 |
 | lb-entity_free-17 | person | Mett | 0.55 |

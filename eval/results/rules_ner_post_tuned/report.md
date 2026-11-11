@@ -5,7 +5,7 @@ Config: `eval/configs/rules_ner_post_tuned.json`. 288 sentences, 2637 words, 504
 Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
 `overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
 
-Runtime: 7599.42 ms per 1,000 words (detection only).
+Runtime: 7477.49 ms per 1,000 words (detection only).
 
 ## By language and subset
 
@@ -14,9 +14,9 @@ Runtime: 7599.42 ms per 1,000 words (detection only).
 | de | hard | 0.98 | 0.98 | 0.98 | 1.00 | 0.99 | 0.99 | 60 | 59 |
 | de | standard | 1.00 | 0.97 | 1.00 | 1.00 | 1.00 | 0.97 | 66 | 66 |
 | en | hard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 60 | 60 |
-| en | standard | 1.00 | 0.98 | 1.00 | 1.00 | 1.00 | 0.98 | 66 | 66 |
+| en | standard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 66 | 66 |
 | fr | hard | 0.98 | 0.97 | 1.00 | 1.00 | 0.99 | 0.97 | 60 | 59 |
-| fr | standard | 1.00 | 0.98 | 1.00 | 1.00 | 1.00 | 0.98 | 66 | 66 |
+| fr | standard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 66 | 66 |
 | lb | hard | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 60 | 60 |
 | lb | standard | 1.00 | 0.97 | 1.00 | 1.00 | 1.00 | 0.97 | 66 | 66 |
 
@@ -27,9 +27,9 @@ Runtime: 7599.42 ms per 1,000 words (detection only).
 | de | hard | 0.98 | 0.98 | 1.00 | 0.99 | 46 | 45 |
 | de | standard | 1.00 | 0.95 | 1.00 | 1.00 | 42 | 42 |
 | en | hard | 1.00 | 1.00 | 1.00 | 1.00 | 46 | 46 |
-| en | standard | 1.00 | 0.98 | 1.00 | 1.00 | 42 | 42 |
+| en | standard | 1.00 | 1.00 | 1.00 | 1.00 | 42 | 42 |
 | fr | hard | 0.98 | 0.96 | 1.00 | 0.99 | 46 | 45 |
-| fr | standard | 1.00 | 0.98 | 1.00 | 1.00 | 42 | 42 |
+| fr | standard | 1.00 | 1.00 | 1.00 | 1.00 | 42 | 42 |
 | lb | hard | 1.00 | 1.00 | 1.00 | 1.00 | 46 | 46 |
 | lb | standard | 1.00 | 0.95 | 1.00 | 1.00 | 42 | 42 |
 
@@ -38,14 +38,13 @@ Runtime: 7599.42 ms per 1,000 words (detection only).
 | lang | false positives | sentences |
 |---|---|---|
 | en | 3 | 20 |
-| fr | 3 | 20 |
+| fr | 4 | 20 |
 | de | 1 | 20 |
-| lb | 6 | 20 |
+| lb | 5 | 20 |
 
 | id | type | text | score |
 |---|---|---|---|
 | lb-entity_free-03 | person | Eng Méck | 0.89 |
-| lb-entity_free-04 | person | Mir sinn e Sonndeg op de Bierg gaang | 0.56 |
 | lb-entity_free-05 | organization | de Pak an der Gare | 0.64 |
 | fr-entity_free-06 | person | Noël | 0.85 |
 | lb-entity_free-10 | organization | Gaart Fussball | 0.53 |
@@ -54,6 +53,7 @@ Runtime: 7599.42 ms per 1,000 words (detection only).
 | fr-entity_free-11 | address | Rues | 0.68 |
 | de-entity_free-11 | address | Straßen | 0.75 |
 | lb-entity_free-11 | address | Wanter | 0.61 |
+| fr-entity_free-13 | location | La Réunion | 0.85 |
 | en-entity_free-17 | person | Mett | 0.73 |
 | lb-entity_free-17 | person | Moies Mett | 0.55 |
 | fr-entity_free-19 | person | Maîtresse à la Maternelle | 0.51 |
@@ -70,7 +70,7 @@ Runtime: 7599.42 ms per 1,000 words (detection only).
 | ip_address | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 8 | 8 |
 | location | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 80 | 80 |
 | national_id | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 16 | 16 |
-| organization | 0.98 | 0.85 | 1.00 | 1.00 | 0.99 | 0.86 | 48 | 47 |
+| organization | 0.98 | 0.90 | 1.00 | 1.00 | 0.99 | 0.91 | 48 | 47 |
 | person | 1.00 | 0.99 | 1.00 | 1.00 | 1.00 | 0.99 | 216 | 215 |
 | phone | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 32 | 32 |
 | url | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 8 | 8 |

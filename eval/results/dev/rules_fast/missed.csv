@@ -1,0 +1,9 @@
+id,type,text,covered,sentence
+fr-standard-matricule-1,person,Pero Dietz,True,Matricule de Pero Dietz : 1944051285228.
+en-standard-job-1,person,Ellinor Haering,False,Ellinor Haering has worked for Deutsche Bank in London since 2019.
+lb-standard-job-1,person,Ellinor Haering,False,Ellinor Haering schafft zënter 2019 bei Deutsche Bank zu London.
+de-hard-coordinated-0,person,Lis,False,Lis und Charel sind nach Betzdorf gefahren.
+lb-hard-coordinated-0,person,Lis,False,D'Lis an de Charel sinn op Betzder gefuer.
+en-hard-coordinated-1,person,Méck,False,Méck and Léontine drove to Bourscheid.
+en-hard-family-1,person,Romaine,False,My mother and Romaine are coming to Goesdorf on Sunday.
+de-hard-family-1,person,Romaine,False,Meine Mutter und Romaine kommen am Sonntag nach Goesdorf.

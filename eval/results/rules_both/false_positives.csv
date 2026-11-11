@@ -1,0 +1,17 @@
+id,type,text,score,sentence
+en-entity_free-03,person,mosquito stung Grandma,0.7,A mosquito stung Grandma on the arm.
+lb-entity_free-03,person,Eng Méck,0.8876,Eng Méck huet d'Bomi an den Aarm gestach.
+lb-entity_free-05,organization,de Pak an der Gare,0.6415,"De Bréif läit op der Post, de Pak an der Gare."
+fr-entity_free-06,person,Noël,0.85,La Tante et l'Oncle viennent à Noël.
+lb-entity_free-10,location,Gaart Fussball,0.7,De Papp an de Jong spillen am Gaart Fussball.
+en-entity_free-11,organization,The Council,0.8994,The Council repaired the Streets after the Winter.
+de-entity_free-11,address,Straßen,0.7473,Die Gemeinde hat die Straßen nach dem Winter erneuert.
+lb-entity_free-11,location,Stroossen,0.55,D'Gemeng huet d'Stroossen nom Wanter nei gemaach.
+lb-entity_free-11,address,Wanter,0.6086,D'Gemeng huet d'Stroossen nom Wanter nei gemaach.
+fr-entity_free-13,location,La Réunion,0.85,La Réunion a lieu le 14/11/2024 à 10 heures en Salle 3.
+en-entity_free-17,person,Mett,0.7295,Breakfast was Mett with onions.
+fr-entity_free-17,person,Mett,0.7,"Au petit-déjeuner, il y avait du Mett aux oignons."
+de-entity_free-17,person,Mett,0.7,Zum Frühstück gab es Mett mit Zwiebeln.
+de-entity_free-17,location,Zwiebeln,0.7,Zum Frühstück gab es Mett mit Zwiebeln.
+lb-entity_free-17,person,Moies Mett,0.7,Mir hunn Moies Mett mat Ënnen giess.
+fr-entity_free-19,person,Maîtresse à la Maternelle,0.5109,Les Enfants ont chanté avec la Maîtresse à la Maternelle.

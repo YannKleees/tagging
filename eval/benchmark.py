@@ -23,7 +23,7 @@ def timed(texts, config, repeats):
 
 def main():
     ap = argparse.ArgumentParser(description="Measure detection runtime per 1,000 words")
-    ap.add_argument("--configs", nargs="+", default=["rules", "rules_ner_post"])
+    ap.add_argument("--configs", nargs="+", default=["rules", "rules_fast", "rules_ner_post"])
     ap.add_argument("--repeats", type=int, default=3)
     args = ap.parse_args()
     rows = evaluate.load(ROOT / "data" / "eval.jsonl")

@@ -13,6 +13,8 @@ VARIANTS = {
     "rules_ner": "rules_ner.json",
     "rules_ner_post": "rules_ner_post.json",
     "rules_ner_post_tuned": "rules_ner_post_tuned.json",
+    "rules_fast": "rules_fast.json",
+    "rules_both": "rules_both.json",
 }
 
 

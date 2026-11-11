@@ -1,0 +1,9 @@
+id,type,text,covered,sentence
+en-standard-appointment-0,person,Cilly Noack,True,"Appointment confirmed for Cilly Noack in Dudelange, call 0171 7539086 to cancel."
+fr-hard-letter-1,organization,Cactus,False,Madame Schiltz de Cactus nous a écrit une lettre.
+de-hard-letter-1,organization,Cactus,True,Frau Schiltz von Cactus hat uns einen Brief geschrieben.
+en-hard-family-0,person,Tun,False,My mother and Tun are coming to Haller on Sunday.
+fr-hard-family-0,person,Tun,False,Ma mère et Tun viennent à Haller dimanche.
+de-hard-family-0,person,Tun,False,Meine Mutter und Tun kommen am Sonntag nach Haller.
+lb-hard-family-0,person,Tun,False,Meng Mamm an den Tun kommen e Sonndeg op Haler.
+lb-hard-born-0,person,Méck,False,"De Méck, gebuer 06.05.1970 zu Suessem."

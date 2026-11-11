@@ -5,7 +5,7 @@ Config: `eval/configs/rules_ner.json`. 248 sentences, 2297 words, 504 gold spans
 Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
 `overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
 
-Runtime: 6021.63 ms per 1,000 words (detection only).
+Runtime: 6514.42 ms per 1,000 words (detection only).
 
 ## By language and subset
 

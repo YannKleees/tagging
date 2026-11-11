@@ -5,7 +5,7 @@ Config: `eval/configs/rules_ner.json`. 288 sentences, 2637 words, 504 gold spans
 Recall comes first: a missed identifier leaks personal data, an over-redaction only costs readability.
 `overlap` counts a prediction of the right type that overlaps the gold span, `exact` needs identical offsets, and `any_type_recall` counts a gold span as redacted if any prediction overlaps it.
 
-Runtime: 5785.40 ms per 1,000 words (detection only).
+Runtime: 5913.13 ms per 1,000 words (detection only).
 
 ## By language and subset
 
@@ -109,7 +109,7 @@ Runtime: 5785.40 ms per 1,000 words (detection only).
 | de-entity_free-12 | person | Die Krankenschwester | 0.54 |
 | de-entity_free-12 | person | Arzt | 0.52 |
 | lb-entity_free-12 | person | D'Infirmière an den Dokter | 0.67 |
-| fr-entity_free-13 | location | La Réunion | 0.81 |
+| fr-entity_free-13 | location | La Réunion | 0.85 |
 | en-entity_free-14 | person | The Boss | 0.70 |
 | en-entity_free-14 | person | Secretary | 0.62 |
 | en-entity_free-14 | organization | Conference | 0.68 |

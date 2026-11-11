@@ -15,7 +15,11 @@ LANGS = ["en", "fr", "de", "lb"]
 # organization, only jobs, relatives, buildings and things, capitalized as in a heading.
 def main():
     ap = argparse.ArgumentParser(description="Count hits on everyday sentences without personal data")
-    ap.add_argument("--configs", nargs="+", default=["rules", "ner_only", "rules_ner", "rules_ner_post_tuned"])
+    ap.add_argument(
+        "--configs",
+        nargs="+",
+        default=["rules", "ner_only", "rules_ner", "rules_fast", "rules_both", "rules_ner_post_tuned"],
+    )
     args = ap.parse_args()
     rows = evaluate.load(ROOT / "data" / "everyday.jsonl")
     counts, hits = {}, []

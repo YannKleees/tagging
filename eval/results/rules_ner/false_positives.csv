@@ -64,7 +64,7 @@ fr-entity_free-12,organization,L'Infirmière et le Médecin,0.7587,L'Infirmière
 de-entity_free-12,person,Die Krankenschwester,0.5426,Die Krankenschwester und der Arzt waren den ganzen Tag im Dienst.
 de-entity_free-12,person,Arzt,0.5217,Die Krankenschwester und der Arzt waren den ganzen Tag im Dienst.
 lb-entity_free-12,person,D'Infirmière an den Dokter,0.6658,D'Infirmière an den Dokter waren de ganzen Dag am Déngscht.
-fr-entity_free-13,location,La Réunion,0.8141,La Réunion a lieu le 14/11/2024 à 10 heures en Salle 3.
+fr-entity_free-13,location,La Réunion,0.85,La Réunion a lieu le 14/11/2024 à 10 heures en Salle 3.
 en-entity_free-14,person,The Boss,0.6962,The Boss and the Secretary are at a Conference.
 en-entity_free-14,person,Secretary,0.621,The Boss and the Secretary are at a Conference.
 en-entity_free-14,organization,Conference,0.6781,The Boss and the Secretary are at a Conference.
