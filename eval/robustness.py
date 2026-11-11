@@ -188,18 +188,67 @@ def recall(rows, config):
     return pd.DataFrame(out), on_gold
 
 
-def perturbations():
-    rows = [r for r in evaluate.load(ROOT / "data" / "eval.jsonl") if r["subset"] != "entity_free"]
-    rng = random.Random(2026)
-    everything = {
+# Persons, firms and places all replaced.
+def swap_all(rows, rng):
+    makers = {
         "person": new_person,
         "organization": lambda _, g: g.choice(ORGS),
         "location": lambda _, g: g.choice(PLACES),
     }
+    return [swap(r, makers, rng) for r in rows]
+
+
+# WikiANN test sentences with their silver entities as byte spans.
+def wikiann_rows(lang, n):
+    import pyarrow.parquet as pq
+    from huggingface_hub import hf_hub_download
+
+    path = hf_hub_download("unimelb-nlp/wikiann", f"{lang}/test-00000-of-00001.parquet", repo_type="dataset")
+    examples = pq.read_table(path).to_pylist()
+    random.Random(1).shuffle(examples)
+    rows = []
+    for ex in examples[:n]:
+        text, spans, current = "", [], None
+        for token, tag in zip(ex["tokens"], ex["ner_tags"]):
+            text += " " if text else ""
+            start = len(text)
+            text += token
+            if tag in (1, 3, 5) or (tag in WIKIANN_TAGS and current is None):
+                current = [start, len(text), WIKIANN_TAGS[tag]]
+                spans.append(current)
+            elif tag in WIKIANN_TAGS:
+                current[1] = len(text)
+            else:
+                current = None
+        rows.append({"lang": lang, "text": text, "spans": [byte_span(text, a, b, kind) for a, b, kind in spans]})
+    return rows
+
+
+# The first `n` documents of the shuffled ai4privacy validation file. Development of the form and
+# ID rules used documents 2,001 to 2,150 of the same shuffle.
+def ai4privacy_rows(lang, n):
+    from huggingface_hub import hf_hub_download
+
+    path = hf_hub_download("ai4privacy/pii-masking-300k", AI4PRIVACY[lang], repo_type="dataset")
+    lines = Path(path).read_text(encoding="utf-8").splitlines()
+    random.Random(1).shuffle(lines)
+    return [
+        {
+            "lang": lang,
+            "text": d["source_text"],
+            "spans": [byte_span(d["source_text"], m["start"], m["end"], m["label"]) for m in d["privacy_mask"]],
+        }
+        for d in (json.loads(x) for x in lines[:n])
+    ]
+
+
+def perturbations():
+    rows = [r for r in evaluate.load(ROOT / "data" / "eval.jsonl") if r["subset"] != "entity_free"]
+    rng = random.Random(2026)
     variants = {
         "original eval split": rows,
         "new person names": [swap(r, {"person": new_person}, rng) for r in rows],
-        "new persons, firms and places": [swap(r, everything, rng) for r in rows],
+        "new persons, firms and places": swap_all(rows, rng),
         "no diacritics": [reshape(r, without_diacritic) for r in rows],
         "all lowercase": [reshape(r, one_to_one(str.lower)) for r in rows],
         "ALL CAPITALS": [reshape(r, one_to_one(str.upper)) for r in rows],
@@ -224,29 +273,9 @@ def perturbations():
 
 
 def wikiann(n):
-    import pyarrow.parquet as pq
-    from huggingface_hub import hf_hub_download
-
     table = []
     for lang in ["lb", "de", "fr", "en"]:
-        path = hf_hub_download("unimelb-nlp/wikiann", f"{lang}/test-00000-of-00001.parquet", repo_type="dataset")
-        examples = pq.read_table(path).to_pylist()
-        random.Random(1).shuffle(examples)
-        rows = []
-        for ex in examples[:n]:
-            text, spans, current = "", [], None
-            for token, tag in zip(ex["tokens"], ex["ner_tags"]):
-                text += " " if text else ""
-                start = len(text)
-                text += token
-                if tag in (1, 3, 5) or (tag in WIKIANN_TAGS and current is None):
-                    current = [start, len(text), WIKIANN_TAGS[tag]]
-                    spans.append(current)
-                elif tag in WIKIANN_TAGS:
-                    current[1] = len(text)
-                else:
-                    current = None
-            rows.append({"text": text, "spans": [byte_span(text, a, b, kind) for a, b, kind in spans]})
+        rows = wikiann_rows(lang, n)
         for name, config in CONFIGS.items():
             df, on_gold = recall(rows, config)
             table.append(
@@ -265,21 +294,9 @@ def wikiann(n):
 
 
 def ai4privacy(n):
-    from huggingface_hub import hf_hub_download
-
     found = []
-    for lang, file in AI4PRIVACY.items():
-        path = hf_hub_download("ai4privacy/pii-masking-300k", file, repo_type="dataset")
-        lines = Path(path).read_text(encoding="utf-8").splitlines()
-        random.Random(1).shuffle(lines)
-        docs = [json.loads(x) for x in lines[:n]]
-        rows = [
-            {
-                "text": d["source_text"],
-                "spans": [byte_span(d["source_text"], m["start"], m["end"], m["label"]) for m in d["privacy_mask"]],
-            }
-            for d in docs
-        ]
+    for lang in AI4PRIVACY:
+        rows = ai4privacy_rows(lang, n)
         for name, config in CONFIGS.items():
             df, _ = recall(rows, config)
             found.append(df.assign(config=name, lang=lang))

@@ -2,6 +2,10 @@
 
 Finds and redacts personal data (names, places, organisations, emails, phone numbers, IBANs, card numbers, national IDs, passport and licence numbers, passwords, dates of birth, addresses, URLs, IP addresses) in English, French, German and Luxembourgish text. A Rust core with rules, word lists, a small name grammar and a form-field reader runs in milliseconds. Two optional NER models add the names that no list knows: a fast one (spaCy) and an accurate one (GLiNER).
 
+**Vibe coded.** I directed this project; an AI coding assistant (Claude) wrote most of the code, the evaluation and the first draft of the paper. The tests and the evaluation below are the evidence for what it does, so read those before you trust it.
+
+**Paper:** [paper/paper.pdf](paper/paper.pdf) describes the method and the comparison with Microsoft Presidio in five pages.
+
 **Try it in your browser:** [yannkleees.github.io/tagging](https://yannkleees.github.io/tagging/). The demo runs the Rust core compiled to WebAssembly; the NER models need the Python package.
 
 ## Result

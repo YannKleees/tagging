@@ -9,7 +9,6 @@ Needs `pip install presidio-analyzer spacy huggingface_hub pyarrow`, spaCy's lar
 and German pipelines for Presidio and the small ones for this tool's fast backend.
 """
 
-import json
 import random
 import time
 from pathlib import Path
@@ -123,48 +122,6 @@ def covered(rows, preds, groups):
     return pd.DataFrame(table).rename_axis("gold type").reset_index()
 
 
-def wikiann_rows(lang, n):
-    import pyarrow.parquet as pq
-    from huggingface_hub import hf_hub_download
-
-    path = hf_hub_download("unimelb-nlp/wikiann", f"{lang}/test-00000-of-00001.parquet", repo_type="dataset")
-    examples = pq.read_table(path).to_pylist()
-    random.Random(1).shuffle(examples)
-    rows = []
-    for ex in examples[:n]:
-        text, spans, current = "", [], None
-        for token, tag in zip(ex["tokens"], ex["ner_tags"]):
-            text += " " if text else ""
-            start = len(text)
-            text += token
-            if tag in (1, 3, 5) or (tag in rb.WIKIANN_TAGS and current is None):
-                current = [start, len(text), rb.WIKIANN_TAGS[tag]]
-                spans.append(current)
-            elif tag in rb.WIKIANN_TAGS:
-                current[1] = len(text)
-            else:
-                current = None
-        rows.append({"lang": lang, "text": text, "spans": [rb.byte_span(text, a, b, k) for a, b, k in spans]})
-    return rows
-
-
-def ai4privacy_rows(lang, n):
-    from huggingface_hub import hf_hub_download
-
-    path = hf_hub_download("ai4privacy/pii-masking-300k", rb.AI4PRIVACY[lang], repo_type="dataset")
-    lines = Path(path).read_text(encoding="utf-8").splitlines()
-    random.Random(1).shuffle(lines)
-    docs = [json.loads(x) for x in lines[:n]]
-    return [
-        {
-            "lang": lang,
-            "text": d["source_text"],
-            "spans": [rb.byte_span(d["source_text"], m["start"], m["end"], m["label"]) for m in d["privacy_mask"]],
-        }
-        for d in docs
-    ]
-
-
 # Hits on text without personal data. Dates and times are counted apart: both tools were asked
 # for them, so they are no mistakes.
 def hits(rows, preds):
@@ -204,13 +161,7 @@ def main():
     eval_rows = evaluate.load(ROOT / "data" / "eval.jsonl")
     entity = [r for r in eval_rows if r["subset"] != "entity_free"]
     free = [r for r in eval_rows if r["subset"] == "entity_free"]
-    rng = random.Random(2026)
-    makers = {
-        "person": rb.new_person,
-        "organization": lambda _, g: g.choice(rb.ORGS),
-        "location": lambda _, g: g.choice(rb.PLACES),
-    }
-    swapped = [rb.swap(r, makers, rng) for r in entity]
+    swapped = rb.swap_all(entity, random.Random(2026))
     everyday = evaluate.load(ROOT / "data" / "everyday.jsonl")
     kinds = [*NAMES, "address", *STRUCTURED]
     groups = {"all": kinds} | {t: [t] for t in kinds}
@@ -228,8 +179,8 @@ def main():
         "None of these sets was used to develop the rules they test: see `eval/README.md` for what was.",
         "",
     ]
-    wiki = [r for lang in LANGS for r in wikiann_rows(lang, 300)]
-    privacy = [r for lang in rb.AI4PRIVACY for r in ai4privacy_rows(lang, 120)]
+    wiki = [r for lang in LANGS for r in rb.wikiann_rows(lang, 300)]
+    privacy = [r for lang in rb.AI4PRIVACY for r in rb.ai4privacy_rows(lang, 120)]
     theirs, presidio_speed = presidio_predictions([entity, swapped, free, everyday, wiki, privacy])
 
     preds, speed = predictions(entity, theirs[0], timed=True)

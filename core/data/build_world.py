@@ -48,11 +48,35 @@ FILTER NOT EXISTS {{ ?item wdt:P17 wd:Q32 }} {LABELS} }}""",
 # organization, intergovernmental organization, news media, academic and research institutions,
 # university, video game developer, software and aerospace companies, political organizations,
 # standards bodies and public universities.
-ORG_TYPES = (
-    "Q4830453 Q6881511 Q891723 Q22687 Q46970 Q18388277 Q786820 Q507619 Q219577 Q1589009 Q161726 Q43229 Q163740 "
-    "Q484652 Q245065 Q1616075 Q2085381 Q3918 Q210167 Q1058914 Q783794 Q4671277 Q7210356 Q79913 Q15911314 Q902104 "
-    "Q875538"
-).split()
+ORG_TYPES = [
+    "Q4830453",
+    "Q6881511",
+    "Q891723",
+    "Q22687",
+    "Q46970",
+    "Q18388277",
+    "Q786820",
+    "Q507619",
+    "Q219577",
+    "Q1589009",
+    "Q161726",
+    "Q43229",
+    "Q163740",
+    "Q484652",
+    "Q245065",
+    "Q1616075",
+    "Q2085381",
+    "Q3918",
+    "Q210167",
+    "Q1058914",
+    "Q783794",
+    "Q4671277",
+    "Q7210356",
+    "Q79913",
+    "Q15911314",
+    "Q902104",
+    "Q875538",
+]
 ORG_QUERY = """SELECT ?item ?lb ?fr ?de ?en ?sl WHERE {{
 {{ SELECT ?item ?sl WHERE {{ ?item wdt:P31 wd:{type}; wikibase:sitelinks ?sl. FILTER(?sl >= 50) }} }} {labels} }}"""
 # `organization` alone is too broad a type: towns and events carry it too.

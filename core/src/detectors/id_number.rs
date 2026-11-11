@@ -157,9 +157,12 @@ fn belgian_valid(s: &str) -> bool {
 fn german_pension_valid(s: &str) -> bool {
     const WEIGHTS: [u32; 12] = [2, 1, 2, 5, 7, 1, 2, 1, 2, 1, 2, 1];
     let compact: Vec<char> = s.chars().filter(char::is_ascii_alphanumeric).collect();
-    let [a1, a2, d1, d2, m1, m2, _, _, letter, s1, s2, check] = compact[..] else {
+    let [_, _, d1, d2, m1, m2, _, _, letter, s1, s2, check] = compact[..] else {
         return false;
     };
+    if !letter.is_ascii_uppercase() {
+        return false;
+    }
     let digit = |c: char| c.to_digit(10);
     let (Some(day), Some(month)) = (
         digit(d1).zip(digit(d2)).map(|(a, b)| a * 10 + b),
@@ -172,7 +175,6 @@ fn german_pension_valid(s: &str) -> bool {
     values.extend([position / 10, position % 10]);
     values.extend([s1, s2].iter().filter_map(|&c| digit(c)));
     let sum: u32 = values.iter().zip(WEIGHTS).map(|(v, w)| v * w / 10 + v * w % 10).sum();
-    let _ = (a1, a2);
     values.len() == 12 && (1..=31).contains(&day) && (1..=12).contains(&month) && Some(sum % 10) == digit(check)
 }
 

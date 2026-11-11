@@ -101,8 +101,6 @@ def main():
         RAW.mkdir(exist_ok=True)
         for kind in PROPS:
             download(kind)
-    if "--fetch-only" in sys.argv:
-        return
     plain, marked = common_words()
     common = plain | marked
 
